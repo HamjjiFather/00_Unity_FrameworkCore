@@ -1,0 +1,9 @@
+{
+  "name": "com.rhkdtjq0390.baseframe",
+  "displayName": "KKS's Base framework",
+  "description": "KKS's Base framework for Unity3d.",
+  "version": "1.0.0",
+  "unity": "2020.1",
+  "unityRelease": "0f1",
+  "dependencies": {},
+}

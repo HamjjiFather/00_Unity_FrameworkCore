@@ -1,0 +1,15 @@
+{
+    "name": "BaseFrame_Editor",
+    "references": [
+        "GUID:d8299faf3b04723448b957ffb6f9c761"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
