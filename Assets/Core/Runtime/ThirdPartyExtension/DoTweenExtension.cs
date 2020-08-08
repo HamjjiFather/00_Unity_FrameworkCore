@@ -9,7 +9,7 @@ namespace KKSFramework
 {
     public static class DoTweenExtensions
     {
-        public static TweenerCore<float, float, FloatOptions> DoFade (this CanvasGroup target, float endValue,
+        public static TweenerCore<float, float, FloatOptions> DOFade (this CanvasGroup target, float endValue,
             float duration)
         {
             var tweenCore = DOTween.To (() => target.alpha, x => target.alpha = x, endValue, duration);
