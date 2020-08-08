@@ -37,8 +37,6 @@ namespace KKSFramework.Management
         private void LocalDataLoad ()
         {
             LocalDataManager.Instance.AddComponentBase (FindObjectOfType<LocalDataComponent> ());
-            // LocalDataManager.Instance.SetSaveAction ();
-            LocalDataHelper.LoadAllGameData ();
         }
 
         /// <summary>

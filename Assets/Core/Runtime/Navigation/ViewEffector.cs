@@ -22,10 +22,10 @@ namespace KKSFramework.Navigation
         /// </summary>
         public float duration = 0.2f;
         
-        // /// <summary>
-        // /// animation effect ease.
-        // /// </summary>
-        // public Ease effectEase = Ease.OutQuad;
+        /// <summary>
+        /// animation effect ease.
+        /// </summary>
+        public Ease effectEase = Ease.OutQuad;
         
         /// <summary>
         /// animation effect type.
@@ -68,33 +68,34 @@ namespace KKSFramework.Navigation
             if (_isLockPlayEffector)
                 return;
 
-            // var tweenCore = canvasGroup.DOFade (0, 0);
-            //
-            // if (ShowEffectModel.viewEffectType == ViewEffectType.Fade)
-            // {
-            //     canvasGroup.alpha = 0;
-            //     tweenCore = canvasGroup
-            //         .DOFade (1, ShowEffectModel.duration)
-            //         .SetEase (ShowEffectModel.effectEase);
-            //     await tweenCore.WaitForCompleteAsync (ct);
-            // }
-            //
-            // if (ShowEffectModel.viewEffectType == ViewEffectType.Scale)
-            // {
-            //     await (tweenCore.target as Transform)
-            //         .DOScale (1f, ShowEffectModel.duration)
-            //         .SetEase (ShowEffectModel.effectEase)
-            //         .WaitForCompleteAsync (ct);
-            // }
-            //
-            // if (ShowEffectModel.viewEffectType == ViewEffectType.Move)
-            // {
-            //     await (tweenCore.target as Transform)
-            //         .DOLocalMove (new Vector3 (0, 50f, 0), ShowEffectModel.duration)
-            //         .SetEase (ShowEffectModel.effectEase)
-            //         .From (true)
-            //         .WaitForCompleteAsync (ct);
-            // }
+            var tweenCore = canvasGroup.DoFade (0, 0);
+            
+            if (ShowEffectModel.viewEffectType == ViewEffectType.Fade)
+            {
+                canvasGroup.alpha = 0;
+                
+                tweenCore = canvasGroup
+                    .DoFade (1, ShowEffectModel.duration)
+                    .SetEase (ShowEffectModel.effectEase);
+                await tweenCore.WaitForCompleteAsync (ct);
+            }
+            
+            if (ShowEffectModel.viewEffectType == ViewEffectType.Scale)
+            {
+                await (tweenCore.target as Transform)
+                    .DOScale (1f, ShowEffectModel.duration)
+                    .SetEase (ShowEffectModel.effectEase)
+                    .WaitForCompleteAsync (ct);
+            }
+            
+            if (ShowEffectModel.viewEffectType == ViewEffectType.Move)
+            {
+                await (tweenCore.target as Transform)
+                    .DOLocalMove (new Vector3 (0, 50f, 0), ShowEffectModel.duration)
+                    .SetEase (ShowEffectModel.effectEase)
+                    .From (true)
+                    .WaitForCompleteAsync (ct);
+            }
 
             SetRaycast ();
         }

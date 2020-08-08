@@ -1,15 +1,22 @@
 ﻿using System.Threading;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
-
-#if CSHARP_7_OR_LATER || (UNITY_2018_3_OR_NEWER && (NET_STANDARD_2_0 || NET_4_6))
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+using Cysharp.Threading.Tasks;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using UnityEngine;
 
 namespace KKSFramework
 {
-    public static class DoTweenAsyncTriggerExtensions
+    public static class DoTweenExtensions
     {
-        #region Special for single operation.
+        public static TweenerCore<float, float, FloatOptions> DoFade (this CanvasGroup target, float endValue,
+            float duration)
+        {
+            var tweenCore = DOTween.To (() => target.alpha, x => target.alpha = x, endValue, duration);
+            tweenCore.SetTarget (target);
+            return tweenCore;
+        }
+
 
         public static UniTask<Tweener> WaitForCompleteAsync (this Tweener tweener,
             CancellationToken cancellationToken = default)
@@ -21,9 +28,5 @@ namespace KKSFramework
             });
             return completionSource.Task;
         }
-
-        #endregion
     }
 }
-
-#endif

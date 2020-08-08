@@ -58,7 +58,8 @@ namespace KKSFramework.GlobalText
 
         public override void ChangeText ()
         {
-            TargetText.GetTranslatedString (translatedInfo.Key, translatedInfo.ToObjectArgs);
+            GlobalTextManager.Instance.RegistTranslate (TargetGlobalTextCompType.UIText, translatedInfo.Key, TargetText,
+                translatedInfo.ToObjectArgs);
         }
 
         #endregion
