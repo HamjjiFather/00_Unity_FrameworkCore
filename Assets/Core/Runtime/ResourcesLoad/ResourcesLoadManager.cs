@@ -64,10 +64,18 @@ namespace KKSFramework.ResourcesLoad
         /// <summary>
         /// 제네릭 타입에 해당하는 리소스 비동기 로드.
         /// </summary>
-        public async UniTask<T> GetResourcesAsync<T> (string roleString, string prefabName)
-            where T : Object
+        public async UniTask<T> GetResourcesAsync<T> (string roleString, string prefabName) where T : Object
         {
             return await GetResourceAsync<T> ($"{roleString}/{prefabName}");
+        }
+
+
+        /// <summary>
+        /// 제네릭 타입에 해당하는 리소스 비동기 로드.
+        /// </summary>
+        public async UniTask<T> GetResourcesAsync<T> (string fullPath) where T : Object
+        {
+            return await GetResourceAsync<T> (fullPath);
         }
 
         #endregion

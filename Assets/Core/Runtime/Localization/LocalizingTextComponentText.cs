@@ -2,13 +2,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace KKSFramework.GlobalText
+namespace KKSFramework.Localization
 {
     /// <summary>
     /// 변환될 텍스트를 가지고 있는 컴포넌트.
     /// </summary>
     [RequireComponent (typeof (Text))]
-    public class GlobalTextComponentUGUIText : GlobalTextComponentBase
+    public class LocalizingTextComponentText : LocalizingTextComponentBase
     {
         #region Fields & Property
 
@@ -44,7 +44,7 @@ namespace KKSFramework.GlobalText
         /// </summary>
         protected override void SetComponent ()
         {
-            GlobalTextManager.Instance.RegistGlobalText (this);
+            LocalizationTextManager.Instance.RegistGlobalText (this);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace KKSFramework.GlobalText
 
         public override void ChangeText ()
         {
-            GlobalTextManager.Instance.RegistTranslate (TargetGlobalTextCompType.UIText, translatedInfo.Key, TargetText,
+            LocalizationTextManager.Instance.RegistTranslate (TargetGlobalTextCompType.UIText, translatedInfo.Key, TargetText,
                 translatedInfo.ToObjectArgs);
         }
 

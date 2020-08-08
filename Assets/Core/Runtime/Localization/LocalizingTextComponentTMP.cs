@@ -2,13 +2,13 @@
 // using TMPro;
 // using UnityEngine;
 //
-// namespace KKSFramework.GameSystem.GlobalText
+// namespace KKSFramework.GameSystem.LocalizingText
 // {
 //     /// <summary>
 //     /// 변환될 텍스트를 가지고 있는 컴포넌트.
 //     /// </summary>
 //     [RequireComponent (typeof (TextMeshPro))]
-//     public class GlobalTextComponentTMP : GlobalTextComponentBase
+//     public class GlobalTextComponentTMP : LocalizingTextComponentBase
 //     {
 //         #region Fields & Property
 //
@@ -44,7 +44,7 @@
 //         /// </summary>
 //         protected override void SetComponent ()
 //         {
-//             GlobalTextManager.Instance.RegistGlobalText (this);
+//             LocalizationTextManager.Instance.RegistGlobalText (this);
 //         }
 //
 //         /// <summary>

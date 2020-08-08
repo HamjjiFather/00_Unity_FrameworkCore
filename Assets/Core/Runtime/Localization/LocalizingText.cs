@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using KKSFramework.TableData;
 
-namespace KKSFramework.GlobalText
+namespace KKSFramework.Localization
 {
-	public class GlobalText : TableDataBase
+	public class LocalizingText : TableDataBase
 	{
 		// 인덱스.
 		public string Id;
@@ -12,7 +12,7 @@ namespace KKSFramework.GlobalText
 		public string[] GlobalTexts;
 
 
-		public GlobalText ()
+		public LocalizingText ()
 		{
 		}
 

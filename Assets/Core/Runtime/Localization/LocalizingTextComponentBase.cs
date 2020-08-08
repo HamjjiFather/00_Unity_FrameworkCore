@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace KKSFramework.GlobalText
+namespace KKSFramework.Localization
 {
     /// <summary>
     /// 변환될 텍스트를 가지고 있는 컴포넌트.
     /// </summary>
-    public abstract class GlobalTextComponentBase : CachedComponent
+    public abstract class LocalizingTextComponentBase : CachedComponent
     {
         #region Fields & Property
 

@@ -16,11 +16,11 @@ namespace KKSFramework.TableData
         /// 데이터 클래스를 List<object> 형식으로 받아올 수 있게 구현해주어야 함.
         /// </summary>
         /// <returns></returns>
-        public async UniTask<List<T>> LoadCSVData<T> (string path) where T : TableDataBase, new ()
+        public async UniTask<List<T>> LoadCSVData<T> (string sccondsPath, string path) where T : TableDataBase, new ()
         {
             var csvDataBases = new List<T> ();
             var res = await ResourcesLoadManager.Instance
-                .GetResourcesAsync<TextAsset> ("_Data", "TSV", path);
+                .GetResourcesAsync<TextAsset> ($"_Data/Tsv/{sccondsPath}/{path}");
             var csvEnum = res.text.Split ('\n').GetEnumerator ();
 
             csvEnum.MoveNext ();

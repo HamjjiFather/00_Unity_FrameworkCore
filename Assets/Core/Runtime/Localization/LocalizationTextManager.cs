@@ -7,7 +7,7 @@ using KKSFramework.TableData;
 using UnityEngine;
 using UnityEngine.UI; // using TMPro;
 
-namespace KKSFramework.GlobalText
+namespace KKSFramework.Localization
 {
     public enum TargetGlobalTextCompType
     {
@@ -77,7 +77,7 @@ namespace KKSFramework.GlobalText
     /// <summary>
     /// 글로벌 텍스트 관리 클래스.
     /// </summary>
-    public class GlobalTextManager : ManagerBase<GlobalTextManager>
+    public class LocalizationTextManager : ManagerBase<LocalizationTextManager>
     {
         #region Fields & Property
 
@@ -96,7 +96,7 @@ namespace KKSFramework.GlobalText
         /// <summary>
         /// 글로벌 텍스트 데이터.
         /// </summary>
-        public Dictionary<string, GlobalText> GlobalTextDict = new Dictionary<string, GlobalText> ();
+        public Dictionary<string, LocalizingText> GlobalTextDict = new Dictionary<string, LocalizingText> ();
         
         /// <summary>
         /// 글로벌 텍스트 번역을 사용하고 있는 텍스트 컴포넌트.
@@ -107,7 +107,7 @@ namespace KKSFramework.GlobalText
         /// <summary>
         /// 글로벌 텍스트 컴포넌트 클래스 리스트.
         /// </summary>
-        private readonly List<GlobalTextComponentBase> _globalTextComps = new List<GlobalTextComponentBase> ();
+        private readonly List<LocalizingTextComponentBase> _globalTextComps = new List<LocalizingTextComponentBase> ();
 
         #endregion
 
@@ -122,7 +122,7 @@ namespace KKSFramework.GlobalText
 
         public async UniTask LoadGlobalTextData ()
         {
-            GlobalTextDict = (await ReadCSVData.Instance.LoadCSVData<GlobalText> (nameof (GlobalText))).ToDictionary (x => x.Id, x => x);
+            GlobalTextDict = (await ReadCSVData.Instance.LoadCSVData<LocalizingText> ("Localization", nameof (LocalizingText))).ToDictionary (x => x.Id, x => x);
         }
         
 
@@ -156,9 +156,9 @@ namespace KKSFramework.GlobalText
         /// <summary>
         /// 글로벌 텍스트 컴포넌트를 추가.
         /// </summary>
-        public void RegistGlobalText (GlobalTextComponentBase pGlobalTextComponent)
+        public void RegistGlobalText (LocalizingTextComponentBase pLocalizingTextComponent)
         {
-            if (_globalTextComps.Contains (pGlobalTextComponent) == false) _globalTextComps.Add (pGlobalTextComponent);
+            if (_globalTextComps.Contains (pLocalizingTextComponent) == false) _globalTextComps.Add (pLocalizingTextComponent);
         }
 
 

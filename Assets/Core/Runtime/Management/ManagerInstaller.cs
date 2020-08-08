@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using KKSFramework.GlobalText;
+using KKSFramework.Localization;
 using KKSFramework.InputEvent;
 using KKSFramework.LocalData;
 using KKSFramework.Navigation;
@@ -59,7 +59,7 @@ namespace KKSFramework.Management
             _managerBases.Add (ResourcesLoadManager.Instance);
             _managerBases.Add (SceneLoadManager.Instance);
             _managerBases.Add (SoundPlayManager.Instance);
-            _managerBases.Add (GlobalTextManager.Instance);
+            _managerBases.Add (LocalizationTextManager.Instance);
             _managerBases.Add (EscapeEventManager.Instance);
         }
 
