@@ -63,11 +63,13 @@ namespace KKSFramework.Localization
                 return;
             }
 
+#if TextMeshPro
             // if (!(textComp is Text) && !(textComp is TextMeshPro))
             // {
             //     Debug.Log ($"textComp is not TextTypeComponent: {textComp.GetType ().Name}");
             //     return;
             // }
+#endif
 
             _targetText = textComp;
         }
@@ -97,7 +99,7 @@ namespace KKSFramework.Localization
         /// 글로벌 텍스트 데이터.
         /// </summary>
         public Dictionary<string, LocalizingText> GlobalTextDict = new Dictionary<string, LocalizingText> ();
-        
+
         /// <summary>
         /// 글로벌 텍스트 번역을 사용하고 있는 텍스트 컴포넌트.
         /// </summary>
@@ -119,12 +121,13 @@ namespace KKSFramework.Localization
 
         #region Methods
 
-
         public async UniTask LoadGlobalTextData ()
         {
-            GlobalTextDict = (await ReadCSVData.Instance.LoadCSVData<LocalizingText> ("Localization", nameof (LocalizingText))).ToDictionary (x => x.Id, x => x);
+            GlobalTextDict =
+                (await ReadCSVData.Instance.LoadCSVData<LocalizingText> ("Localization", nameof (LocalizingText)))
+                .ToDictionary (x => x.Id, x => x);
         }
-        
+
 
         /// <summary>
         /// 언어가 변경됨.
@@ -158,7 +161,8 @@ namespace KKSFramework.Localization
         /// </summary>
         public void RegistGlobalText (LocalizingTextComponentBase pLocalizingTextComponent)
         {
-            if (_globalTextComps.Contains (pLocalizingTextComponent) == false) _globalTextComps.Add (pLocalizingTextComponent);
+            if (_globalTextComps.Contains (pLocalizingTextComponent) == false)
+                _globalTextComps.Add (pLocalizingTextComponent);
         }
 
 
@@ -174,13 +178,13 @@ namespace KKSFramework.Localization
                 return;
             }
 
-            #if TEXTMESHPRO
+#if TextMeshPro
             if (!(textComp is Text) && !(textComp is TextMeshPro))
             {
                 Debug.Log ($"textComp is not TextTypeComponent: {textComp.GetType ().Name}");
                 return;
             }
-            #endif
+#endif
 
             if (!GlobalTextDict.ContainsKey (key)) return;
             if (!_translatedInfos.ContainsKey (textComp))
