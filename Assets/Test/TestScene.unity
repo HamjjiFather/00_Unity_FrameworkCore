@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   containerPath: ScoreText
+  targetComponent: {fileID: 1465627082}
 --- !u!114 &1465627082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,7 +503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f79e91aa9d143d7b922e0443d0dfdd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pageUiUIContainer: {fileID: 1938364631}
 --- !u!114 &1938364633
 MonoBehaviour:
   m_ObjectHideFlags: 0

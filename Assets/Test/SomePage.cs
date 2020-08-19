@@ -11,6 +11,8 @@ namespace KKSFramework.DataBind
 
         [ResolveUI("ScoreText")]
         private Text _scoreText;
+
+        private Button _button;
         
 #pragma warning restore CS0649
 

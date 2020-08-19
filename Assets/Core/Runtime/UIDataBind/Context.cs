@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ModestTree;
+using UniRx;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace KKSFramework.DataBind
 {
     [RequireComponent (typeof (IBinder))]
-    public class UIContainer : MonoBehaviour, IDisposable
+    public class Context : MonoBehaviour, IDisposable
     {
         /// <summary>
         /// 컨테이너에 포함된 컴포넌트 딕셔너리.
         /// </summary>
-        public Dictionary<string, UIBehaviour> BindableComponents { get; } = new Dictionary<string, UIBehaviour> ();
-
+        public Dictionary<string, Component> Container { get; } = new Dictionary<string, Component> ();
+        
 
         #region UnityMethods
 
@@ -31,7 +31,7 @@ namespace KKSFramework.DataBind
                 fields.Foreach (field =>
                 {
                     var attribute = field.GetCustomAttribute<ResolveUIAttribute> (true);
-                    field.SetValue (monoBehaviour, Resolve<UIBehaviour> (attribute.Key));
+                    field.SetValue (monoBehaviour, Resolve<Component> (attribute.Key));
                 });
             });
         }
@@ -45,17 +45,17 @@ namespace KKSFramework.DataBind
         #endregion
 
 
-        public void AddComponent (string key, UIBehaviour uiBehaviour)
+        public void AddComponent (string key, Component target)
         {
-            BindableComponents.Add (key, uiBehaviour);
+            Container.Add (key, target);
         }
 
 
-        public T Resolve<T> (string key) where T : UIBehaviour
+        public T Resolve<T> (string key) where T : Component
         {
             if (Vaildate (key))
             {
-                return BindableComponents[key] as T;
+                return Container[key] as T;
             }
 
             Debug.Log ($"No UIBehaviour component named {key}.");
@@ -65,13 +65,13 @@ namespace KKSFramework.DataBind
 
         public bool Vaildate (string key)
         {
-            return BindableComponents.ContainsKey (key);
+            return Container.ContainsKey (key);
         }
 
 
         public void Dispose ()
         {
-            BindableComponents.Clear ();
+            Container.Clear ();
             GC.Collect ();
         }
     }

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.3] - 2020-08-16
 * Add ui Component data bind system.
+* Change bind type 'UIBehaviour' to 'Component'.
 
 ## [1.0.2] - 2020-08-08
 * All base frame sources load from github.

@@ -10,24 +10,24 @@ namespace KKSFramework.DataBind
         /// <summary>
         /// 컨테이너.
         /// </summary>
-        private UIContainer _targetUIContainer;
-        public UIContainer TargetUIContainer
+        private Context _targetContext;
+        public Context TargetContext
         {
             get
             {
-                if (_targetUIContainer != null) return _targetUIContainer;
-                var containerInParents = GetComponentInParent<UIContainer> ();
+                if (_targetContext != null) return _targetContext;
+                var containerInParents = GetComponentInParent<Context> ();
                 if (containerInParents == null)
                 {
-                    Debug.LogError ("No parents 'UIContainer' Component to bind");
+                    Debug.LogError ("No parents 'Context' Component to bind");
                     return default;
                 }
 
-                _targetUIContainer = GetComponentInParent<UIContainer> ();
+                _targetContext = GetComponentInParent<Context> ();
 
-                return _targetUIContainer;
+                return _targetContext;
             }
-            private set => _targetUIContainer = value;
+            private set => _targetContext = value;
         }
         
         /// <summary>
@@ -39,15 +39,15 @@ namespace KKSFramework.DataBind
         /// <summary>
         /// 타겟이 되는 컴포넌트.
         /// </summary>
-        private UIBehaviour _targetComponent;
+        [SerializeField]
+        protected Component targetComponent;
 
 
         #region UnityMethods
 
         private void Awake ()
         {
-            _targetComponent = GetComponent<UIBehaviour> ();
-            TargetUIContainer.AddComponent (containerPath, _targetComponent);
+            TargetContext.AddComponent (containerPath, targetComponent);
         }
 
 
@@ -67,8 +67,8 @@ namespace KKSFramework.DataBind
         
         public void Dispose ()
         {
-            TargetUIContainer = null;
-            _targetComponent = null;
+            TargetContext = null;
+            targetComponent = null;
         }
     }
 }
