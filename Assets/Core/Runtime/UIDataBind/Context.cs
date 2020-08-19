@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ModestTree;
-using UniRx;
 using UnityEngine;
 
 namespace KKSFramework.DataBind
@@ -15,25 +14,15 @@ namespace KKSFramework.DataBind
         /// 컨테이너에 포함된 컴포넌트 딕셔너리.
         /// </summary>
         public Dictionary<string, Component> Container { get; } = new Dictionary<string, Component> ();
-        
+
+        private bool _isResolved;
+
 
         #region UnityMethods
 
         private void Awake ()
         {
-            var classes = GetComponents<IBinder> ();
-            classes.Foreach (monoBehaviour =>
-            {
-                var fields = monoBehaviour
-                    .GetType ()
-                    .GetFields (BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Where (x => x.HasAttribute<ResolveUIAttribute> ());
-                fields.Foreach (field =>
-                {
-                    var attribute = field.GetCustomAttribute<ResolveUIAttribute> (true);
-                    field.SetValue (monoBehaviour, Resolve<Component> (attribute.Key));
-                });
-            });
+            Resolve ();
         }
 
 
@@ -43,6 +32,29 @@ namespace KKSFramework.DataBind
         }
 
         #endregion
+
+
+        public void Resolve (bool isForce = false)
+        {
+            if (!_isResolved || isForce)
+            {
+                var classes = GetComponents<IBinder> ();
+                classes.Foreach (monoBehaviour =>
+                {
+                    var fields = monoBehaviour
+                        .GetType ()
+                        .GetFields (BindingFlags.Instance | BindingFlags.NonPublic)
+                        .Where (x => x.HasAttribute<ResolveUIAttribute> ());
+                    fields.Foreach (field =>
+                    {
+                        var attribute = field.GetCustomAttribute<ResolveUIAttribute> (true);
+                        field.SetValue (monoBehaviour, Resolve<Component> (attribute.Key));
+                    });
+                });
+            }
+
+            _isResolved = true;
+        }
 
 
         public void AddComponent (string key, Component target)
