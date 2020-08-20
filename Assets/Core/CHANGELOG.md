@@ -4,13 +4,17 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2020-08-20
+* Change the processing structure of the ResolveUIAttribute.
+* Rename path from UIDataBind to DataBind.
+
 ## [1.0.3] - 2020-08-16
 * Add ui Component data bind system.
-* Change bind type 'UIBehaviour' to 'Component'.
+* Change bind type from 'UIBehaviour' to 'Component'.
 
 ## [1.0.2] - 2020-08-08
 * All base frame sources load from github.
-* change 'GlobalText' namespace to 'Localization'.
+* change namespace from 'GlobalText' to 'Localization'.
 * separate tsv source with 'TableData' and 'Localization'.
 
 ## [1.0.1] - 2020-07-01

@@ -12,6 +12,13 @@ namespace KKSFramework.DataBind
         [ResolveUI("ScoreText")]
         private Text _scoreText;
 
+        [ResolveUI("ScoreTexts")]
+        private Text[] _texts;
+
+        [ResolveUI("Images")]
+        private Image[] _images;
+
+        [ResolveUI("Button")]
         private Button _button;
         
 #pragma warning restore CS0649
@@ -24,6 +31,12 @@ namespace KKSFramework.DataBind
         private void Start ()
         {
             _scoreText.text = "Good";
+            _texts[0].text = "haha";
+            _button.onClick.AddListener (() =>
+            {
+                _images[0].color = Color.red;
+            });
+            Debug.Log (_texts.Length);
         }
 
         #endregion

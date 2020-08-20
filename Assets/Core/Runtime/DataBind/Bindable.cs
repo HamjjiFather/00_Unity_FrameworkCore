@@ -1,12 +1,18 @@
-using System;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 namespace KKSFramework.DataBind
 {
-    [RequireComponent(typeof(UIBehaviour))]
-    public class BindableComponent : MonoBehaviour, IDisposable
+    public abstract class Bindable : MonoBehaviour
     {
+        #region Fields & Property
+        
+        /// <summary>
+        /// 구분 키 값.
+        /// </summary>
+        [SerializeField]
+        protected string containerPath = string.Empty;
+        public string ContainerPath => containerPath;
+
         /// <summary>
         /// 컨테이너.
         /// </summary>
@@ -29,46 +35,53 @@ namespace KKSFramework.DataBind
             }
             private set => _targetContext = value;
         }
+
+        public abstract object TargetComponent
+        {
+            get;
+        }
         
-        /// <summary>
-        /// 구분 키 값.
-        /// </summary>
-        [SerializeField]
-        protected string containerPath = string.Empty;
-        
-        /// <summary>
-        /// 타겟이 되는 컴포넌트.
-        /// </summary>
-        [SerializeField]
-        protected Component targetComponent;
+#pragma warning disable CS0649
+
+#pragma warning restore CS0649
+
+        #endregion
 
 
         #region UnityMethods
 
-        private void Awake ()
+        protected virtual void Awake ()
         {
-            TargetContext.AddComponent (containerPath, targetComponent);
+            
         }
-
 
         private void Reset ()
         {
             containerPath = containerPath.Equals (string.Empty) ? gameObject.name : containerPath;
         }
         
-        
         private void OnDestroy ()
         {
             Dispose ();
         }
         
+
         #endregion
 
+
+        #region Methods
         
-        public void Dispose ()
+        public virtual void Dispose ()
         {
             TargetContext = null;
-            targetComponent = null;
+            
         }
+
+        #endregion
+
+
+        #region EventMethods
+
+        #endregion
     }
 }
