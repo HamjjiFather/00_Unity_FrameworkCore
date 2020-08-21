@@ -4,6 +4,25 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2020-08-22
+### Added
+* [GameObjectArrayBind] class replaces the removed [ArrayBind] class.
+* Process of convert to component array value from bound game object array.
+* Use value name as Key when use empty [ResolverAttribute] constructor.
+* Add public access modifier at field targets that using [ResolverAttribute].
+
+### Changed
+* Rename some classes for exact purpose.
+* Find [Context] component in only parents game object.
+* Bindable target type has Changed from [Component] to [Object].
+* 
+
+### Removed
+* Remove [(Text, Image, RawImage)ArrayBind] class.
+
+## [1.0.5] - 2020-08-21
+* Change find a way Context in 'Bindable' class.
+
 ## [1.0.4] - 2020-08-20
 * Change the processing structure of the ResolveUIAttribute.
 * Rename path from UIDataBind to DataBind.

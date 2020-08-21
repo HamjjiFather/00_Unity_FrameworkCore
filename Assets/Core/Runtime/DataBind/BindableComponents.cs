@@ -2,7 +2,7 @@
 
 namespace KKSFramework.DataBind
 {
-    public class BindableComponents<T> : Bindable where T : Component
+    public class BindableComponents<T> : Bindable where T : Object
     {
         /// <summary>
         /// 타겟이 되는 컴포넌트.
@@ -13,11 +13,6 @@ namespace KKSFramework.DataBind
         public override object TargetComponent => targetComponents;
 
 
-        #region UnityMethods
-        
-        #endregion
-
-        
         public override void Dispose ()
         {
             base.Dispose ();

@@ -46,11 +46,11 @@ namespace KKSFramework.DataBind
 
         private bool CheckRunnableState ()
         {
-            var classes = GetComponents<IBinder> ();
+            var classes = GetComponents<IResolveTarget> ();
             var result = classes.Any ();
             if (!result)
             {
-                Debug.LogWarning ($"[{nameof (Context)}] There is no 'IResolve' component in this game object.");
+                Debug.LogWarning ($"[{nameof (Context)}] There is no 'IResolveTarget' component in this game object.");
             }
 
             return classes.Any ();
@@ -60,49 +60,100 @@ namespace KKSFramework.DataBind
         /// <summary>
         /// 바인딩된 컴포넌트를 할당한다. 
         /// </summary>
-        public void Resolve (bool isForce = false)
+        private void Resolve (bool isForce = false)
         {
             if (CheckRunnableState () && !_isResolved || isForce)
             {
                 var bindingComps = GetComponentsInChildren<Bindable> ().Where (x => x.TargetContext.Equals (this));
 
-                var binderClass = GetComponent<IBinder> ();
+                var binderClass = GetComponent<IResolveTarget> ();
                 var fields = binderClass
                     .GetType ()
-                    .GetFields (BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Where (x => x.HasAttribute<ResolveUIAttribute> ());
+                    .GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                    .Where (x => x.HasAttribute<ResolverAttribute> ());
 
                 fields.Foreach (field =>
                 {
-                    var attribute = field.GetCustomAttribute<ResolveUIAttribute> (true);
-                    var bindingComp = bindingComps.Single (x => x.ContainerPath.Equals (attribute.Key));
-                    AddComponent (attribute.Key, bindingComp.TargetComponent);
-                    field.SetValue (binderClass, bindingComp.TargetComponent);
+                    var attribute = field.GetCustomAttribute<ResolverAttribute> (true);
+                    var attributeKey = string.IsNullOrEmpty (attribute.Key) ? field.Name : attribute.Key;
+                    var targetComp = Container.ContainsKey (attributeKey)
+                        ? Container[attributeKey]
+                        : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).TargetComponent;
+
+                    // target component is GameObject Array type.
+                    if (targetComp is GameObject[] gameObjects)
+                    {
+                        var fieldType = field.FieldType;
+                        if (!fieldType.HasElementType)
+                        {
+                            Debug.Log ($"resolve target field type is not array type {fieldType}");
+                            return;
+                        }
+
+                        var elementType = fieldType.GetElementType ();
+                        var components = gameObjects.Select (x => x.GetComponent (elementType))
+                            .ToArray ();
+                        var elementArray = Array.CreateInstance (elementType, gameObjects.Length);
+                        components.Foreach ((c, i) => { elementArray.SetValue (c, i); });
+                        AddComponent (attributeKey, gameObjects);
+                        field.SetValue (binderClass, elementArray);
+                        return;
+                    }
+
+                    AddComponent (attributeKey, targetComp);
+                    field.SetValue (binderClass, targetComp);
                 });
             }
 
             _isResolved = true;
         }
-
-
-        public void AddComponent (string key, object target)
-        {
-            Container.Add (key, target);
-        }
-
-
-        public object Resolve (string key, Type type)
+        
+        
+        /// <summary>
+        /// Manually Resolve.
+        /// </summary>
+        public object Resolve (string key)
         {
             if (Vaildate (key))
             {
-                return Convert.ChangeType (Container[key], type);
+                return Container[key];
             }
 
-            Debug.Log ($"No UIBehaviour component named {key}.");
+            Debug.Log ($"There is no bindable source: {key}.");
             return default;
         }
 
 
+        /// <summary>
+        /// Manually Resolve with Convert to Generic type.
+        /// </summary>
+        public T Resolve<T> (string key)
+        {
+            if (Vaildate (key))
+            {
+                return (T) Container[key];
+            }
+
+            Debug.Log ($"There is no bindable source: {key}.");
+            return default;
+        }
+
+
+        /// <summary>
+        /// Add Component.
+        /// </summary>
+        public void AddComponent (string key, object target)
+        {
+            if (Container.ContainsKey (key))
+                return;
+
+            Container.Add (key, target);
+        }
+
+
+        /// <summary>
+        /// Has contained key.
+        /// </summary>
         public bool Vaildate (string key)
         {
             return Container.ContainsKey (key);

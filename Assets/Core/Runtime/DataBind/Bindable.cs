@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace KKSFramework.DataBind
 {
@@ -22,14 +23,14 @@ namespace KKSFramework.DataBind
             get
             {
                 if (_targetContext != null) return _targetContext;
-                var containerInParents = GetComponentInParent<Context> ();
+                var containerInParents = GetComponentsInParent<Context> ().First(x => x.gameObject != gameObject);
                 if (containerInParents == null)
                 {
-                    Debug.LogError ("No parents 'Context' Component to bind");
+                    Debug.LogError ("there is no 'Context' component in parents object to bind");
                     return default;
                 }
 
-                _targetContext = GetComponentInParent<Context> ();
+                _targetContext = containerInParents;
 
                 return _targetContext;
             }
@@ -49,11 +50,6 @@ namespace KKSFramework.DataBind
 
 
         #region UnityMethods
-
-        protected virtual void Awake ()
-        {
-            
-        }
 
         private void Reset ()
         {

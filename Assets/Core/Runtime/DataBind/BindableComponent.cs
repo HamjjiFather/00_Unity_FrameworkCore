@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace KKSFramework.DataBind
 {
@@ -9,7 +10,7 @@ namespace KKSFramework.DataBind
         /// 타겟이 되는 컴포넌트.
         /// </summary>
         [SerializeField]
-        protected Component targetComponent;
+        protected Object targetComponent;
 
         public override object TargetComponent => targetComponent;
 

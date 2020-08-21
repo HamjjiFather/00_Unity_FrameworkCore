@@ -22,12 +22,12 @@ namespace KKSFramework.Editor
         /// <summary>
         /// 필드 인포.
         /// </summary>
-        private List<FieldInfo> list_property_infos;
+        private List<FieldInfo> _listPropertyInfos;
 
         /// <summary>
         /// 상속 여부.
         /// </summary>
-        private bool is_inheritance;
+        private bool _isInheritance;
 
         #endregion
 
@@ -37,20 +37,20 @@ namespace KKSFramework.Editor
         protected override void OnEnable ()
         {
             base.OnEnable ();
-            is_inheritance = !target.GetType ().Name.Equals (typeof (ButtonExtension).Name);
-            if (is_inheritance)
-                list_property_infos = target.GetType ().GetFields ().ToList ().FindAll (x =>
-                    !x.DeclaringType.Name.Equals (typeof (ButtonExtension).Name) &&
+            _isInheritance = !target.GetType ().Name.Equals (nameof (ButtonExtension));
+            if (_isInheritance)
+                _listPropertyInfos = target.GetType ().GetFields ().ToList ().FindAll (x =>
+                    !x.DeclaringType.Name.Equals (nameof (ButtonExtension)) &&
                     x.DeclaringType.Name.Equals (target.GetType ().Name));
         }
 
         public override void OnInspectorGUI ()
         {
-            if (is_inheritance)
-                if (list_property_infos.Count != 0)
-                    for (var i = 0; i < list_property_infos.Count; i++)
+            if (_isInheritance)
+                if (_listPropertyInfos.Count != 0)
+                    foreach (var t in _listPropertyInfos)
                     {
-                        EditorGUILayout.PropertyField (serializedObject.FindProperty (list_property_infos[i].Name));
+                        EditorGUILayout.PropertyField (serializedObject.FindProperty (t.Name));
                         serializedObject.ApplyModifiedProperties ();
                     }
 

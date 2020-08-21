@@ -2,18 +2,22 @@ using System;
 
 namespace KKSFramework.DataBind
 {
-    public interface IBinder
+    public interface IResolveTarget
     {
         
     }
     
-    
     [AttributeUsage(AttributeTargets.Field)]
-    public class ResolveUIAttribute : Attribute
+    public class ResolverAttribute : Attribute
     {
         public readonly string Key;
 
-        public ResolveUIAttribute (string key)
+        public ResolverAttribute ()
+        {
+            
+        }
+        
+        public ResolverAttribute (string key)
         {
             Key = key;
         }
