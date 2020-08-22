@@ -64,7 +64,8 @@ namespace KKSFramework.DataBind
         {
             if (CheckRunnableState () && !_isResolved || isForce)
             {
-                var bindingComps = GetComponentsInChildren<Bindable> ().Where (x => x.TargetContext.Equals (this));
+                var bindingComps = GetComponentsInChildren<Bindable> (true)
+                    .Where (x => x.TargetContext.Equals (this));
 
                 var binderClass = GetComponent<IResolveTarget> ();
                 var fields = binderClass
@@ -97,7 +98,7 @@ namespace KKSFramework.DataBind
                             field.SetValue (binderClass, gameObjects);
                             return;
                         }
-                        
+
                         var components = gameObjects.Select (x => x.GetComponent (elementType))
                             .ToArray ();
                         var elementArray = Array.CreateInstance (elementType, gameObjects.Length);
@@ -114,8 +115,8 @@ namespace KKSFramework.DataBind
 
             _isResolved = true;
         }
-        
-        
+
+
         /// <summary>
         /// Manually Resolve.
         /// </summary>

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 * Pass GetComponent process if element type is [GameObject] type in game object array type.
+* Context also find [Bindable] component in inactive children.
 
 ### Removed
 * Remove [(Text, Image, RawImage)ArrayBind] class.
