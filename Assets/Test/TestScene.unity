@@ -1912,7 +1912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e7ecaf1736f5824e8af8b10794d7b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  containerPath: ScoreTexts
+  containerPath: _textObj
   targetComponents:
   - {fileID: 1656904695}
   - {fileID: 794381455}

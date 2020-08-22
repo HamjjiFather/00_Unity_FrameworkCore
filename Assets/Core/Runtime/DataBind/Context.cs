@@ -91,6 +91,13 @@ namespace KKSFramework.DataBind
                         }
 
                         var elementType = fieldType.GetElementType ();
+                        if (elementType == typeof (GameObject))
+                        {
+                            AddComponent (attributeKey, gameObjects);
+                            field.SetValue (binderClass, gameObjects);
+                            return;
+                        }
+                        
                         var components = gameObjects.Select (x => x.GetComponent (elementType))
                             .ToArray ();
                         var elementArray = Array.CreateInstance (elementType, gameObjects.Length);

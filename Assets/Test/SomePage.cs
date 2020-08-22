@@ -15,10 +15,8 @@ public class SomePage : MonoBehaviour, IResolveTarget
     [Resolver]
     private Text _scoreText;
 
-    [Resolver ("ScoreTexts")]
-    private Text[] _texts;
-
-    private Button[] _textButtons;
+    [Resolver]
+    private GameObject[] _textObj;
 
     [Resolver ("Elements")]
     private SomeElement[] _someElement;
@@ -32,14 +30,8 @@ public class SomePage : MonoBehaviour, IResolveTarget
 
     private void Start ()
     {
-        _textButtons = context.Resolve<GameObject[]> ("ScoreTexts").Select (x => x.GetComponent<Button> ()).ToArray ();
-        
-        _scoreText.text = "Good";
-        _texts[0].text = "haha";
-        _textButtons[0].onClick.AddListener (() =>
-        {
-            _textButtons[0].gameObject.SetActive (false);
-        });
+        Debug.Log (_textObj.Length);
+        _textObj[0].name = "ASD";
         _someElement.Foreach (x => x.Debug ());
     }
 

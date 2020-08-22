@@ -15,7 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Rename some classes for exact purpose.
 * Find [Context] component in only parents game object.
 * Bindable target type has Changed from [Component] to [Object].
-* 
+
+### Fixed
+* Pass GetComponent process if element type is [GameObject] type in game object array type.
 
 ### Removed
 * Remove [(Text, Image, RawImage)ArrayBind] class.
