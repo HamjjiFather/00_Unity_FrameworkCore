@@ -9,7 +9,7 @@ namespace KKSFramework.Localization
 		public string Id;
 
 		// 글로벌 텍스트.
-		public string[] GlobalTexts;
+		public string[] LocalizationItems;
 
 
 		public LocalizingText ()
@@ -21,7 +21,7 @@ namespace KKSFramework.Localization
 		{
 			var rowIndex = 0;
 			Id = myData[rowIndex++];
-			GlobalTexts = myData[rowIndex++].Split ('/');
+			LocalizationItems = myData[rowIndex++].Split ('/');
 		}
 	}
 }

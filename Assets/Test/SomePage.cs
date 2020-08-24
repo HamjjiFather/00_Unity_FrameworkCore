@@ -1,6 +1,8 @@
 using System.Linq;
 using KKSFramework;
 using KKSFramework.DataBind;
+using KKSFramework.Localization;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +32,11 @@ public class SomePage : MonoBehaviour, IResolveTarget
 
     private void Start ()
     {
+        // _scoreText.text = LocalizationTextManager.Instance.LanguageChangeCommand.Subscribe(_ =>
+        // {
+        //     LocalizationTextManager.Instance.GetTranslatedString ()
+        // });
+        
         Debug.Log (_textObj.Length);
         _textObj[0].name = "ASD";
         _someElement.Foreach (x => x.Debug ());
