@@ -12,12 +12,17 @@ namespace KKSFramework.Navigation
 
         #endregion
 
+        
+        protected virtual void Awake ()
+        {
+            popupOption.InitializePopupOption (ClickClose);
+        }
 
+        
         #region EventMethods
 
         protected override UniTask OnPush (object pushValue = null)
         {
-            popupOption.InitializePopupOption (ClickClose);
             return base.OnPush (pushValue);
         }
 
