@@ -73,10 +73,19 @@ namespace KKSFramework.DataBind
                     .GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where (x => x.HasAttribute<ResolverAttribute> ());
 
+#if BF_DEBUG
+                var thisObj = gameObject;
+                Debug.Log ($"The result quantity of binding requests in the {thisObj.name} GameObject is {fields.Count()}", thisObj);
+#endif
+
                 fields.Foreach (field =>
                 {
                     var attribute = field.GetCustomAttribute<ResolverAttribute> (true);
                     var attributeKey = string.IsNullOrEmpty (attribute.Key) ? field.Name : attribute.Key;
+#if BF_DEBUG
+                    Debug.Log ($"resolve request {attributeKey} in {thisObj.name} GameObject", thisObj);
+#endif
+
                     var targetComp = Container.ContainsKey (attributeKey)
                         ? Container[attributeKey]
                         : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).TargetComponent;
@@ -87,7 +96,9 @@ namespace KKSFramework.DataBind
                         var fieldType = field.FieldType;
                         if (!fieldType.HasElementType)
                         {
-                            Debug.Log ($"resolve target field type is not array type {fieldType}");
+#if BF_DEBUG
+                            Debug.LogError ($"resolve target field type has not array type {fieldType} in {thisObj.name} GameObject", thisObj);
+#endif
                             return;
                         }
 

@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 * Simplified translation system structure.
 
+### Fixed
+* Find [TargetContext] component in inactive parents at [Bindable] class.
+* Fix [LocalizingComponentForText] class name.
+
 ## [1.0.6] - 2020-08-22
 ### Added
 * [GameObjectArrayBind] class replaces the removed [ArrayBind] class.
@@ -22,7 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 * Pass GetComponent process if element type is [GameObject] type in game object array type.
-* Context also find [Bindable] component in inactive children.
+* Find [Bindable] component in inactive children at [Context] class.
 
 ### Removed
 * Remove [(Text, Image, RawImage)ArrayBind] class.
