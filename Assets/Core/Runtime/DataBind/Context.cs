@@ -60,7 +60,7 @@ namespace KKSFramework.DataBind
         /// <summary>
         /// 바인딩된 컴포넌트를 할당한다. 
         /// </summary>
-        private void Resolve (bool isForce = false)
+        public void Resolve (bool isForce = false)
         {
             if (CheckRunnableState () && !_isResolved || isForce)
             {
