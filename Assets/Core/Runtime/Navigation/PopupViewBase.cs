@@ -30,14 +30,12 @@ namespace KKSFramework.Navigation
         {
             await popupOption.ShowAsync (CancellationToken);
             await base.OnShow ();
-            Showed ();
         }
 
         protected override async UniTask OnHide ()
         {
             await popupOption.HideAsync (CancellationToken);
             await base.OnHide ();
-            Hid ();
         }
 
 
