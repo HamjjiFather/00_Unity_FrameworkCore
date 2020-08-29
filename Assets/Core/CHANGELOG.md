@@ -4,7 +4,16 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.7] - 2020-08-25
+## [1.2.0] - 2020-08-30 (Property Binding System : DataBind)
+### Added
+* Add property and properties bind system on data bind.
+    * base value type: boolean, int, string, float.
+    * ui value type: [Text].text, [Image].image, [RawImage].texture, [Graphic].color.
+
+### Change
+* BaseFrame.Editor.asmdef contains only editor platforms.
+
+## [1.1.1] - 2020-08-25
 ### Changed
 * Simplified translation system structure.
 
@@ -12,17 +21,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Find [TargetContext] component in inactive parents at [Bindable] class.
 * Fix [LocalizingComponentForText] class name.
 
-## [1.0.6] - 2020-08-22
+## [1.1.0] - 2020-08-22 (Component Binding System : DataBind)
 ### Added
 * [GameObjectArrayBind] class replaces the removed [ArrayBind] class.
 * Process of convert to component array value from bound game object array.
 * Use value name as Key when use empty [ResolverAttribute] constructor.
 * Add public access modifier at field targets that using [ResolverAttribute].
+* Add ui Component data bind system.
+* Change bind type from 'UIBehaviour' to 'Component'.
 
 ### Changed
 * Rename some classes for exact purpose.
 * Find [Context] component in only parents game object.
 * Bindable target type has Changed from [Component] to [Object].
+* Change find a way Context in 'Bindable' class.
+* Change the processing structure of the ResolveUIAttribute.
+* Rename path from UIDataBind to DataBind.
 
 ### Fixed
 * Pass GetComponent process if element type is [GameObject] type in game object array type.
@@ -30,17 +44,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 * Remove [(Text, Image, RawImage)ArrayBind] class.
-
-## [1.0.5] - 2020-08-21
-* Change find a way Context in 'Bindable' class.
-
-## [1.0.4] - 2020-08-20
-* Change the processing structure of the ResolveUIAttribute.
-* Rename path from UIDataBind to DataBind.
-
-## [1.0.3] - 2020-08-16
-* Add ui Component data bind system.
-* Change bind type from 'UIBehaviour' to 'Component'.
 
 ## [1.0.2] - 2020-08-08
 * All base frame sources load from github.
@@ -58,7 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Area => 하나의 데이터 모델을 가지고 보여지는 작은 구성단위.
 * Element => View에서 중복된 구조의 정보를 보여주기 위한 최소 구성단위.
 
-## [1.0.0] - 2020-06-01
+## [1.0.0] - Pre Versioning
 * Popup 공통 애니메이션 추가.
 * 전체 사이즈 변경 팝업 애니메이션.
 * 세로 사이즈 변경 팝업 애니메이션.

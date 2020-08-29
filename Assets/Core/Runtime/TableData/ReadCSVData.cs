@@ -29,7 +29,7 @@ namespace KKSFramework.TableData
             {
                 var datas = csvEnum.Current?.ToString ();
                 if (string.IsNullOrEmpty (datas)) continue;
-                var tempListValues = datas.Split ('\t').ToList ();
+                var tempListValues = datas.Split ('\t').Select (x => x.Replace ("\r", "")).ToList ();
                 var dataBase = new T ();
                 dataBase.SetData (tempListValues);
                 csvDataBases.Add (dataBase);

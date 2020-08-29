@@ -15,7 +15,20 @@ namespace KKSFramework
         /// <summary>
         /// 이 오브젝트에 캐시된 컴포넌트 딕셔너리.
         /// </summary>
-        private readonly Dictionary<Type, Component> _cachedComponentDict = new Dictionary<Type, Component> ();
+        private Dictionary<Type, Component> _cachedComponentDict;
+
+        public Dictionary<Type, Component> CachedComponentDict
+        {
+            get
+            {
+                if (_cachedComponentDict == null)
+                {
+                    _cachedComponentDict = new Dictionary<Type, Component> ();
+                }
+
+                return _cachedComponentDict;
+            }
+        }
 
         #endregion
 
@@ -29,8 +42,8 @@ namespace KKSFramework
         /// <returns></returns>
         public Component GetCachedComponent (Type type)
         {
-            _cachedComponentDict.TryGetValue (type, out var tempComponent);
-            return tempComponent ? tempComponent : _cachedComponentDict[type] = GetComponent (type);
+            CachedComponentDict.TryGetValue (type, out var tempComponent);
+            return tempComponent ? tempComponent : CachedComponentDict[type] = GetComponent (type);
         }
 
         /// <summary>
@@ -41,8 +54,8 @@ namespace KKSFramework
         public Component AddCachedComponent (Type type)
         {
             var tempComponent = gameObject.AddComponent (type);
-            _cachedComponentDict.Add (type, tempComponent);
-            return tempComponent ? tempComponent : _cachedComponentDict[type] = GetComponent (type);
+            CachedComponentDict.Add (type, tempComponent);
+            return tempComponent ? tempComponent : CachedComponentDict[type] = GetComponent (type);
         }
 
         /// <summary>

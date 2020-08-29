@@ -12,7 +12,7 @@
 //     {
 //         #region Fields & Property
 //
-//         public override TextMeshPro TargetComponent => GetCachedComponent<TextMeshPro> ();
+//         public override TextMeshPro BindTarget => GetCachedComponent<TextMeshPro> ();
 //
 // #pragma warning disable CS0649
 //
@@ -35,7 +35,7 @@
 //
 //         public override void ChangeText (string translatedString)
 //         {
-//             TargetComponent.text = translatedString;
+//             BindTarget.text = translatedString;
 //         }
 //
 //         #endregion

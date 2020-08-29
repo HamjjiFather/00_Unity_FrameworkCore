@@ -1,10 +1,5 @@
-using System.Linq;
-using KKSFramework;
 using KKSFramework.DataBind;
-using KKSFramework.Localization;
-using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SomePage : MonoBehaviour, IResolveTarget
 {
@@ -12,16 +7,14 @@ public class SomePage : MonoBehaviour, IResolveTarget
 
     public Context context;
 
+    public Sprite sprite;
 #pragma warning disable CS0649
+    
+    [Resolver]
+    private Property<string> _strings;
 
     [Resolver]
-    private Text _scoreText;
-
-    [Resolver]
-    private GameObject[] _textObj;
-
-    [Resolver ("Elements")]
-    private SomeElement[] _someElement;
+    private Property<Color> _colors;
 
 #pragma warning restore CS0649
 
@@ -32,20 +25,19 @@ public class SomePage : MonoBehaviour, IResolveTarget
 
     private void Start ()
     {
-        // _scoreText.text = LocalizationTextManager.Instance.LanguageChangeCommand.Subscribe(_ =>
-        // {
-        //     LocalizationTextManager.Instance.GetTranslatedString ()
-        // });
-        
-        Debug.Log (_textObj.Length);
-        _textObj[0].name = "ASD";
-        _someElement.Foreach (x => x.Debug ());
+        _colors.Value = Color.red;
     }
 
     #endregion
 
 
     #region Methods
+
+    public void ChangeString (string value)
+    {
+        _strings.Value = value;
+    }
+    
 
     #endregion
 
