@@ -111,7 +111,7 @@ namespace KKSFramework.Navigation
         /// </summary>
         public override void InitManager ()
         {
-            EscapeEventManager.Instance.AddEscapeEvent (() => GoBackPage ().Forget ());
+            EscapeEventManager.Instance.SetEscapeEvent (() => GoBackPage ().Forget ());
         }
 
 

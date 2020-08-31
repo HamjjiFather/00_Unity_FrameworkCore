@@ -7,12 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.2.1] - 2020-08-30
 ### Added
 * Add [NavigationComponent] prefab from Base Project to Core.
+* Add Hooking action in [EscapeEventManager] class.
 
 ### Change
 * Root [Canvas], [EventSystem] declare in [NavigationComponent].
 * Change to binding system [NavigationComponent] reference.
 * Separate Core folder Scripts and Prefab.
-* Change Popup's push and pop process in [NavigtaionManager]  
+* Change Popup's push and pop process in [NavigationManager]
 
 ## [1.2.0] - 2020-08-30 (Property Binding System : DataBind)
 ### Added

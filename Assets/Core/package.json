@@ -2,7 +2,7 @@
   "name": "com.rhkdtjq0390.baseframe",
   "displayName": "Base framework",
   "description": "Base framework for Unity3d.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "unity": "2020.1",
   "unityRelease": "2f1",
   "dependencies": {}

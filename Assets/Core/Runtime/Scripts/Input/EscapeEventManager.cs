@@ -2,59 +2,101 @@
 using KKSFramework.Management;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace KKSFramework.InputEvent
 {
     /// <summary>
-    /// 안드로이드의 경우 ESC 버튼 이벤트 관리 클래스.
+    /// Managing to 'esc' button event on pc and android platforms.
     /// </summary>
-    public class EscapeEventManager : ManagerBase<EscapeEventManager>
+    public sealed class EscapeEventManager : ManagerBase<EscapeEventManager>
     {
         /// <summary>
-        /// Escape 이벤트.
+        /// normal esc action.
         /// </summary>
-        private UnityAction _escapeAction;
+        private Action _escapeAction;
 
         /// <summary>
-        /// 이벤트 구독.
+        /// hooked esc action.
         /// </summary>
-        private IDisposable _escapeSubscribe;
+        private Action _hookedEscapeAction;
 
         /// <summary>
-        /// Escape 이벤트 동작 여부.
+        /// escape event action.
         /// </summary>
-        private bool _isActiveEvent;
+        public Action EscapeAction => _hookedEscapeAction ?? _escapeAction;
 
 
-        /// <summary>
-        /// 이벤트 동작 여부 설정.
-        /// </summary>
-        public virtual void SetActiveEvent (bool active)
+        public override void InitManager ()
         {
-            _isActiveEvent = active;
+#if UNITY_ANDROID || UNITY_STANDALONE
+            Observable.EveryUpdate ()
+                .Where (x => Input.GetKeyDown (KeyCode.Escape))
+                .Subscribe (_ =>
+                {
+                    EscapeAction.Invoke ();
+                    if (_hookedEscapeAction is null)
+                        return;
+
+                    _hookedEscapeAction = null;
+                });
+#endif
+
+            base.InitManager ();
         }
+        
 
         /// <summary>
-        /// 이벤트 추가.
+        /// change normal event action.
         /// </summary>
-        public virtual void AddEscapeEvent (UnityAction action)
+        [Obsolete("This method will be obsoleted. Therefore use SetEscapeEvent method instead of this")]
+        public void AddEscapeEvent (Action action)
         {
 #if UNITY_ANDROID || UNITY_STANDALONE
             _escapeAction = action;
-            _escapeSubscribe = Observable.EveryUpdate ()
-                .Where (x => Input.GetKeyDown ("escape"))
-                .Subscribe (_ => { _escapeAction?.Invoke (); });
+#endif
+        }
+        
+        
+        /// <summary>
+        /// change normal event action.
+        /// </summary>
+        public void SetEscapeEvent (Action action)
+        {
+#if UNITY_ANDROID || UNITY_STANDALONE
+            _escapeAction = action;
 #endif
         }
 
+        
         /// <summary>
-        /// 이벤트 삭제.
+        /// hooking event action.
         /// </summary>
-        public virtual void RemoveEscapeEvent ()
+        public void SetHookingEscapeEvent (Action hookingAction)
+        {
+#if UNITY_ANDROID || UNITY_STANDALONE
+            _hookedEscapeAction = hookingAction;
+#endif
+        }
+
+        
+        /// <summary>
+        /// remove normal escape event.
+        /// </summary>
+        public void RemoveEscapeEvent ()
         {
 #if UNITY_ANDROID || UNITY_STANDALONE
             _escapeAction = null;
+#endif
+        }
+        
+        
+        /// <summary>
+        /// remove hooking escape event.
+        /// </summary>
+        public void RemoveHookingEscapeEvent ()
+        {
+#if UNITY_ANDROID || UNITY_STANDALONE
+            _hookedEscapeAction = null;
 #endif
         }
     }
