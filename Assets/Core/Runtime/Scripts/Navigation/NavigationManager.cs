@@ -219,8 +219,8 @@ namespace KKSFramework.Navigation
         {
             var popup = await CreatePopup (viewString);
             var lastPage = _pageInfoStack.Peek ();
-            await popup.Push (pushValue);
             lastPage.PageViewBase.RegistPopup (popup);
+            await popup.Push (pushValue);
         }
 
         /// <summary>
@@ -262,10 +262,9 @@ namespace KKSFramework.Navigation
                     if (!IsExistLastNavInfo ())
                         break;
 
-                    await ShowTransitionViewAsync ();
-
                     if (await navigationInfo.PageViewBase.CloseLastPopup () == false)
                     {
+                        await ShowTransitionViewAsync ();
                         await navigationInfo.PageViewBase.Pop ();
                         _pageInfoStack.Pop ();
 
@@ -273,12 +272,11 @@ namespace KKSFramework.Navigation
                         nextNavInfo.PageViewBase.transform.SetParent (_navigationComponent.PageParents);
                         nextNavInfo.PageViewBase.ToForeground ().Forget ();
                         nextNavInfo.PageViewBase.Unpooled ();
+                        await HideTransitionViewAsync ();
                     }
 
                     PageCount.Value = _pageInfoStack.Count;
                     LastPageType.Value = navigationInfo.ViewTypeName;
-
-                    await HideTransitionViewAsync ();
 
                     break;
 
