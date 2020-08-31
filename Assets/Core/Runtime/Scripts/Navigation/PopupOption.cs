@@ -1,32 +1,53 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using KKSFramework.DataBind;
+using KKSFramework.UI;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace KKSFramework.Navigation
 {
-    public class PopupOption : ViewOption
+    public class PopupOption : ViewOption, IResolveTarget
     {
-        public Button bgButton;
+        #region Fields & Property
 
-        public Button closeButton;
+#pragma warning disable CS0649
+        
+        [Resolver]
+        private ButtonExtension _bgButton;
+        
+        public ButtonExtension BgButton => _bgButton;
+        
 
-        public ViewEffector viewEffector;
+        [Resolver]
+        private ButtonExtension _closeButton;
+        
+        public ButtonExtension CloseButton => _closeButton;
+        
+
+        [Resolver]
+        private ViewEffector _viewEffector;
+
+        public ViewEffector ViewEffector => _viewEffector;
+
+#pragma warning restore CS0649
+
+        #endregion
+       
 
         public void InitializePopupOption (UnityAction closeAction)
         {
-            bgButton.onClick.AddListener (closeAction);
-            closeButton.onClick.AddListener (closeAction);
+            BgButton.onClick.AddListener (closeAction);
+            CloseButton.onClick.AddListener (closeAction);
         }
 
         public async UniTask ShowAsync (CancellationToken ct = default)
         {
-            await viewEffector.ShowAsync (ct);
+            await ViewEffector.ShowAsync (ct);
         }
 
         public async UniTask HideAsync (CancellationToken ct = default)
         {
-            await viewEffector.HideAsync (ct);
+            await ViewEffector.HideAsync (ct);
         }
     }
 }

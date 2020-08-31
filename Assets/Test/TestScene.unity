@@ -1673,7 +1673,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 893679499}
-  - component: {fileID: 893679501}
+  - component: {fileID: 893679502}
   - component: {fileID: 893679500}
   m_Layer: 5
   m_Name: AContext
@@ -1722,11 +1722,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 893679498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b79eb51b6ff47cd9fb95df1f4e71705, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f79e91aa9d143d7b922e0443d0dfdd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoRun: 1
---- !u!114 &893679501
+  sprite: {fileID: 0}
+--- !u!114 &893679502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1735,11 +1735,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 893679498}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f79e91aa9d143d7b922e0443d0dfdd9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b79eb51b6ff47cd9fb95df1f4e71705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  context: {fileID: 893679500}
-  sprite: {fileID: 21300000, guid: d83425f855a39bc4ba1a8bde8c7e7f00, type: 3}
+  autoRun: 1
 --- !u!1 &912778074
 GameObject:
   m_ObjectHideFlags: 0
@@ -2015,7 +2014,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 893679501}
+      - m_Target: {fileID: 893679500}
         m_TargetAssemblyTypeName: SomePage, Assembly-CSharp
         m_MethodName: ChangeString
         m_Mode: 0
@@ -2825,12 +2824,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containerPath: _strings
   targetComponents:
-  - {fileID: 622342709}
-  - {fileID: 1122389131}
-  - {fileID: 1813118756}
-  - {fileID: 1545298572}
-  propertyName: name
-  targetComponent: {fileID: 622342709}
+  - {fileID: 622342710}
+  - {fileID: 1122389132}
+  - {fileID: 1813118757}
+  - {fileID: 1545298573}
+  propertyName: text
+  targetComponent: {fileID: 622342710}
 --- !u!1 &1737851673
 GameObject:
   m_ObjectHideFlags: 0

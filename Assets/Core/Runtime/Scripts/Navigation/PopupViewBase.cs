@@ -1,24 +1,36 @@
 ﻿using Cysharp.Threading.Tasks;
+using KKSFramework.DataBind;
 using UnityEngine;
 
 namespace KKSFramework.Navigation
 {
+    [RequireComponent (typeof (Context))]
     [RequireComponent (typeof (PopupOption))]
-    public class PopupViewBase : ViewBase
+    public class PopupViewBase : ViewBase, IResolveTarget
     {
         #region Fields & Property
 
-        private PopupOption popupOption => GetCachedComponent<PopupOption> ();
+        private PopupOption PopupOption => GetCachedComponent<PopupOption> ();
 
         #endregion
 
-        
+
         protected virtual void Awake ()
         {
-            popupOption.InitializePopupOption (ClickClose);
+            PopupOption.InitializePopupOption (ClickClose);
         }
 
         
+        private void Reset ()
+        {
+            if (!GetComponent<Context> ())
+                gameObject.AddComponent<Context> ();
+
+            if (!GetComponent<PageOption> ())
+                gameObject.AddComponent<PopupOption> ();
+        }
+
+
         #region EventMethods
 
         protected override UniTask OnPush (object pushValue = null)
@@ -28,20 +40,20 @@ namespace KKSFramework.Navigation
 
         protected override async UniTask OnShow ()
         {
-            await popupOption.ShowAsync (CancellationToken);
+            await PopupOption.ShowAsync (CancellationToken);
             await base.OnShow ();
         }
 
         protected override async UniTask OnHide ()
         {
-            await popupOption.HideAsync (CancellationToken);
+            await PopupOption.HideAsync (CancellationToken);
             await base.OnHide ();
         }
 
 
         protected virtual void ClickClose ()
         {
-            NavigationManager.Instance.GoBackPage ().Forget();
+            NavigationManager.Instance.GoBackPage ().Forget ();
         }
 
         #endregion

@@ -67,60 +67,63 @@ namespace KKSFramework.DataBind
                 var bindingComps = GetComponentsInChildren<Bindable> (true)
                     .Where (x => x.TargetContext.Equals (this));
 
-                var binderClass = GetComponent<IResolveTarget> ();
-                var fields = binderClass
-                    .GetType ()
-                    .GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                    .Where (x => x.HasAttribute<ResolverAttribute> ());
-
-#if BF_DEBUG
-                var thisObj = gameObject;
-                Debug.Log ($"The result quantity of binding requests in the {thisObj.name} GameObject is {fields.Count()}", thisObj);
-#endif
-
-                fields.Foreach (field =>
+                var binderClasses = GetComponents<IResolveTarget> ();
+                binderClasses.Foreach (binder =>
                 {
-                    var attribute = field.GetCustomAttribute<ResolverAttribute> (true);
-                    var attributeKey = string.IsNullOrEmpty (attribute.Key) ? field.Name : attribute.Key;
+                    var fields = binder.GetType ()
+                        .GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                        .Where (x => x.HasAttribute<ResolverAttribute> ());
 #if BF_DEBUG
-                    Debug.Log ($"resolve request {attributeKey} in {thisObj.name} GameObject", thisObj);
+                    var thisObj = gameObject;
+                    Debug.Log (
+                        $"The result quantity of binding requests in the {thisObj.name} GameObject is {fields.Count ()}",
+                        thisObj);
 #endif
 
-                    var targetComp = Container.ContainsKey (attributeKey)
-                        ? Container[attributeKey]
-                        : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
-
-                    // target component is GameObject Array type.
-                    if (targetComp is GameObject[] gameObjects)
+                    fields.Foreach (field =>
                     {
-                        var fieldType = field.FieldType;
-                        if (!fieldType.HasElementType)
-                        {
+                        var attribute = field.GetCustomAttribute<ResolverAttribute> (true);
+                        var attributeKey = string.IsNullOrEmpty (attribute.Key) ? field.Name : attribute.Key;
 #if BF_DEBUG
-                            Debug.LogError ($"resolve target field type has not array type {fieldType} in {thisObj.name} GameObject", thisObj);
+                        Debug.Log ($"resolve request {attributeKey} in {thisObj.name} GameObject", thisObj);
 #endif
-                            return;
-                        }
 
-                        var elementType = fieldType.GetElementType ();
-                        if (elementType == typeof (GameObject))
+                        var targetComp = Container.ContainsKey (attributeKey)
+                            ? Container[attributeKey]
+                            : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
+
+                        // target component is GameObject Array type.
+                        if (targetComp is GameObject[] gameObjects)
                         {
+                            var fieldType = field.FieldType;
+                            if (!fieldType.HasElementType)
+                            {
+#if BF_DEBUG
+                                Debug.LogError ($"resolve target field type has not array type {fieldType} in {thisObj.name} GameObject", thisObj);
+#endif
+                                return;
+                            }
+
+                            var elementType = fieldType.GetElementType ();
+                            if (elementType == typeof (GameObject))
+                            {
+                                AddComponent (attributeKey, gameObjects);
+                                field.SetValue (binder, gameObjects);
+                                return;
+                            }
+
+                            var components = gameObjects.Select (x => x.GetComponent (elementType))
+                                .ToArray ();
+                            var elementArray = Array.CreateInstance (elementType, gameObjects.Length);
+                            components.Foreach ((c, i) => { elementArray.SetValue (c, i); });
                             AddComponent (attributeKey, gameObjects);
-                            field.SetValue (binderClass, gameObjects);
+                            field.SetValue (binder, elementArray);
                             return;
                         }
 
-                        var components = gameObjects.Select (x => x.GetComponent (elementType))
-                            .ToArray ();
-                        var elementArray = Array.CreateInstance (elementType, gameObjects.Length);
-                        components.Foreach ((c, i) => { elementArray.SetValue (c, i); });
-                        AddComponent (attributeKey, gameObjects);
-                        field.SetValue (binderClass, elementArray);
-                        return;
-                    }
-
-                    AddComponent (attributeKey, targetComp);
-                    field.SetValue (binderClass, targetComp);
+                        AddComponent (attributeKey, targetComp);
+                        field.SetValue (binder, targetComp);
+                    });
                 });
             }
 

@@ -1,24 +1,44 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using KKSFramework.DataBind;
 using UnityEngine;
 
 namespace KKSFramework.Navigation
 {
+    [RequireComponent(typeof (Context))]
     [RequireComponent (typeof (PageOption))]
-    public class PageViewBase : ViewBase
+    public class PageViewBase : ViewBase, IResolveTarget
     {
         #region Fields & Property
 
+        /// <summary>
+        /// _pageOption.
+        /// </summary>
         private PageOption PageOption => GetCachedComponent<PageOption> ();
 
+        /// <summary>
+        /// Popup stack.
+        /// </summary>
         private readonly Stack<PopupViewBase> _registedPopupStack = new Stack<PopupViewBase> ();
-
+        
+        /// <summary>
+        /// Has popup.
+        /// </summary>
         public bool ExistPopup => _registedPopupStack.Count != 0;
-
+        
         #endregion
 
 
         #region UnityMethods
+
+        private void Reset ()
+        {
+            if (!GetComponent<Context> ())
+                gameObject.AddComponent<Context> ();
+
+            if (!GetComponent<PageOption> ())
+                gameObject.AddComponent<PageOption> ();
+        }
 
         #endregion
 
@@ -30,8 +50,8 @@ namespace KKSFramework.Navigation
         /// </summary>
         public void RegistPopup (PopupViewBase popupViewBase)
         {
-            popupViewBase.transform.SetParent (PageOption.popupParents);
-            popupViewBase.rectTransform.SetInstantiateTransform ();
+            popupViewBase.transform.SetParent (PageOption.PopupParents);
+            popupViewBase.RectTransform.SetInstantiateTransform ();
             _registedPopupStack.Push (popupViewBase);
         }
 

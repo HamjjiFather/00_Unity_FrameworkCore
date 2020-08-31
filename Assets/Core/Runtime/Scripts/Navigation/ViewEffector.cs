@@ -30,7 +30,7 @@ namespace KKSFramework.Navigation
         /// <summary>
         /// animation effect type.
         /// </summary>
-        public ViewEffectType viewEffectType;
+        public ViewEffectType viewEffectType = ViewEffectType.Fade;
     }
 
     [RequireComponent (typeof (CanvasGroup))]

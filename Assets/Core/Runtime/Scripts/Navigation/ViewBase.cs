@@ -12,8 +12,7 @@ namespace KKSFramework.Navigation
         /// <summary>
         /// RectTransform.
         /// </summary>
-        public RectTransform rectTransform => GetCachedComponent<RectTransform> ();
-
+        public RectTransform RectTransform => GetCachedComponent<RectTransform> ();
 
 #pragma warning disable CS0649
 
@@ -21,9 +20,14 @@ namespace KKSFramework.Navigation
 
         #endregion
 
-
+        /// <summary>
+        /// view option.
+        /// </summary>
         private ViewOption ViewOption => GetCachedComponent<ViewOption> ();
 
+        /// <summary>
+        /// cancellation token source.
+        /// </summary>
         private CancellationTokenSource _cancellationTokenSource;
 
         protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
