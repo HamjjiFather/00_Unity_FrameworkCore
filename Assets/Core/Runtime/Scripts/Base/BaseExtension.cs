@@ -30,6 +30,32 @@ namespace KKSFramework
         #endregion
 
 
+        #region While
+
+        public static void ForWhile (this int cycle, Action invokeAction)
+        {
+            var i = 0;
+            while (i < cycle)
+            {
+                invokeAction.Invoke ();
+                i++;
+            }
+        }
+
+
+        public static void ForWhile (this int cycle, Action<int> invokeAction)
+        {
+            var i = 0;
+            while (i < cycle)
+            {
+                invokeAction.Invoke (i);
+                i++;
+            }
+        }
+
+        #endregion
+
+
         #region Float
 
         public static bool IsZero (this float floatValue)

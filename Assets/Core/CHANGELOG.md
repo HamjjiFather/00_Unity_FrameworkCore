@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Add [NavigationComponent] prefab from Base Project to Core.
 * Add Hooking action in [EscapeEventManager] class.
 * Add amount of generic type in [AreaBase] class.
+* Add extension method for [int] that repeat while amount.
 
 ### Change
 * Root [Canvas], [EventSystem] declare in [NavigationComponent].
