@@ -1,30 +1,63 @@
-﻿using KKSFramework.DataBind;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using KKSFramework.DataBind;
 
-public class SomeElement : MonoBehaviour, IResolveTarget
+public class SomeData
+{
+    public string Good;
+
+    public SomeData (string good)
+    {
+        Good = good;
+    }
+}
+
+public class SomeElement : MonoBehaviour
 {
 #pragma warning disable CS0649
 
-    [Resolver ("Images")]
-    private Image[] _images;
-
-    [Resolver ("Button")]
-    private Button _button;
+    public int value;
 
 #pragma warning restore CS0649
 
-    private void Start ()
+    [Bind]
+    public void A ()
     {
-        _button.onClick.AddListener (() =>
-        {
-            _images[0].color = Color.red;
-            _images[1].color = Color.blue;
-        });
+        Debug.Log ("A");
     }
 
-    public void Debug ()
+    [Bind]
+    public void B (int i)
     {
-        UnityEngine.Debug.Log (gameObject.name);
+        value = i;
+        Debug.Log (i);
+    }
+
+    [Bind]
+    public void C (int i, int z)
+    {
+        Debug.Log (i + z);
+    }
+
+    [Bind]
+    public int AA ()
+    {
+        return 0;
+    }
+
+    [Bind]
+    public int BB (int i)
+    {
+        return i + 5;
+    }
+
+    public int CC (int i, int z)
+    {
+        return i + z;
+    }
+
+    [Bind]
+    public SomeData SomeData (string str)
+    {
+        return new SomeData (str);
     }
 }

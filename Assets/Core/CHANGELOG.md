@@ -4,6 +4,14 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2020-09-04 (Method Binding System : DataBind)
+### Added
+* Add method, methods binding system.
+    * delegate type: [Action], [Action<>], [Func], [Func<>].
+
+### Change
+
+
 ## [1.2.1] - 2020-08-30
 ### Added
 * Add [NavigationComponent] prefab from Base Project to Core.
@@ -18,15 +26,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Change Popup's push and pop process in [NavigationManager].
 * Change the quantity of a class to bind from one class to multiple classes.
 * Change all of the classes about [ViewBase] to the binding system.
+* Change Generic Type to [IEnumerable] in type value of Properties.
 
 ## [1.2.0] - 2020-08-30 (Property Binding System : DataBind)
 ### Added
 * Add property and properties bind system on data bind.
     * base value type: boolean, int, string, float.
     * ui value type: [Text].text, [Image].image, [RawImage].texture, [Graphic].color.
-
-### Change
-* BaseFrame.Editor.asmdef contains only editor platforms.
 
 ## [1.1.1] - 2020-08-25
 ### Changed

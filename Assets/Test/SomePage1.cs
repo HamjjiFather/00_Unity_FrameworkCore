@@ -1,17 +1,14 @@
 using KKSFramework.DataBind;
-using KKSFramework.Navigation;
 using UnityEngine;
 
 public class SomePage1 : MonoBehaviour, IResolveTarget
 {
     #region Fields & Property
 
-    public Sprite sprite;
-    
 #pragma warning disable CS0649
 
     [Resolver]
-    private Property<string> _strings;
+    private Property<string[]> _strings;
 
 #pragma warning restore CS0649
 
@@ -20,15 +17,21 @@ public class SomePage1 : MonoBehaviour, IResolveTarget
 
     #region UnityMethods
 
+    private void Start ()
+    {
+        _strings.Value = new[]
+        {
+            "a",
+            "b",
+            "c",
+            "d"
+        };
+    }
+
     #endregion
 
 
     #region Methods
-
-    public void ChangeString (string value)
-    {
-        _strings.Value = value;
-    }
     
 
     #endregion

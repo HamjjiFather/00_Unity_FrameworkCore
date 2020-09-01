@@ -4,10 +4,12 @@ using UnityEngine.UI;
 
 namespace KKSFramework.DataBind
 {
-    public class RawImageTextureBindableProperties : BindableProperties<RawImage, Texture>
+    public class RawImageTextureBindableProperties : BindableProperties<RawImage, Texture[]>
     {
-        protected override Texture GetDelegate () => targetComponents.First ().GetComponent<RawImage> ().texture;
+        protected override Texture[] GetDelegate () =>
+            targetComponents.Select (x => x.GetComponent<RawImage> ().texture).ToArray ();
 
-        protected override void SetDelegate (Texture value) => targetComponents.Foreach (x => x.texture = value);
+        protected override void SetDelegate (Texture[] values) =>
+            targetComponents.ZipForEach (values, (comp, value) => { comp.texture = value; });
     }
 }

@@ -1,14 +1,16 @@
-using System.Linq;
 using UnityEngine;
 
 namespace KKSFramework.DataBind
 {
-    public class IntPropertiesBind : BaseValueBindableProperties<Component, int>
+    public class IntPropertiesBind : BaseValueBindableProperties<Component, int[]>
     {
-        protected override void SetDelegate (int value)
+        protected override void SetDelegate (int[] values)
         {
-            targetComponents.Select (x => x.GetComponent (targetComponent.GetType ()))
-                .Foreach (x => x.GetType ().GetProperty (propertyName)?.SetValue (x, value));
+            targetComponents.ZipForEach (values, (comp, value) =>
+            {
+                var target = comp.GetComponent (targetComponent.GetType ());
+                targetComponent.GetType ().GetProperty (propertyName)?.SetValue (target, value);
+            });
         }
     }
 }

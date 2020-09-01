@@ -4,10 +4,12 @@ using UnityEngine.UI;
 
 namespace KKSFramework.DataBind
 {
-    public class GraphicColorPropertiesBind : BindableProperties<Graphic, Color>
+    public class GraphicColorPropertiesBind : BindableProperties<Graphic, Color[]>
     {
-        protected override Color GetDelegate () => targetComponents.First ().GetComponent<Graphic> ().color;
+        protected override Color[] GetDelegate () =>
+            targetComponents.Select (x => x.GetComponent<Graphic> ().color).ToArray ();
 
-        protected override void SetDelegate (Color value) => targetComponents.Foreach (x => x.color = value);
+        protected override void SetDelegate (Color[] values) =>
+            targetComponents.ZipForEach (values, (comp, value) => comp.GetComponent<Graphic> ().color = value);
     }
 }
