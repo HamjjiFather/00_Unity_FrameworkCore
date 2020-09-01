@@ -1,5 +1,6 @@
 ﻿using KKSFramework.Sound;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace KKSFramework.UI
@@ -29,7 +30,7 @@ namespace KKSFramework.UI
         /// </summary>
         [Header ("[ButtonExtension]")]
         [Space (5)]
-        public SoundTypeEnum soundTypeEnum;
+        public SoundTypeEnum soundTypeEnum = SoundTypeEnum.sfx_button;
 
         /// <summary>
         /// 버튼 텍스트.
@@ -76,6 +77,34 @@ namespace KKSFramework.UI
             if (buttonText != null)
                 buttonText.text = text;
         }
+
+
+        /// <summary>
+        /// Add OnClick listener.
+        /// </summary>
+        public void AddListener (UnityAction call)
+        {
+            onClick.AddListener (call);
+        }
+        
+        
+        /// <summary>
+        /// Remove OnClick listener.
+        /// </summary>
+        public void RemoveListener (UnityAction call)
+        {
+            onClick.RemoveListener (call);
+        }
+        
+        
+        /// <summary>
+        /// Remove all OnClick listener.
+        /// </summary>
+        public void RemoveAllListeners ()
+        {
+            onClick.RemoveAllListeners ();
+        }
+        
 
         #endregion
     }

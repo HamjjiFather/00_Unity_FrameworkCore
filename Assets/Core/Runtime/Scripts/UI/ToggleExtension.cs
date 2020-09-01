@@ -28,9 +28,9 @@ namespace KKSFramework.UI
         /// <summary>
         /// 사운드 타입.
         /// </summary>
-        [Header ("[ButtonExtension]")]
+        [Header ("[ToggleExtension]")]
         [Space (5)]
-        public SoundTypeEnum soundTypeEnum;
+        public SoundTypeEnum soundTypeEnum = SoundTypeEnum.sfx_button;
 
         /// <summary>
         /// 토글 텍스트.
@@ -86,6 +86,33 @@ namespace KKSFramework.UI
         {
             if (toggleText != null)
                 toggleText.text = text;
+        }
+
+
+        /// <summary>
+        /// Add OnValueChanged event listener.
+        /// </summary>
+        public void AddListener (UnityAction<bool> valueChanged)
+        {
+            onValueChanged.AddListener (valueChanged);
+        }
+        
+        
+        /// <summary>
+        /// Remove OnValueChanged event listener.
+        /// </summary>
+        public void RemoveListener (UnityAction<bool> valueChanged)
+        {
+            onValueChanged.RemoveListener (valueChanged);
+        }
+        
+        
+        /// <summary>
+        /// Remove all OnValueChanged event listener.
+        /// </summary>
+        public void AddOnValueChanged ()
+        {
+            onValueChanged.RemoveAllListeners ();
         }
 
         #endregion

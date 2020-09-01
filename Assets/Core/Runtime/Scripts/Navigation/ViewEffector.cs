@@ -39,19 +39,19 @@ namespace KKSFramework.Navigation
         /// <summary>
         /// show effect model.
         /// </summary>
-        public ViewEffectModel ShowEffectModel;
+        public ViewEffectModel showEffectModel;
 
 
         /// <summary>
         /// hide effect model.
         /// </summary>
-        public ViewEffectModel HideEffectModel;
+        public ViewEffectModel hideEffectModel;
 
 
         /// <summary>
         /// canvasGroup.
         /// </summary>
-        private CanvasGroup canvasGroup => GetCachedComponent<CanvasGroup> ();
+        private CanvasGroup CanvasGroup => GetCachedComponent<CanvasGroup> ();
 
 
         /// <summary>
@@ -68,31 +68,31 @@ namespace KKSFramework.Navigation
             if (_isLockPlayEffector)
                 return;
 
-            var tweenCore = canvasGroup.DOFade (0, 0);
+            var tweenCore = CanvasGroup.DOFade (0, 0);
             
-            if (ShowEffectModel.viewEffectType == ViewEffectType.Fade)
+            if (showEffectModel.viewEffectType == ViewEffectType.Fade)
             {
-                canvasGroup.alpha = 0;
+                CanvasGroup.alpha = 0;
                 
-                tweenCore = canvasGroup
-                    .DOFade (1, ShowEffectModel.duration)
-                    .SetEase (ShowEffectModel.effectEase);
+                tweenCore = CanvasGroup
+                    .DOFade (1, showEffectModel.duration)
+                    .SetEase (showEffectModel.effectEase);
                 await tweenCore.WaitForCompleteAsync (ct);
             }
             
-            if (ShowEffectModel.viewEffectType == ViewEffectType.Scale)
+            if (showEffectModel.viewEffectType == ViewEffectType.Scale)
             {
                 await (tweenCore.target as Transform)
-                    .DOScale (1f, ShowEffectModel.duration)
-                    .SetEase (ShowEffectModel.effectEase)
+                    .DOScale (1f, showEffectModel.duration)
+                    .SetEase (showEffectModel.effectEase)
                     .WaitForCompleteAsync (ct);
             }
             
-            if (ShowEffectModel.viewEffectType == ViewEffectType.Move)
+            if (showEffectModel.viewEffectType == ViewEffectType.Move)
             {
                 await (tweenCore.target as Transform)
-                    .DOLocalMove (new Vector3 (0, 50f, 0), ShowEffectModel.duration)
-                    .SetEase (ShowEffectModel.effectEase)
+                    .DOLocalMove (new Vector3 (0, 50f, 0), showEffectModel.duration)
+                    .SetEase (showEffectModel.effectEase)
                     .From (true)
                     .WaitForCompleteAsync (ct);
             }
@@ -109,30 +109,30 @@ namespace KKSFramework.Navigation
             if (_isLockPlayEffector)
                 return;
 
-            var tweenCore = canvasGroup.DOFade (1, HideEffectModel.duration);
+            var tweenCore = CanvasGroup.DOFade (1, hideEffectModel.duration);
             
-            if (HideEffectModel.viewEffectType == ViewEffectType.Fade)
+            if (hideEffectModel.viewEffectType == ViewEffectType.Fade)
             {
-                canvasGroup.alpha = 1;
-                tweenCore = canvasGroup
-                    .DOFade (0, HideEffectModel.duration)
-                    .SetEase (HideEffectModel.effectEase);
+                CanvasGroup.alpha = 1;
+                tweenCore = CanvasGroup
+                    .DOFade (0, hideEffectModel.duration)
+                    .SetEase (hideEffectModel.effectEase);
                 await tweenCore.WaitForCompleteAsync (ct);
             }
             
-            if (HideEffectModel.viewEffectType == ViewEffectType.Scale)
+            if (hideEffectModel.viewEffectType == ViewEffectType.Scale)
             {
                 await (tweenCore.target as Transform)
-                    .DOScale (0, HideEffectModel.duration)
-                    .SetEase (HideEffectModel.effectEase)
+                    .DOScale (0, hideEffectModel.duration)
+                    .SetEase (hideEffectModel.effectEase)
                     .WaitForCompleteAsync (ct);
             }
             
-            if (HideEffectModel.viewEffectType == ViewEffectType.Move)
+            if (hideEffectModel.viewEffectType == ViewEffectType.Move)
             {
                 await (tweenCore.target as Transform)
-                    .DOLocalMove (new Vector3 (0, 50f, 0), HideEffectModel.duration)
-                    .SetEase (HideEffectModel.effectEase)
+                    .DOLocalMove (new Vector3 (0, 50f, 0), hideEffectModel.duration)
+                    .SetEase (hideEffectModel.effectEase)
                     .WaitForCompleteAsync (ct);
             }
 
@@ -145,7 +145,7 @@ namespace KKSFramework.Navigation
         /// </summary>
         public void ShowFadeImmediately ()
         {
-            canvasGroup.alpha = 1;
+            CanvasGroup.alpha = 1;
             SetRaycast ();
         }
 
@@ -155,7 +155,7 @@ namespace KKSFramework.Navigation
         /// </summary>
         public void HideFadeImmediately ()
         {
-            canvasGroup.alpha = 0;
+            CanvasGroup.alpha = 0;
             SetRaycast ();
         }
 
@@ -174,7 +174,7 @@ namespace KKSFramework.Navigation
         /// </summary>
         private void SetRaycast ()
         {
-            canvasGroup.blocksRaycasts = canvasGroup.alpha.Equals (1);
+            CanvasGroup.blocksRaycasts = CanvasGroup.alpha.Equals (1);
         }
     }
 }

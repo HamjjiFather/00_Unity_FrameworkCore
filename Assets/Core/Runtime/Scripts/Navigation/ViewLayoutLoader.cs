@@ -1,4 +1,6 @@
+using System.Linq;
 using Cysharp.Threading.Tasks;
+using KKSFramework.DataBind;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,17 +9,25 @@ namespace KKSFramework.Navigation
     /// <summary>
     /// 페이지에서 규칙적으로 호출되는 ViewLayout들을 호출하기 위한 컴포넌트.
     /// </summary>
-    public class ViewLayoutLoader : MonoBehaviour
+    [RequireComponent(typeof(Context))]
+    public class ViewLayoutLoader : MonoBehaviour, IResolveTarget
     {
         #region Fields & Property
-
-        public ViewLayoutBase[] viewLayoutObjs;
-
-        public Button[] layoutViewButton;
 
         public bool initOnAwake = true;
 
 #pragma warning disable CS0649
+        
+        [Resolver]
+        private ViewLayoutBase[] _viewLayoutObjs;
+
+        public ViewLayoutBase[] ViewLayoutBases => _viewLayoutObjs;
+
+        
+        [Resolver]
+        private Button[] _layoutViewButton;
+        
+        public Button[] LayoutViewButton => _layoutViewButton;
 
 #pragma warning restore CS0649
 
@@ -30,7 +40,7 @@ namespace KKSFramework.Navigation
 
         private void Awake ()
         {
-            layoutViewButton.Foreach ((button, index) =>
+            _layoutViewButton.Foreach ((button, index) =>
             {
                 button.onClick.AddListener (() => ClickLayoutViewButton (index));
             });
@@ -46,15 +56,24 @@ namespace KKSFramework.Navigation
 
         public void Initialize ()
         {
-            viewLayoutObjs.Foreach (x => { x.Initialize (); });
+            _viewLayoutObjs.Foreach (x => { x.Initialize (); });
         }
 
 
         public void SetSubView (int index)
         {
-            viewLayoutObjs[_nowLayout].DisableLayout ().Forget ();
+            if (_nowLayout >= 0 && _nowLayout < _viewLayoutObjs.Length)
+                _viewLayoutObjs[_nowLayout].DisableLayout ().Forget ();
+            
             _nowLayout = index;
-            viewLayoutObjs[_nowLayout].ActiveLayout ().Forget ();
+            _viewLayoutObjs[_nowLayout].ActiveLayout ().Forget ();
+        }
+
+
+        public void CloseViewLayout ()
+        {
+            _viewLayoutObjs.Foreach (vlo => vlo.DisableLayout ().Forget());
+            _nowLayout = -1;
         }
 
         #endregion

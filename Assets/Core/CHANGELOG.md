@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Root [Canvas], [EventSystem] declare in [NavigationComponent].
 * Change to binding system [NavigationComponent] reference.
 * Separate Core folder Scripts and Prefab.
-* Change Popup's push and pop process in [NavigationManager]
+* Change Popup's push and pop process in [NavigationManager].
 * Change the quantity of a class to bind from one class to multiple classes.
 * Change all of the classes about [ViewBase] to the binding system.
 
