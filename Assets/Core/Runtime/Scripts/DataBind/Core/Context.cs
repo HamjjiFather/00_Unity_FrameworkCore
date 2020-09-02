@@ -70,9 +70,18 @@ namespace KKSFramework.DataBind
                 var binderClasses = GetComponents<IResolveTarget> ();
                 binderClasses.Foreach (binder =>
                 {
-                    var fields = binder.GetType ()
-                        .GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                        .Where (x => x.HasAttribute<ResolverAttribute> ());
+                    var binderType = binder.GetType ();
+                    var fields = new List<FieldInfo> ();
+                    
+                    while (!binderType.Name.Equals (nameof(MonoBehaviour)))
+                    {
+                        var result = binderType
+                            .GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                            .Where (x => x.HasAttribute<ResolverAttribute> ());
+                        fields.AddRange (result);
+                        binderType = binderType.BaseType;
+                    }
+                    
 #if BF_DEBUG
                     var thisObj = gameObject;
                     Debug.Log (
@@ -99,7 +108,9 @@ namespace KKSFramework.DataBind
                             if (!fieldType.HasElementType)
                             {
 #if BF_DEBUG
-                                Debug.LogError ($"resolve target field type has not array type {fieldType} in {thisObj.name} GameObject", thisObj);
+                                Debug.LogError (
+                                    $"resolve target field type has not array type {fieldType} in {thisObj.name} GameObject",
+                                    thisObj);
 #endif
                                 return;
                             }

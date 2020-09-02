@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace KKSFramework.DataBind
 {
-    public abstract class BindableProperty<T, TV> : Bindable where T : Component
+    public abstract class BindableProperty<T, TV> : Bindable where T : Object
     {
         #region Fields & Property
         

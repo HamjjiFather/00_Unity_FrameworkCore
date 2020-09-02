@@ -30,7 +30,7 @@ namespace KKSFramework.Editor
     }
     
     
-    public class BaseValueTypePropertyInspector<T, TV> : UnityEditor.Editor where T : BaseValueBindableProperty<Component, TV>
+    public class BaseValueTypePropertyInspector<T, TV> : UnityEditor.Editor where T : BaseValueBindableProperty<Object, TV>
     {
         #region Fields & Property
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KKSFramework.DataBind
 {
-    public class BaseValueBindableProperty<T, TV> : BindableProperty<T, TV> where T : Component
+    public class BaseValueBindableProperty<T, TV> : BindableProperty<T, TV> where T : Object
     {
         #region Fields & Property
         

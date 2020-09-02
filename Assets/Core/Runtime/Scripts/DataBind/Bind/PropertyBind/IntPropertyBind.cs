@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace KKSFramework.DataBind
 {
-    public class IntPropertyBind : BaseValueBindableProperty<Component, int>
+    public class IntPropertyBind : BaseValueBindableProperty<Object, int>
     {
     }
 }

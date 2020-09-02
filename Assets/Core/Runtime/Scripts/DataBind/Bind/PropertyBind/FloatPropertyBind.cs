@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace KKSFramework.DataBind
 {
-    public class FloatPropertyBind : BaseValueBindableProperty<Component, float>
+    public class FloatPropertyBind : BaseValueBindableProperty<Object, float>
     {
     }
 }

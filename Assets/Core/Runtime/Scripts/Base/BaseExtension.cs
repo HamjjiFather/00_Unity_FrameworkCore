@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using KKSFramework.UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -647,10 +648,34 @@ namespace KKSFramework
                 throw new ArgumentException (nameof (source));
 
             var sourceArray = source.ToArray ();
-            var randValue = Random.Range (0, sourceArray.Length);
+            var randValue = UnityEngine.Random.Range (0, sourceArray.Length);
             var result = sourceArray[randValue];
             return result;
         }
+        
+        
+        public static IEnumerable<TSource> RandomSources<TSource> (this IEnumerable<TSource> source, int count)
+        {
+            if (source == null)
+                throw new ArgumentException (nameof (source));
+
+            if (count >= source.Count ())
+                return source;
+            
+            var sourceArray = source.ToArray ();
+            var enumerable = Enumerable.Range (0, source.Count ()).ToList ();
+            var returnSources = new List<TSource> ();
+            for (var i = 0; i < count; i++)
+            {
+                var randValue = enumerable.RandomSource ();
+                var result = sourceArray[randValue];
+                enumerable.Remove (randValue);
+                returnSources.Add (result);
+            }
+
+            return returnSources;
+        }
+        
 
 
         public static TSource RandomSource<TSource> (this IEnumerable<TSource> source, Func<TSource, bool> selector)
@@ -700,16 +725,20 @@ namespace KKSFramework
 
 
         public static IEnumerable<TSource> MinSources<TSource> (this IEnumerable<TSource> sources,
-            Func<TSource, float> selector)
+            [NotNull] Func<TSource, float> selector)
         {
             var minValue = sources.Min (selector);
             return sources.Where (x => Math.Abs (selector.Invoke (x) - minValue) < float.Epsilon);
         }
 
 
-        public static bool FirstOrLast<TSource> (this IEnumerable<TSource> source, TSource element)
+        public static bool FirstOrLast<TSource> (this IEnumerable<TSource> source, [NotNull] TSource element)
         {
-            return element.Equals (source.FirstOrDefault ()) || element.Equals (source.LastOrDefault ());
+            var first = source.FirstOrDefault();
+            if (element.Equals (first))
+                return true;
+            var last = source.LastOrDefault();
+            return element.Equals (last);
         }
 
 
@@ -861,6 +890,16 @@ namespace KKSFramework
         public static void AddRange<TK, TV> (this Dictionary<TK, TV> dict, Dictionary<TK, TV> targetDict)
         {
             targetDict.Foreach (target => { dict.ContainAndAdd (target.Key, target.Value); });
+        }
+
+        #endregion
+
+
+        #region Random
+
+        public static int RandomRange (this IEnumerable<int> bound)
+        {
+            return UnityEngine.Random.Range (bound.Min (), bound.Max ());
         }
 
         #endregion
