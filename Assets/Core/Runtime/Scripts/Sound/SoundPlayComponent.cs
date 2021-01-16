@@ -1,4 +1,5 @@
-﻿using KKSFramework.Management;
+﻿using KKSFramework.DataBind;
+using KKSFramework.Management;
 using UnityEngine;
 
 namespace KKSFramework.Sound
@@ -31,14 +32,19 @@ namespace KKSFramework.Sound
         /// <summary>
         /// 배경음 실행 오디오 소스.
         /// </summary>
-        [SerializeField]
+        [Resolver]
         private AudioSource audioSourceBGM;
+        
+        public AudioSource AudioSourceBGM => audioSourceBGM;
 
+        
         /// <summary>
         /// 효과음 실행 오디오 소스.
         /// </summary>
-        [SerializeField]
-        public AudioSource audioSourceSFX;
+        [Resolver]
+        private AudioSource audioSourceSFX;
+
+        public AudioSource AudioSourceSfx => audioSourceSFX;
 
 #pragma warning restore CS0649
 

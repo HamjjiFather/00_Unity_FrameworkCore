@@ -10,9 +10,15 @@ namespace KKSFramework.Navigation
 #pragma warning disable CS0649
 
         [Resolver]
-        private Transform _popupParents;
+        private RectTransform _popupParents;
 
-        public Transform PopupParents => _popupParents;
+        public RectTransform PopupParents => _popupParents;
+
+        
+        [Resolver]
+        private RectTransform _contentRoot;
+
+        public RectTransform ContentRoot => _contentRoot;
 
 #pragma warning restore CS0649
 

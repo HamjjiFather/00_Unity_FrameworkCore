@@ -2,7 +2,9 @@
 using Cysharp.Threading.Tasks;
 using KKSFramework.DataBind;
 using KKSFramework.UI;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace KKSFramework.Navigation
 {
@@ -28,6 +30,18 @@ namespace KKSFramework.Navigation
         private ViewEffector _viewEffector;
 
         public ViewEffector ViewEffector => _viewEffector;
+
+        
+        [Resolver]
+        private Text _popupTitleText;
+
+        public Text PopupTitleText => _popupTitleText;
+
+
+        [Resolver]
+        private RectTransform _contentRoot;
+
+        public RectTransform ContentRoot => _contentRoot;
 
 #pragma warning restore CS0649
 

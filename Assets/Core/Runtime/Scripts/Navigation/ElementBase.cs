@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace KKSFramework.Navigation
@@ -13,6 +14,29 @@ namespace KKSFramework.Navigation
 
         public abstract void SetElement (T elementData);
     }
+
+    public abstract class TaskElementBase : IElementBase
+    {
+        public abstract UniTask SetElementTask ();
+
+        public virtual void SetElement ()
+        {
+            
+        }
+    }
+    
+    public abstract class TaskElementBase<T> : MonoBehaviour, IElementBase<T>
+    {
+        public abstract T ElementData { get; set; }
+        
+        public abstract UniTask SetElementTask (T elementData);
+
+        public virtual void SetElement (T elementData)
+        {
+            
+        }
+    }
+    
 
     public interface IElementBase
     {
