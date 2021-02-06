@@ -7,11 +7,8 @@ namespace KKSFramework.Sound
     /// <summary>
     /// 사운드 관리 컴포넌트.
     /// </summary>
-    public class SoundPlayComponent : ComponentBase
+    public class SoundPlayComponent : ComponentBase, IResolveTarget
     {
-        //[Header("[SoundPlayComponent]"), Space(5)]
-
-
         #region Constructor
 
         #endregion
@@ -26,25 +23,25 @@ namespace KKSFramework.Sound
         /// </summary>
         public AudioSource AudioSource (SoundType soundType)
         {
-            return soundType == SoundType.Bgm ? audioSourceBGM : audioSourceSFX;
+            return soundType == SoundType.Bgm ? _audioSourceBGM : _audioSourceSfx;
         }
 
         /// <summary>
         /// 배경음 실행 오디오 소스.
         /// </summary>
         [Resolver]
-        private AudioSource audioSourceBGM;
+        private AudioSource _audioSourceBGM;
         
-        public AudioSource AudioSourceBGM => audioSourceBGM;
+        public AudioSource AudioSourceBGM => _audioSourceBGM;
 
         
         /// <summary>
         /// 효과음 실행 오디오 소스.
         /// </summary>
         [Resolver]
-        private AudioSource audioSourceSFX;
+        private AudioSource _audioSourceSfx;
 
-        public AudioSource AudioSourceSfx => audioSourceSFX;
+        public AudioSource AudioSourceSfx => _audioSourceSfx;
 
 #pragma warning restore CS0649
 
