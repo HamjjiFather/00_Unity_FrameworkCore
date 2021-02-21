@@ -46,5 +46,14 @@ namespace KKSFramework.DesignPattern
         public virtual void InitAfterLoadLocalData ()
         {
         }
+
+
+        /// <summary>
+        /// 모든 세팅 후 초기화.
+        /// </summary>
+        public virtual void InitFinally ()
+        {
+            
+        }
     }
 }

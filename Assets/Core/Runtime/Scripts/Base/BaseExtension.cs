@@ -316,6 +316,7 @@ namespace KKSFramework
         /// </summary>
         public static Color ToColor (string code)
         {
+            code = code.Replace ("#", "");
             var r = code.Substring (0, 2);
             var g = code.Substring (2, 2);
             var b = code.Substring (4, 2);
@@ -652,8 +653,8 @@ namespace KKSFramework
             var result = sourceArray[randValue];
             return result;
         }
-        
-        
+
+
         public static IEnumerable<TSource> RandomSources<TSource> (this IEnumerable<TSource> source, int count)
         {
             if (source == null)
@@ -661,7 +662,7 @@ namespace KKSFramework
 
             if (count >= source.Count ())
                 return source;
-            
+
             var sourceArray = source.ToArray ();
             var enumerable = Enumerable.Range (0, source.Count ()).ToList ();
             var returnSources = new List<TSource> ();
@@ -675,7 +676,6 @@ namespace KKSFramework
 
             return returnSources;
         }
-        
 
 
         public static TSource RandomSource<TSource> (this IEnumerable<TSource> source, Func<TSource, bool> selector)
@@ -734,10 +734,10 @@ namespace KKSFramework
 
         public static bool FirstOrLast<TSource> (this IEnumerable<TSource> source, [NotNull] TSource element)
         {
-            var first = source.FirstOrDefault();
+            var first = source.FirstOrDefault ();
             if (element.Equals (first))
                 return true;
-            var last = source.LastOrDefault();
+            var last = source.LastOrDefault ();
             return element.Equals (last);
         }
 

@@ -15,28 +15,20 @@ namespace KKSFramework.DataBind
 
         public string ContainerPath => containerPath;
 
-        /// <summary>
-        /// 컨테이너.
-        /// </summary>
-        private Context _targetContext;
-
         public Context TargetContext
         {
             get
             {
-                if (_targetContext != null) return _targetContext;
-                var containerInParents = GetComponentsInParent<Context> (true).First (x => x.gameObject != gameObject);
-                if (containerInParents == null)
-                {
-                    Debug.LogError ("there is no 'Context' component in parents object to bind");
+                var componentsInParent = GetComponentsInParent<Context> (true);
+                if (!componentsInParent.Any ())
                     return default;
-                }
+                
+                var contextInParents = componentsInParent.FirstOrDefault (x => x.gameObject != gameObject);
+                if (contextInParents != null) return contextInParents;
+                Debug.LogError ("there is no 'Context' component in parents object to bind");
+                return default;
 
-                _targetContext = containerInParents;
-
-                return _targetContext;
             }
-            private set => _targetContext = value;
         }
 
         public abstract object BindTarget { get; }
@@ -67,7 +59,7 @@ namespace KKSFramework.DataBind
 
         public virtual void Dispose ()
         {
-            TargetContext = null;
+            // TargetContext = null;
         }
 
         #endregion

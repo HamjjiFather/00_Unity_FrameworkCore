@@ -41,9 +41,9 @@ namespace KKSFramework.LocalData
         /// <summary>
         /// 게임 데이터 로드.
         /// </summary>
-        public T LoadGameData<T> (Bundle bundle) where T : Bundle
+        public void LoadGameData (Bundle bundle)
         {
-            return bundle.FromJsonData () as T;
+            bundle.FromJsonData ();
         }
 
         /// <summary>
@@ -71,14 +71,12 @@ namespace KKSFramework.LocalData
         /// <summary>
         /// Bundle 클래스 Json파일로 저장.
         /// </summary>
-        public static Bundle FromJsonData (this Bundle bundle)
+        public static void FromJsonData (this Bundle bundle)
         {
             var filePath = $"{LocalDataManager.DataPath}/{bundle.GetType ().Name}.json";
-            if (!File.Exists (filePath)) return bundle;
+            if (!File.Exists (filePath)) return;
             var dataString = File.ReadAllText (filePath);
             JsonUtility.FromJsonOverwrite (dataString, bundle);
-
-            return bundle;
         }
 
         /// <summary>

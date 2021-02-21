@@ -4,6 +4,15 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2021-02-21
+### Added
+* Add to [CustomHierarchyColorWindow], [CustomHierarchyEditor] Class for bind target object name change.
+* Add for finally initialize Method in [ViewModelBase] class.
+
+### Change
+* Change how to find [Context] in parent component.
+* Change the return type of some methods in [LocalDataManager] to void.
+
 ## [1.3.1] - 2021-01-16
 *  Version up to Unity 2020.2.0f1.
 
@@ -11,14 +20,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Component bind ways convert to Context and Component bind system.
 * Import some base prefab from a sample framework project.
 
+### Fixed
+* Fix error in SoundPlayComponent class. 
+
+### Remove
+* remove [FrameworkBaseEditorWindow] class.
 
 ## [1.3.0] - 2020-09-04 (Method Binding System : DataBind)
 ### Added
 * Add method, methods binding system.
     * delegate type: [Action], [Action<>], [Func], [Func<>].
-
-### Change
-
 
 ## [1.2.1] - 2020-08-30
 ### Added

@@ -50,7 +50,7 @@ namespace KKSFramework.DataBind
             var result = classes.Any ();
             if (!result)
             {
-                Debug.LogWarning ($"[{nameof (Context)}] There is no 'IResolveTarget' component in this game object.");
+                Debug.LogWarning ($"[{nameof (Context)}] There is no 'IResolveTarget' component in this game object. {gameObject.name}");
             }
 
             return classes.Any ();
