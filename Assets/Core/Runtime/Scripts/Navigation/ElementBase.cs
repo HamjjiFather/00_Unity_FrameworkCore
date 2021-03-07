@@ -12,29 +12,23 @@ namespace KKSFramework.Navigation
     {
         public abstract T ElementData { get; set; }
 
+        
         public abstract void SetElement (T elementData);
     }
 
-    public abstract class TaskElementBase : IElementBase
+    
+    public abstract class TaskElementBase : ITaskElementBase
     {
-        public abstract UniTask SetElementTask ();
-
-        public virtual void SetElement ()
-        {
-            
-        }
+        public abstract UniTask SetElementAsync ();
     }
     
-    public abstract class TaskElementBase<T> : MonoBehaviour, IElementBase<T>
+    
+    public abstract class TaskElementBase<T> : MonoBehaviour, ITaskElementBase<T>
     {
         public abstract T ElementData { get; set; }
         
-        public abstract UniTask SetElementTask (T elementData);
-
-        public virtual void SetElement (T elementData)
-        {
-            
-        }
+        
+        public abstract UniTask SetElementAsync (T elementData);
     }
     
 
@@ -43,10 +37,27 @@ namespace KKSFramework.Navigation
         void SetElement ();
     }
 
+    
     public interface IElementBase<T>
     {
         T ElementData { get; set; }
 
+        
         void SetElement (T elementData);
+    }
+
+    
+    public interface ITaskElementBase
+    {
+        UniTask SetElementAsync ();
+    }
+    
+    
+    public interface ITaskElementBase<T>
+    {
+        T ElementData { get; set; }
+
+        
+        UniTask SetElementAsync (T elementData);
     }
 }
