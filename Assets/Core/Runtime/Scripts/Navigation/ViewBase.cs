@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace KKSFramework.Navigation
 {
-    public class ViewBase : PooingComponent
+    public class ViewBase : PoolingComponent
     {
         #region Fields & Property
 

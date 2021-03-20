@@ -226,18 +226,14 @@ namespace KKSFramework.Navigation
         /// <summary>
         /// create common view.
         /// </summary>
-        public async UniTask OpenCommonView<T> (string viewName) where T : PooingComponent
+        public async UniTask OpenCommonView<T> (string viewName) where T : PrefabComponent
         {
-            var poolingPath = $"_Prefab/CommonView/{viewName}";
             var resObj =
                 await ResourcesLoadManager.Instance.GetResourcesAsync<T> ("_Prefab", "CommonView",
                     viewName);
-            var commonView = ProjectContext.Instance.Container.InstantiatePrefabForComponent<T> (resObj);
-            commonView.Created<T> (poolingPath);
-
-            var rectT = commonView.GetComponent<RectTransform> ();
-            rectT.SetParent (_navigationComponent.CommonViewParents);
-            rectT.SetInstantiateTransform ();
+            resObj.InstantiateObject ();
+            var commonView = resObj.InstantiateObject (_navigationComponent.CommonViewParents);
+            commonView.GetComponent<RectTransform> ().SetInstantiateTransform ();
         }
 
         /// <summary>

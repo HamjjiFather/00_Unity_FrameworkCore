@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * Add to [CustomHierarchyColorWindow], [CustomHierarchyEditor] Class for bind target object name change.
 * Add for finally initialize Method in [ViewModelBase] class.
+* Add ITaskElement interface, class.
 
 ### Change
 * Change how to find [Context] in parent component.

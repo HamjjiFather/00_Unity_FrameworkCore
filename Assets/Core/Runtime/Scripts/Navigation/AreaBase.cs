@@ -4,12 +4,12 @@ namespace KKSFramework.Navigation
 {
     public abstract class AreaBase<T> : MonoBehaviour
     {
-        public abstract void SetArea (T areaData);
+        public abstract void SetArea (T companyCharacterModel);
     }
     
     public abstract class AreaBase<T1, T2> : MonoBehaviour
     {
-        public abstract void SetArea (T1 areaData1, T2 areaData2);
+        public abstract void SetArea (T1 userModel, T2 areaData2);
     }
     
     public abstract class AreaBase<T1, T2, T3> : MonoBehaviour

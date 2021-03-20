@@ -15,15 +15,15 @@ namespace KKSFramework
         /// <summary>
         /// 이 오브젝트에 캐시된 컴포넌트 딕셔너리.
         /// </summary>
-        private Dictionary<Type, Component> _cachedComponentDict;
+        private Dictionary<Type, object> _cachedComponentDict;
 
-        public Dictionary<Type, Component> CachedComponentDict
+        public Dictionary<Type, object> CachedComponentDict
         {
             get
             {
                 if (_cachedComponentDict == null)
                 {
-                    _cachedComponentDict = new Dictionary<Type, Component> ();
+                    _cachedComponentDict = new Dictionary<Type, object> ();
                 }
 
                 return _cachedComponentDict;
@@ -38,41 +38,63 @@ namespace KKSFramework
         /// <summary>
         /// 캐시된 컴포넌트 리턴.
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
         public Component GetCachedComponent (Type type)
         {
-            CachedComponentDict.TryGetValue (type, out var tempComponent);
-            return tempComponent ? tempComponent : CachedComponentDict[type] = GetComponent (type);
+            if (!CachedComponentDict.ContainsKey (type))
+            {
+                CachedComponentDict.Add (type, GetComponent (type));
+            }
+            
+            return CachedComponentDict[type] as Component;
         }
+        
+        
+        /// <summary>
+        /// 캐시된 컴포넌트 리턴.
+        /// </summary>
+        public Component[] GetCachedComponents (Type type)
+        {
+            if (!CachedComponentDict.ContainsKey (type))
+            {
+                CachedComponentDict.Add (type, GetComponents (type));
+            }
+            
+            return CachedComponentDict[type] as Component[];
+        }
+
 
         /// <summary>
         /// 컴포넌트를 추가하고 캐시된 제네릭 컴포넌트 리턴.
         /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
         public Component AddCachedComponent (Type type)
         {
             var tempComponent = gameObject.AddComponent (type);
             CachedComponentDict.Add (type, tempComponent);
-            return tempComponent ? tempComponent : CachedComponentDict[type] = GetComponent (type);
+            return GetCachedComponent (type);
         }
+
 
         /// <summary>
         /// 캐시된 제네릭 컴포넌트 리턴.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public T GetCachedComponent<T> () where T : Component
+        public T GetCachedComponent<T> ()
         {
-            return (T) GetCachedComponent (typeof (T));
+            return GetCachedComponent (typeof (T)).GetComponent<T> ();
         }
+
+
+        /// <summary>
+        /// 캐시된 제네릭 컴포넌트 리턴.
+        /// </summary>
+        public T[] GetCachedComponents<T> ()
+        {
+            return Array.ConvertAll (GetCachedComponents (typeof (T)), input => input.GetComponent<T> ());
+        }
+
 
         /// <summary>
         /// 컴포넌트를 추가하고 캐시된 제네릭 컴포넌트 리턴.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         public T AddCachedComponent<T> () where T : Component
         {
             return (T) AddCachedComponent (typeof (T));

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
-using DG.Tweening;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using UnityEngine;
@@ -17,7 +17,7 @@ namespace KKSFramework
             return tweenCore;
         }
 
-
+        
         public static UniTask<Tweener> WaitForCompleteAsync (this Tweener tweener,
             CancellationToken cancellationToken = default)
         {

@@ -39,8 +39,8 @@ namespace KKSFramework.ResourcesLoad
         /// 풀링된 일반 프리팹 오브젝트 리스트.
         /// enum 타입별로 관리하고 싶으면 변수 타입에 해당하는 딕셔너리를 늘려서 관리하도록.
         /// </summary>
-        private readonly Dictionary<string, Queue<PooingComponent>> _pooledPrefabs =
-            new Dictionary<string, Queue<PooingComponent>> ();
+        private readonly Dictionary<string, Queue<PoolingComponent>> _pooledPrefabs =
+            new Dictionary<string, Queue<PoolingComponent>> ();
 
         #endregion
 
@@ -50,7 +50,7 @@ namespace KKSFramework.ResourcesLoad
         /// <summary>
         /// 해당 타입의 풀링된 오브젝트를 리턴.
         /// </summary>
-        private PooingComponent ReturnPooledObjectBase (string poolingPath)
+        private PoolingComponent ReturnPooledObjectBase (string poolingPath)
         {
             if (IsExistPooledObject (poolingPath))
                 return _pooledPrefabs[poolingPath].Dequeue ();
@@ -98,12 +98,12 @@ namespace KKSFramework.ResourcesLoad
         /// 오브젝트를 파괴하지 않고 풀링함.
         /// 풀링된 오브젝트는 하위에 위치 시킴.
         /// </summary>
-        public void RegistPooledObject (PoolingInfo poolingInfo, PooingComponent pooingComponent)
+        public void RegistPooledObject (PoolingInfo poolingInfo, PoolingComponent poolingComponent)
         {
             if (_pooledPrefabs.ContainsKey (poolingInfo.PoolingPath) == false)
-                _pooledPrefabs.Add (poolingInfo.PoolingPath, new Queue<PooingComponent> ());
+                _pooledPrefabs.Add (poolingInfo.PoolingPath, new Queue<PoolingComponent> ());
 
-            _pooledPrefabs[poolingInfo.PoolingPath].Enqueue (pooingComponent);
+            _pooledPrefabs[poolingInfo.PoolingPath].Enqueue (poolingComponent);
 
             if (_pooledObjTransformDict.ContainsKey (poolingInfo.PoolingPath) == false)
             {
@@ -116,8 +116,8 @@ namespace KKSFramework.ResourcesLoad
                 _pooledObjTransformDict.Add (poolingInfo.PoolingPath, objTransform);
             }
 
-            pooingComponent.transform.SetParent (_pooledObjTransformDict[poolingInfo.PoolingPath]);
-            pooingComponent.gameObject.SetActive (false);
+            poolingComponent.transform.SetParent (_pooledObjTransformDict[poolingInfo.PoolingPath]);
+            poolingComponent.gameObject.SetActive (false);
         }
 
         #endregion

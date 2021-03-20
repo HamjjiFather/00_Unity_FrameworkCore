@@ -25,7 +25,6 @@ namespace KKSFramework.DesignPattern
         }
     }
 
-    [UsedImplicitly]
     public abstract class ViewModelBase
     {
         /// <summary>
@@ -53,7 +52,6 @@ namespace KKSFramework.DesignPattern
         /// </summary>
         public virtual void InitFinally ()
         {
-            
         }
     }
 }
