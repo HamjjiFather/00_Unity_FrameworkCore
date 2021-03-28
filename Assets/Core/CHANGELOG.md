@@ -4,6 +4,11 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2021-03-29 (Game System)
+### Added
+* Add required class to the game system.
+  * include [Level], [TimeChecker], [Probability], [BigInteger] classes.
+
 ## [1.3.2] - 2021-02-21
 ### Added
 * Add to [CustomHierarchyColorWindow], [CustomHierarchyEditor] Class for bind target object name change.
@@ -272,7 +277,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * await OnForeground -> 페이지가 전환되어 나타나기전 사전 처리.
 * await OnBackground -> 페이지가 전환되어 사라지기전 사전 처리.
 * OnHid -> 뷰가 화면에 사라지고 나서 처리.
-* 페이지(A) 출현await A Push -> A Show -> A OnShowed
+* 페이지(A) 출현 await A Push -> A Show -> A OnShowed
 * 페이지(A) > 페이지(B) 전환 await A BackGround -> await A Hide -> A OnHid -> await B Push -> await B Show -> B OnShowed
 * 페이지(B) > 페이지(A) 복귀 await B Pop -> await B Hide -> A Foreground -> A Show -> A OnShowed
 * 모든 Helper 클래스 삭제.
