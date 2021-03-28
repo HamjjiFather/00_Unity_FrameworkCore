@@ -50,7 +50,8 @@ namespace KKSFramework.DataBind
             var result = classes.Any ();
             if (!result)
             {
-                Debug.LogWarning ($"[{nameof (Context)}] There is no 'IResolveTarget' component in this game object. {gameObject.name}");
+                Debug.LogWarning (
+                    $"[{nameof (Context)}] There is no 'IResolveTarget' component in this game object. {gameObject.name}");
             }
 
             return classes.Any ();
@@ -72,8 +73,8 @@ namespace KKSFramework.DataBind
                 {
                     var binderType = binder.GetType ();
                     var fields = new List<FieldInfo> ();
-                    
-                    while (!binderType.Name.Equals (nameof(MonoBehaviour)))
+
+                    while (!binderType.Name.Equals (nameof (MonoBehaviour)))
                     {
                         var result = binderType
                             .GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
@@ -81,7 +82,7 @@ namespace KKSFramework.DataBind
                         fields.AddRange (result);
                         binderType = binderType.BaseType;
                     }
-                    
+
 #if BF_DEBUG
                     var thisObj = gameObject;
                     Debug.Log (
@@ -97,9 +98,22 @@ namespace KKSFramework.DataBind
                         Debug.Log ($"resolve request {attributeKey} in {thisObj.name} GameObject", thisObj);
 #endif
 
-                        var targetComp = Container.ContainsKey (attributeKey)
-                            ? Container[attributeKey]
-                            : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
+                        object targetComp;
+                        try
+                        {
+                            targetComp = Container.ContainsKey (attributeKey)
+                                ? Container[attributeKey]
+                                : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
+                        }
+                        catch (Exception e)
+                        {
+#if BF_DEBUG
+                            Debug.LogError ($"resolve request error {attributeKey} in {thisObj.name} GameObject",
+                                thisObj);
+#endif
+                            throw;
+                        }
+
 
                         // target component is GameObject Array type.
                         if (targetComp is GameObject[] gameObjects)

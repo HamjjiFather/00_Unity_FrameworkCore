@@ -42,7 +42,7 @@ namespace KKSFramework.DataBind
 
         #region UnityMethods
 
-        private void Reset ()
+        protected virtual void Reset ()
         {
             containerPath = containerPath.Equals (string.Empty) ? gameObject.name : containerPath;
         }
