@@ -145,9 +145,9 @@ namespace KKSFramework.Navigation
 
             var resObj = await ResourcesLoadManager.Instance.GetResourcesAsync<PageViewBase> ("_Prefab",
                 "Page", viewString);
-            var page = ProjectContext.Instance.Container.InstantiatePrefabForComponent<PageViewBase> (resObj);
+            var page = resObj.InstantiateObject () as PoolingComponent;
             page.Created<PageViewBase> (poolingPath);
-            return page;
+            return page as PageViewBase;
         }
 
 
@@ -165,9 +165,9 @@ namespace KKSFramework.Navigation
 
             var resObj = await ResourcesLoadManager.Instance.GetResourcesAsync<PopupViewBase> ("_Prefab",
                 "Popup", viewString);
-            var popup = ProjectContext.Instance.Container.InstantiatePrefabForComponent<PopupViewBase> (resObj);
+            var popup = resObj.InstantiateObject () as PoolingComponent;
             popup.Created<PopupViewBase> (poolingPath);
-            return popup;
+            return popup as PopupViewBase;
         }
 
 
@@ -231,7 +231,6 @@ namespace KKSFramework.Navigation
             var resObj =
                 await ResourcesLoadManager.Instance.GetResourcesAsync<T> ("_Prefab", "CommonView",
                     viewName);
-            resObj.InstantiateObject ();
             var commonView = resObj.InstantiateObject (_navigationComponent.CommonViewParents);
             commonView.GetComponent<RectTransform> ().SetInstantiateTransform ();
         }

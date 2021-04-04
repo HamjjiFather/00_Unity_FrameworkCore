@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Add required class to the game system.
   * include [Level], [TimeChecker], [Probability], [BigInteger] classes.
 
+### Changed
+* Change ViewBase creation structure.
+
 ## [1.3.2] - 2021-02-21
 ### Added
 * Add to [CustomHierarchyColorWindow], [CustomHierarchyEditor] Class for bind target object name change.
