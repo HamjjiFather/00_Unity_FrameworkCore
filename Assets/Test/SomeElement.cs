@@ -11,13 +11,14 @@ public class SomeData
     }
 }
 
-public class SomeElement : MonoBehaviour
+public class SomeElement : SelfComponentBind
 {
 #pragma warning disable CS0649
 
     public int value;
 
 #pragma warning restore CS0649
+
 
     [Bind]
     public void A ()
