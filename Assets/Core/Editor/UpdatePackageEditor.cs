@@ -9,22 +9,40 @@ namespace KKSFramework.Editor
     {
         #region Fields & Property
 
-        private static AddRequest _request;
-
 #pragma warning disable CS0649
 
 #pragma warning restore CS0649
 
+        private static AddRequest _request;
+
+        private const string PackageLink =
+            "https://github.com/HamjjiFather/00_Unity_FrameworkCore.git?path=Assets/Core";
+
+        private const string PackageId = "com.rhkdtjq0390.baseframe";
+
+        private const string MenuItemPath = "Framework/Check for Updates Baseframe";
+        
         #endregion
 
 
         #region Methods
         
-        [MenuItem("Framework/CheckForUpdatesPackage")]
+        [MenuItem(MenuItemPath)]
         public static void CheckFrameworkPackage ()
         {
-            _request = Client.Add ("https://github.com/HamjjiFather/00_Unity_FrameworkCore.git?path=Assets/Core");
+            _request = Client.Add (PackageLink);
             EditorApplication.update -= AddProgress;
+        }
+
+        
+        /// <summary>
+        /// 메뉴 아이템 버튼 조건 체크.
+        /// 현재 프로젝트 BundleId와 BaseFrame패키지 아이디가 다르면 버튼을 활성화 한다.
+        /// </summary>
+        [MenuItem(MenuItemPath, validate = true)]
+        public static bool CheckFrameworkValidate ()
+        {
+            return !Application.identifier.Equals (PackageId);
         }
         
         

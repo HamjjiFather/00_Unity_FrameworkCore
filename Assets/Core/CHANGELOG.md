@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 * Add base class about [Quest] system.
 * Add check for updates menu editor class.
+* Add validate check for update Base frame package.
 
 ### Changed
 * Change the structure of changing from UGUI to ExtensionUI.
