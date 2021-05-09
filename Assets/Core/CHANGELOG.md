@@ -6,13 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.4.1] - 2021-04-26 (Quest, Check for updates)
 ### Added
-
 * Add base class about [Quest] system.
 * Add check for updates menu editor class.
 
+### Changed
+* Change the structure of changing from UGUI to ExtensionUI.
+
 ## [1.4.0] - 2021-03-29 (Game System)
 ### Added
-
 * Add required class to the game system.
  ** include [Level], [TimeChecker], [Probability], [BigInteger] classes.
 * [Transform], [GameObject], and [ComponentBind] classes that automatically target self-generated classes add inherited classes.

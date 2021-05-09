@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine.UI;
 using KKSFramework.UI;
+using UnityEngine;
 
 namespace KKSFramework.Editor
 {
@@ -11,11 +12,7 @@ namespace KKSFramework.Editor
         [MenuItem ("CONTEXT/Button/Button Component Change", validate = false)]
         public static void ChangeButtonComponent (MenuCommand command)
         {
-            var btnComp = (Button) command.context;
-            var btnObj = btnComp.gameObject;
-            Undo.DestroyObjectImmediate ((Button) command.context);
-            var buttonExtension = Undo.AddComponent<ButtonExtension> (btnObj);
-            buttonExtension.ReplaceComponent (btnComp);
+            ConvertTo<ButtonExtension> (command.context);
         }
 
         [MenuItem ("CONTEXT/Button/Button Component Change", validate = true)]
@@ -31,14 +28,11 @@ namespace KKSFramework.Editor
             }
         }
 
+
         [MenuItem ("CONTEXT/Toggle/Toggle Component Change", validate = false)]
-        public static void ChangeToggleComponent (MenuCommand p_command)
+        public static void ChangeToggleComponent (MenuCommand command)
         {
-            var toggleComp = (Toggle) p_command.context;
-            var toggleObj = toggleComp.gameObject;
-            Undo.DestroyObjectImmediate ((Toggle) p_command.context);
-            var toggleExtension = Undo.AddComponent<ToggleExtension> (toggleObj);
-            toggleExtension.ReplaceComponent (toggleComp);
+            ConvertTo<ToggleExtension> (command.context);
         }
 
         [MenuItem ("CONTEXT/Toggle/Toggle Component Change", validate = true)]
@@ -52,6 +46,34 @@ namespace KKSFramework.Editor
             {
                 return true;
             }
+        }
+
+
+        /// <summary>
+        /// Convert to the specified component.
+        /// </summary>
+        private static void ConvertTo<T> (Object context) where T : MonoBehaviour
+        {
+            if (!(context is MonoBehaviour target)) return;
+            var so = new SerializedObject (target);
+            so.Update ();
+
+            var oldEnable = target.enabled;
+            target.enabled = false;
+
+            // Find MonoScript of the specified component.
+            foreach (var script in Resources.FindObjectsOfTypeAll<MonoScript> ())
+            {
+                if (script.GetClass () != typeof (T))
+                    continue;
+
+                // Set 'm_Script' to convert.
+                so.FindProperty ("m_Script").objectReferenceValue = script;
+                so.ApplyModifiedProperties ();
+                break;
+            }
+
+            ((MonoBehaviour) so.targetObject).enabled = oldEnable;
         }
 
         #endregion

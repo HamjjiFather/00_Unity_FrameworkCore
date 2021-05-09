@@ -55,7 +55,7 @@ namespace KKSFramework.Editor
                     }
 
             // 색상 변경 옵션.
-            EditorGUILayout.PropertyField (serializedObject.FindProperty ("clickSoundClip"));
+            EditorGUILayout.PropertyField (serializedObject.FindProperty ("soundTypeEnum"));
             serializedObject.ApplyModifiedProperties ();
 
             // 색상 변경 옵션.
