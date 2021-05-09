@@ -5,15 +5,15 @@ using UnityEngine;
 namespace KKSFramework
 {
     /// <summary>
-    /// 캐시 컴포넌트 클래스.
-    /// 2018.06.03. 작성.
+    ///     캐시 컴포넌트 클래스.
+    ///     2018.06.03. 작성.
     /// </summary>
     public class CachedComponent : MonoBehaviour
     {
         #region Fields & Property
 
         /// <summary>
-        /// 이 오브젝트에 캐시된 컴포넌트 딕셔너리.
+        ///     이 오브젝트에 캐시된 컴포넌트 딕셔너리.
         /// </summary>
         private Dictionary<Type, object> _cachedComponentDict;
 
@@ -21,10 +21,7 @@ namespace KKSFramework
         {
             get
             {
-                if (_cachedComponentDict == null)
-                {
-                    _cachedComponentDict = new Dictionary<Type, object> ();
-                }
+                if (_cachedComponentDict == null) _cachedComponentDict = new Dictionary<Type, object> ();
 
                 return _cachedComponentDict;
             }
@@ -36,35 +33,29 @@ namespace KKSFramework
         #region Methods
 
         /// <summary>
-        /// 캐시된 컴포넌트 리턴.
+        ///     캐시된 컴포넌트 리턴.
         /// </summary>
         public Component GetCachedComponent (Type type)
         {
-            if (!CachedComponentDict.ContainsKey (type))
-            {
-                CachedComponentDict.Add (type, GetComponent (type));
-            }
-            
+            if (!CachedComponentDict.ContainsKey (type)) CachedComponentDict.Add (type, GetComponent (type));
+
             return CachedComponentDict[type] as Component;
         }
-        
-        
+
+
         /// <summary>
-        /// 캐시된 컴포넌트 리턴.
+        ///     캐시된 컴포넌트 리턴.
         /// </summary>
         public Component[] GetCachedComponents (Type type)
         {
-            if (!CachedComponentDict.ContainsKey (type))
-            {
-                CachedComponentDict.Add (type, GetComponents (type));
-            }
-            
+            if (!CachedComponentDict.ContainsKey (type)) CachedComponentDict.Add (type, GetComponents (type));
+
             return CachedComponentDict[type] as Component[];
         }
 
 
         /// <summary>
-        /// 컴포넌트를 추가하고 캐시된 제네릭 컴포넌트 리턴.
+        ///     컴포넌트를 추가하고 캐시된 제네릭 컴포넌트 리턴.
         /// </summary>
         public Component AddCachedComponent (Type type)
         {
@@ -75,7 +66,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        /// 캐시된 제네릭 컴포넌트 리턴.
+        ///     캐시된 제네릭 컴포넌트 리턴.
         /// </summary>
         public T GetCachedComponent<T> ()
         {
@@ -84,7 +75,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        /// 캐시된 제네릭 컴포넌트 리턴.
+        ///     캐시된 제네릭 컴포넌트 리턴.
         /// </summary>
         public T[] GetCachedComponents<T> ()
         {
@@ -93,7 +84,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        /// 컴포넌트를 추가하고 캐시된 제네릭 컴포넌트 리턴.
+        ///     컴포넌트를 추가하고 캐시된 제네릭 컴포넌트 리턴.
         /// </summary>
         public T AddCachedComponent<T> () where T : Component
         {

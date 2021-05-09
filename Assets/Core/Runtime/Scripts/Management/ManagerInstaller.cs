@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using KKSFramework.Localization;
 using KKSFramework.InputEvent;
 using KKSFramework.LocalData;
+using KKSFramework.Localization;
 using KKSFramework.Navigation;
 using KKSFramework.ResourcesLoad;
 using KKSFramework.SceneLoad;
@@ -11,7 +11,7 @@ using UnityEngine;
 namespace KKSFramework.Management
 {
     /// <summary>
-    /// 모든 기능 관리 클래스의 인스톨 클래스.
+    ///     모든 기능 관리 클래스의 인스톨 클래스.
     /// </summary>
     public class ManagerInstaller : MonoBehaviour
     {
@@ -32,7 +32,7 @@ namespace KKSFramework.Management
         #region Methods
 
         /// <summary>
-        /// 로컬 데이터 로드.
+        ///     로컬 데이터 로드.
         /// </summary>
         private void LocalDataLoad ()
         {
@@ -40,7 +40,7 @@ namespace KKSFramework.Management
         }
 
         /// <summary>
-        /// 매니저 클래스 초기화 작업.
+        ///     매니저 클래스 초기화 작업.
         /// </summary>
         private void InstallManagerClass ()
         {
@@ -50,7 +50,7 @@ namespace KKSFramework.Management
         }
 
         /// <summary>
-        /// 매니저 클래스 등록.
+        ///     매니저 클래스 등록.
         /// </summary>
         private void RegistManagerClass ()
         {
@@ -64,7 +64,7 @@ namespace KKSFramework.Management
         }
 
         /// <summary>
-        /// 매니저 클래스 초기화.
+        ///     매니저 클래스 초기화.
         /// </summary>
         private void InitializeManagerClass ()
         {
@@ -72,7 +72,7 @@ namespace KKSFramework.Management
         }
 
         /// <summary>
-        /// 매니저 클래스에 컴포넌트 등록.
+        ///     매니저 클래스에 컴포넌트 등록.
         /// </summary>
         private void CreateComponentBase ()
         {

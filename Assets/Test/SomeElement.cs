@@ -17,7 +17,7 @@ public class SomeElement : SelfComponentBind
 
     public int value;
 
-#pragma warning restore CS0649
+
 
 
     [Bind]

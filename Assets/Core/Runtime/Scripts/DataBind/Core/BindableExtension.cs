@@ -2,24 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 using KKSFramework.DataBind.Methods;
+using UnityEngine;
 
 namespace KKSFramework.DataBind
 {
     public static class BindableExtension
     {
         /// <summary>
-        /// Return Methods.
+        ///     Return Methods.
         /// </summary>
         public static object ReturnMethods (IEnumerable<Component> targetComponents, Component targetComponent,
             string methodName)
         {
             var methodInfo = targetComponent.GetType ().GetMethod (methodName);
-            if (methodInfo is null)
-            {
-                return null;
-            }
+            if (methodInfo is null) return null;
 
             var parameterTypes = methodInfo.GetParameters ().Select (x => x.ParameterType).ToArray ();
             var returnType = methodInfo.ReturnType;
@@ -59,7 +56,7 @@ namespace KKSFramework.DataBind
                     default:
                         return null;
                 }
-                
+
                 var makeGeneric = toMethodDelegatesGenericType.MakeGenericType (parameterTypes);
                 return Activator.CreateInstance (makeGeneric, delegates);
             }
@@ -93,24 +90,21 @@ namespace KKSFramework.DataBind
 
                 default:
                     return null;
-                
             }
-            
-            var makeFuncDelegateGeneric = toFuncDelegateGenericType.MakeGenericType (GetGenericTypes (returnType, parameterTypes));
+
+            var makeFuncDelegateGeneric =
+                toFuncDelegateGenericType.MakeGenericType (GetGenericTypes (returnType, parameterTypes));
             return Activator.CreateInstance (makeFuncDelegateGeneric, funcs);
         }
 
 
         /// <summary>
-        /// Return Method.
+        ///     Return Method.
         /// </summary>
         public static object ReturnMethod (Component targetComponent, string methodName)
         {
             var methodInfo = targetComponent.GetType ().GetMethod (methodName);
-            if (methodInfo is null)
-            {
-                return null;
-            }
+            if (methodInfo is null) return null;
 
             var parameterTypes = methodInfo.GetParameters ().Select (x => x.ParameterType).ToArray ();
             var returnType = methodInfo.ReturnType;
@@ -121,13 +115,13 @@ namespace KKSFramework.DataBind
 
 
         /// <summary>
-        /// Return action delegate.
+        ///     Return action delegate.
         /// </summary>
         private static object GetActionDelegate (MethodInfo methodInfo, Component targetComponent,
             Type[] parameterTypes)
         {
             Type genericType;
-            
+
             switch (parameterTypes.Length)
             {
                 case 0:
@@ -163,7 +157,7 @@ namespace KKSFramework.DataBind
 
 
         /// <summary>
-        /// Return func delegate.
+        ///     Return func delegate.
         /// </summary>
         private static object GetFuncDelegate (MethodInfo methodInfo, Component targetComponent, Type returnType,
             IReadOnlyCollection<Type> parameterTypes)
@@ -198,8 +192,8 @@ namespace KKSFramework.DataBind
             var makeGeneric = genericType.MakeGenericType (GetGenericTypes (returnType, parameterTypes));
             return Delegate.CreateDelegate (makeGeneric, targetComponent, methodInfo);
         }
-        
-        
+
+
         private static Type[] GetGenericTypes (Type returnType, IEnumerable<Type> parameterTypes)
         {
             return parameterTypes.Append (returnType).ToArray ();

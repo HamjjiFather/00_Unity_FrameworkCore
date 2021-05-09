@@ -3,19 +3,19 @@
 namespace KKSFramework.Animation
 {
     /// <summary>
-    /// 수동 작동 애니메이션 데이터.
+    ///     수동 작동 애니메이션 데이터.
     /// </summary>
     [Serializable]
     public class ManuallySpriteAnimationData : SpriteAnimationData
     {
         /// <summary>
-        /// OnEnable에서 실행 여부.
+        ///     OnEnable에서 실행 여부.
         /// </summary>
         public bool is_played_on_enable;
     }
 
     /// <summary>
-    /// 수동 작동 애니메이션 클래스.
+    ///     수동 작동 애니메이션 클래스.
     /// </summary>
     public class ManuallySpriteAnimationComponent : SpriteAnimationComponent
     {
@@ -25,7 +25,7 @@ namespace KKSFramework.Animation
         #region Fields & Property
 
         /// <summary>
-        /// 애니메이션 데이터.
+        ///     애니메이션 데이터.
         /// </summary>
         public ManuallySpriteAnimationData com_ManuallySpriteAnimationData;
 

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace KKSFramework.Animation
 {
     /// <summary>
-    /// 스프라이트 애니메이션 방향 타입.
+    ///     스프라이트 애니메이션 방향 타입.
     /// </summary>
     public enum StatusDirection
     {
@@ -17,7 +17,7 @@ namespace KKSFramework.Animation
     }
 
     /// <summary>
-    /// 스프라이트 애니메이션 동작 타입.
+    ///     스프라이트 애니메이션 동작 타입.
     /// </summary>
     public enum StatusBehaviour
     {
@@ -29,33 +29,33 @@ namespace KKSFramework.Animation
     }
 
     /// <summary>
-    /// 스프라이트 애니메이션 데이터 클래스.
+    ///     스프라이트 애니메이션 데이터 클래스.
     /// </summary>
     [Serializable]
     public class SpriteAnimationData
     {
         /// <summary>
-        /// 반복 여부.
+        ///     반복 여부.
         /// </summary>
         public bool is_looping;
 
         /// <summary>
-        /// 반복 후 스프라이트 종료 여부.
+        ///     반복 후 스프라이트 종료 여부.
         /// </summary>
         public bool is_off;
 
         /// <summary>
-        /// 스프라이트 리스트.
+        ///     스프라이트 리스트.
         /// </summary>
         public List<Sprite> list_spr_animation = new List<Sprite> ();
 
         /// <summary>
-        /// 애니메이션 속도 보정치.
+        ///     애니메이션 속도 보정치.
         /// </summary>
         public float speed_rate;
 
         /// <summary>
-        /// 이 데이터의 스프라이트 길이.
+        ///     이 데이터의 스프라이트 길이.
         /// </summary>
         /// <returns></returns>
         public int ReturnAnimationLength ()
@@ -65,52 +65,52 @@ namespace KKSFramework.Animation
     }
 
     /// <summary>
-    /// 애니메이션 관리 클래스.
+    ///     애니메이션 관리 클래스.
     /// </summary>
     public class SpriteAnimationComponent : MonoBehaviour
     {
         /// <summary>
-        /// 애니메이션 지속시간.
+        ///     애니메이션 지속시간.
         /// </summary>
         private readonly float animation_duration = 1f;
 
         /// <summary>
-        /// 현재 애니메이션 카운트.
+        ///     현재 애니메이션 카운트.
         /// </summary>
         private int ani_count;
 
         /// <summary>
-        /// 현재 실행중인 애니메이션 키.
+        ///     현재 실행중인 애니메이션 키.
         /// </summary>
         private string animation_key = string.Empty;
 
         /// <summary>
-        /// 애니메이션 동작 타입.
+        ///     애니메이션 동작 타입.
         /// </summary>
         private StatusBehaviour e_StatusBehaviour = StatusBehaviour.Default;
 
         /// <summary>
-        /// 애니메이션 방향 타입.
+        ///     애니메이션 방향 타입.
         /// </summary>
         private StatusDirection e_StatusDirection = StatusDirection.Default;
 
         /// <summary>
-        /// 이벤트 프레임.
+        ///     이벤트 프레임.
         /// </summary>
         private int event_frame = -1;
 
         /// <summary>
-        /// 스프라이트 렌더러.
+        ///     스프라이트 렌더러.
         /// </summary>
         private SpriteRenderer spren_this;
 
         /// <summary>
-        /// 스프라이트 종료 이벤트.
+        ///     스프라이트 종료 이벤트.
         /// </summary>
         public UnityAction ua_end_animation;
 
         /// <summary>
-        /// 스프라이트 특정 프레임 이벤트.
+        ///     스프라이트 특정 프레임 이벤트.
         /// </summary>
         public UnityAction ua_frame_event;
 
@@ -126,13 +126,13 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 스프라이트 애니메이션 데이터.
+        ///     스프라이트 애니메이션 데이터.
         /// </summary>
         public Dictionary<string, SpriteAnimationData> Dic_sprites_data { get; set; } =
             new Dictionary<string, SpriteAnimationData> ();
 
         /// <summary>
-        /// 현재 애니메이션 길이를 리턴.
+        ///     현재 애니메이션 길이를 리턴.
         /// </summary>
         /// <returns></returns>
         public int ReturnAnimationLength ()
@@ -141,7 +141,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 해당 키에 해당하는 애니메이션 데이터 존재 여부.
+        ///     해당 키에 해당하는 애니메이션 데이터 존재 여부.
         /// </summary>
         /// <param name="p_key"></param>
         /// <returns></returns>
@@ -151,7 +151,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 이동 애니메이션 세팅.
+        ///     이동 애니메이션 세팅.
         /// </summary>
         /// <param name="p_arr_spr"></param>
         public void SetSprites (StatusDirection p_e_StatusDirection, StatusBehaviour p_e_StatusBehaviour,
@@ -163,7 +163,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 스프라이트 즉시 변경.
+        ///     스프라이트 즉시 변경.
         /// </summary>
         public void ChangeSpriteImmediately (StatusDirection p_e_StatusDirection = StatusDirection.Default,
             StatusBehaviour p_e_StatusBehaviour = StatusBehaviour.Default, int p_count = 0)
@@ -176,7 +176,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 스프라이트 데이터 초기화.
+        ///     스프라이트 데이터 초기화.
         /// </summary>
         public void ClearAllSprite ()
         {
@@ -184,7 +184,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 이벤트 데이터 초기화.
+        ///     이벤트 데이터 초기화.
         /// </summary>
         public void ClearAllEvent ()
         {
@@ -193,7 +193,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 애니메이션 실행.
+        ///     애니메이션 실행.
         /// </summary>
         /// <param name="p_is_attack"></param>
         public void Play (SpriteAnimationData p_SpriteAnimationData,
@@ -221,7 +221,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 프레임 이벤트 설정.
+        ///     프레임 이벤트 설정.
         /// </summary>
         /// <param name="p_event_frame"></param>
         /// <param name="p_ua_frame"></param>
@@ -232,7 +232,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 종료 프레임 이벤트 설정.
+        ///     종료 프레임 이벤트 설정.
         /// </summary>
         /// <param name="p_ua_end"></param>
         public void SetEndEvent (UnityAction p_ua_end)
@@ -241,7 +241,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 애니메이션 정지.
+        ///     애니메이션 정지.
         /// </summary>
         public void Stop ()
         {
@@ -251,7 +251,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 애니메이션 재실행.
+        ///     애니메이션 재실행.
         /// </summary>
         public void Resume ()
         {
@@ -261,7 +261,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 애니메이션 실행.
+        ///     애니메이션 실행.
         /// </summary>
         public void PlayAnimation ()
         {
@@ -270,7 +270,7 @@ namespace KKSFramework.Animation
         }
 
         /// <summary>
-        /// 애니메이션 변경.
+        ///     애니메이션 변경.
         /// </summary>
         private void ChangeAnimation ()
         {

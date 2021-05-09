@@ -9,7 +9,7 @@ namespace KKSFramework
     public static class Utility
     {
         /// <summary>
-        /// clear all of console log.
+        ///     clear all of console log.
         /// </summary>
         public static void ClearConsole ()
         {
@@ -19,7 +19,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        /// Type에 해당하는 enum을 랜덤으로 1개 리턴함.
+        ///     Type에 해당하는 enum을 랜덤으로 1개 리턴함.
         /// </summary>
         public static Enum ReturnRandomEnum (Type p_type)
         {
@@ -28,7 +28,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        /// 문자열과 같은 이름을 가진 T 타입에 해당하는 enum 타입을 리턴.
+        ///     문자열과 같은 이름을 가진 T 타입에 해당하는 enum 타입을 리턴.
         /// </summary>
         public static T ReturnEnumTypeValue<T> (string enumName) where T : Enum
         {
@@ -37,9 +37,9 @@ namespace KKSFramework
         }
 
         /// <summary>
-        /// 단계별 차등 FilledAmount 적용 값을 리턴.
-        /// ex: 100, 200, 500의 단계 데이터, 값 150일 경우 0.33.. + 0.16..이 되어  0.5의 값을 리턴 함.
-        /// ex: 5, 10, 15, 30의 단계 데이터, 값 17일 경우 0.25 + 0.25 + 0.25 + 0.033..이 되어 + 0.7833..의 값을 리턴 함.
+        ///     단계별 차등 FilledAmount 적용 값을 리턴.
+        ///     ex: 100, 200, 500의 단계 데이터, 값 150일 경우 0.33.. + 0.16..이 되어  0.5의 값을 리턴 함.
+        ///     ex: 5, 10, 15, 30의 단계 데이터, 값 17일 경우 0.25 + 0.25 + 0.25 + 0.033..이 되어 + 0.7833..의 값을 리턴 함.
         /// </summary>
         /// <returns></returns>
         public static float ReturnSteppedFilledAmount (float p_value, List<float> p_list_step_amount)

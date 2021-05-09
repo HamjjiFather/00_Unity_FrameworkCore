@@ -9,7 +9,7 @@ namespace KKSFramework.Localization
         public string key;
 
         public string[] args = new string[0];
-        
+
         public object[] ToObjectArgs => Array.ConvertAll (args, x => x.ToString ()).ToArray ();
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace KKSFramework.Editor
 {
     /// <summary>
-    /// Extension Copy Component Editor Class.
+    ///     Extension Copy Component Editor Class.
     /// </summary>
     public static class CopyComponentExtensionMenu
     {

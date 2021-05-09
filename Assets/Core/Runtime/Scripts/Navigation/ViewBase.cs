@@ -7,28 +7,26 @@ namespace KKSFramework.Navigation
 {
     public class ViewBase : PoolingComponent
     {
+        /// <summary>
+        ///     cancellation token source.
+        /// </summary>
+        private CancellationTokenSource _cancellationTokenSource;
+
+
         #region Fields & Property
 
         /// <summary>
-        /// RectTransform.
+        ///     RectTransform.
         /// </summary>
         public RectTransform RectTransform => GetCachedComponent<RectTransform> ();
 
-#pragma warning disable CS0649
-
-#pragma warning restore CS0649
-
         #endregion
 
-        /// <summary>
-        /// view option.
-        /// </summary>
-        private ViewOption ViewOption => GetCachedComponent<ViewOption> ();
 
         /// <summary>
-        /// cancellation token source.
+        ///     view option.
         /// </summary>
-        private CancellationTokenSource _cancellationTokenSource;
+        private ViewOption ViewOption => GetCachedComponent<ViewOption> ();
 
         protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
 
@@ -41,7 +39,7 @@ namespace KKSFramework.Navigation
         #region Methods
 
         /// <summary>
-        /// 뷰 오픈.
+        ///     뷰 오픈.
         /// </summary>
         public async UniTask Push (object pushValue = null)
         {
@@ -52,7 +50,7 @@ namespace KKSFramework.Navigation
         }
 
         /// <summary>
-        /// 뷰 클로즈.
+        ///     뷰 클로즈.
         /// </summary>
         public async UniTask Pop ()
         {
@@ -89,7 +87,7 @@ namespace KKSFramework.Navigation
         #region EventMethods
 
         /// <summary>
-        /// 팝업 열림 이벤트 함수.
+        ///     팝업 열림 이벤트 함수.
         /// </summary>
         protected virtual async UniTask OnPush (object pushValue = null)
         {
@@ -98,15 +96,15 @@ namespace KKSFramework.Navigation
         }
 
         /// <summary>
-        /// 팝업 열림 마무리 이벤트 함수.
+        ///     팝업 열림 마무리 이벤트 함수.
         /// </summary>
         protected virtual void Pushed (object pushValue = null)
         {
         }
 
         /// <summary>
-        /// 페이지, 팝업이 감춰져있다가 맨앞으로 나옴.
-        /// 전환시 처리 대기를 하면 된다.
+        ///     페이지, 팝업이 감춰져있다가 맨앞으로 나옴.
+        ///     전환시 처리 대기를 하면 된다.
         /// </summary>
         protected virtual UniTask OnForeground ()
         {
@@ -139,8 +137,8 @@ namespace KKSFramework.Navigation
 
 
         /// <summary>
-        /// 팝업 닫힘 이벤트 함수.
-        /// 풀링 이후 실행.
+        ///     팝업 닫힘 이벤트 함수.
+        ///     풀링 이후 실행.
         /// </summary>
         protected virtual UniTask Popped ()
         {

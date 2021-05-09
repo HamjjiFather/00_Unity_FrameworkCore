@@ -5,29 +5,11 @@ using UnityEngine;
 namespace KKSFramework.Navigation
 {
     /// <summary>
-    /// 페이지에서 규칙적으로 호출되는 ViewLayout들을 호출하기 위한 컴포넌트.
+    ///     페이지에서 규칙적으로 호출되는 ViewLayout들을 호출하기 위한 컴포넌트.
     /// </summary>
     [RequireComponent (typeof (Context))]
     public class ViewLayoutLoaderBase : MonoBehaviour, IResolveTarget
     {
-        #region Fields & Property
-
-        public bool initOnAwake = true;
-
-#pragma warning disable CS0649
-
-        [Resolver]
-        private ViewLayoutBase[] _viewLayoutObjs;
-
-        public ViewLayoutBase[] ViewLayoutBases => _viewLayoutObjs;
-
-#pragma warning restore CS0649
-
-        private int _nowLayout;
-
-        #endregion
-
-
         #region UnityMethods
 
         protected virtual void Awake ()
@@ -39,27 +21,41 @@ namespace KKSFramework.Navigation
         #endregion
 
 
+        #region Fields & Property
+
+        public bool initOnAwake = true;
+
+
+        [field: Resolver]
+        public ViewLayoutBase[] ViewLayoutBases { get; }
+
+
+        private int _nowLayout;
+
+        #endregion
+
+
         #region Methods
 
         public virtual void Initialize ()
         {
-            _viewLayoutObjs.Foreach (x => { x.Initialize (); });
+            ViewLayoutBases.Foreach (x => { x.Initialize (); });
         }
 
 
         public virtual void SetSubView (int index)
         {
-            if (_nowLayout >= 0 && _nowLayout < _viewLayoutObjs.Length)
-                _viewLayoutObjs[_nowLayout].DisableLayout ().Forget ();
+            if (_nowLayout >= 0 && _nowLayout < ViewLayoutBases.Length)
+                ViewLayoutBases[_nowLayout].DisableLayout ().Forget ();
 
             _nowLayout = index;
-            _viewLayoutObjs[_nowLayout].ActiveLayout ().Forget ();
+            ViewLayoutBases[_nowLayout].ActiveLayout ().Forget ();
         }
 
 
         public virtual void CloseViewLayout ()
         {
-            _viewLayoutObjs.Foreach (vlo => vlo.DisableLayout ().Forget ());
+            ViewLayoutBases.Foreach (vlo => vlo.DisableLayout ().Forget ());
             _nowLayout = -1;
         }
 

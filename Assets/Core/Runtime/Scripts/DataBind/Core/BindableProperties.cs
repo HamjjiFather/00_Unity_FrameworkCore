@@ -8,14 +8,14 @@ namespace KKSFramework.DataBind
         #region Fields & Property
 
         /// <summary>
-        /// 타겟이 되는 컴포넌트.
+        ///     타겟이 되는 컴포넌트.
         /// </summary>
         public T[] targetComponents;
 
         public override object BindTarget => BindTargetProperty;
 
         /// <summary>
-        /// my property.
+        ///     my property.
         /// </summary>
         private Property<TV> _targetValue;
 
@@ -29,10 +29,6 @@ namespace KKSFramework.DataBind
                 return _targetValue;
             }
         }
-
-#pragma warning disable CS0649
-
-#pragma warning restore CS0649
 
         #endregion
 

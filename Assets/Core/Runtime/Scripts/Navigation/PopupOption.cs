@@ -10,44 +10,6 @@ namespace KKSFramework.Navigation
 {
     public class PopupOption : ViewOption, IResolveTarget
     {
-        #region Fields & Property
-
-#pragma warning disable CS0649
-        
-        [Resolver]
-        private ButtonExtension _bgButton;
-        
-        public ButtonExtension BgButton => _bgButton;
-        
-
-        [Resolver]
-        private ButtonExtension _closeButton;
-        
-        public ButtonExtension CloseButton => _closeButton;
-        
-
-        [Resolver]
-        private ViewEffector _viewEffector;
-
-        public ViewEffector ViewEffector => _viewEffector;
-
-        
-        [Resolver]
-        private Text _popupTitleText;
-
-        public Text PopupTitleText => _popupTitleText;
-
-
-        [Resolver]
-        private RectTransform _contentRoot;
-
-        public RectTransform ContentRoot => _contentRoot;
-
-#pragma warning restore CS0649
-
-        #endregion
-       
-
         public void InitializePopupOption (UnityAction closeAction)
         {
             BgButton.onClick.AddListener (closeAction);
@@ -63,5 +25,29 @@ namespace KKSFramework.Navigation
         {
             await ViewEffector.HideAsync (ct);
         }
+
+
+        #region Fields & Property
+
+        [field: Resolver]
+        public ButtonExtension BgButton { get; }
+
+
+        [field: Resolver]
+        public ButtonExtension CloseButton { get; }
+
+
+        [field: Resolver]
+        public ViewEffector ViewEffector { get; }
+
+
+        [field: Resolver]
+        public Text PopupTitleText { get; }
+
+
+        [field: Resolver]
+        public RectTransform ContentRoot { get; }
+
+        #endregion
     }
 }

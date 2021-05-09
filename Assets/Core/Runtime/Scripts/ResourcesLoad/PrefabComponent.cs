@@ -5,7 +5,7 @@ using Zenject;
 namespace KKSFramework.ResourcesLoad
 {
     /// <summary>
-    /// 프리팹 관리 클래스.
+    ///     프리팹 관리 클래스.
     /// </summary>
     [DisallowMultipleComponent]
     public class PrefabComponent : CachedComponent
@@ -13,7 +13,7 @@ namespace KKSFramework.ResourcesLoad
         #region Return Generic Type
 
         /// <summary>
-        /// 오브젝트 생성.
+        ///     오브젝트 생성.
         /// </summary>
         public T InstantiateObject<T> (params Type[] types) where T : Component
         {
@@ -23,7 +23,7 @@ namespace KKSFramework.ResourcesLoad
 
 
         /// <summary>
-        /// 오브젝트 생성.
+        ///     오브젝트 생성.
         /// </summary>
         public T InstantiateObject<T> (Transform parents, params Type[] types) where T : Component
         {
@@ -33,7 +33,7 @@ namespace KKSFramework.ResourcesLoad
 
 
         /// <summary>
-        /// 오브젝트 생성.
+        ///     오브젝트 생성.
         /// </summary>
         public T InstantiateObject<T> (Transform parents, Vector3 localPosition,
             Vector3 localEulerAngle, params Type[] types) where T : Component
@@ -43,7 +43,7 @@ namespace KKSFramework.ResourcesLoad
         }
 
         /// <summary>
-        /// 오브젝트 생성.
+        ///     오브젝트 생성.
         /// </summary>
         public T InstantiateObject<T> (Transform parents, Vector3 localScale,
             Vector3 localPosition, Vector3 localEulerAngle, params Type[] types) where T : Component
@@ -58,39 +58,33 @@ namespace KKSFramework.ResourcesLoad
         #region Return PrefabComponent
 
         /// <summary>
-        /// 오브젝트 생성.
+        ///     오브젝트 생성.
         /// </summary>
         public PrefabComponent InstantiateObject (params Type[] types)
         {
             var prefabComp = ProjectContext.Instance.Container.InstantiatePrefab (this)
                 .GetComponent<PrefabComponent> ();
-            foreach (var t in types)
-            {
-                prefabComp.AddCachedComponent (t);
-            }
+            foreach (var t in types) prefabComp.AddCachedComponent (t);
 
             return prefabComp;
         }
 
 
         /// <summary>
-        /// 오브젝트 생성.
+        ///     오브젝트 생성.
         /// </summary>
         public PrefabComponent InstantiateObject (Transform parents, params Type[] types)
         {
             var prefabComp = ProjectContext.Instance.Container.InstantiatePrefab (this, parents)
                 .GetComponent<PrefabComponent> ();
             prefabComp.transform.SetInstantiateTransform ();
-            foreach (var t in types)
-            {
-                prefabComp.AddCachedComponent (t);
-            }
+            foreach (var t in types) prefabComp.AddCachedComponent (t);
 
             return prefabComp;
         }
 
         /// <summary>
-        /// 오브젝트 생성.
+        ///     오브젝트 생성.
         /// </summary>
         public PrefabComponent InstantiateObject (Transform parents, Vector3 localPosition,
             Vector3 localEulerAngle, params Type[] types)
@@ -99,7 +93,7 @@ namespace KKSFramework.ResourcesLoad
         }
 
         /// <summary>
-        /// 오브젝트 생성.
+        ///     오브젝트 생성.
         /// </summary>
         public PrefabComponent InstantiateObject (Transform parents, Vector3 localScale,
             Vector3 localPosition, Vector3 localEulerAngle, params Type[] types)

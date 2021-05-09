@@ -5,7 +5,7 @@ using UnityEngine;
 namespace KKSFramework.Sound
 {
     /// <summary>
-    /// 사운드 관리 컴포넌트.
+    ///     사운드 관리 컴포넌트.
     /// </summary>
     public class SoundPlayComponent : ComponentBase, IResolveTarget
     {
@@ -16,34 +16,26 @@ namespace KKSFramework.Sound
 
         #region Fields & Property
 
-#pragma warning disable CS0649
-
         /// <summary>
-        /// 타입에 따른 오디오 소스 리턴.
+        ///     타입에 따른 오디오 소스 리턴.
         /// </summary>
         public AudioSource AudioSource (SoundType soundType)
         {
-            return soundType == SoundType.Bgm ? _audioSourceBGM : _audioSourceSfx;
+            return soundType == SoundType.Bgm ? AudioSourceBGM : AudioSourceSfx;
         }
 
         /// <summary>
-        /// 배경음 실행 오디오 소스.
+        ///     배경음 실행 오디오 소스.
         /// </summary>
-        [Resolver]
-        private AudioSource _audioSourceBGM;
-        
-        public AudioSource AudioSourceBGM => _audioSourceBGM;
+        [field: Resolver]
+        public AudioSource AudioSourceBGM { get; }
 
-        
+
         /// <summary>
-        /// 효과음 실행 오디오 소스.
+        ///     효과음 실행 오디오 소스.
         /// </summary>
-        [Resolver]
-        private AudioSource _audioSourceSfx;
-
-        public AudioSource AudioSourceSfx => _audioSourceSfx;
-
-#pragma warning restore CS0649
+        [field: Resolver]
+        public AudioSource AudioSourceSfx { get; }
 
         #endregion
 

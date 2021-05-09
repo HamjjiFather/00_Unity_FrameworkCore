@@ -11,7 +11,8 @@ namespace KKSFramework.GameSystem
         }
 
 
-        public QuestProgressModelBase (int index, float reqProgressValue, Action<int> progressCompleteAction, Action<int> progressFailureAction)
+        public QuestProgressModelBase (int index, float reqProgressValue, Action<int> progressCompleteAction,
+            Action<int> progressFailureAction)
         {
             ProgressIndex = index;
             ReqProgressValue = reqProgressValue;
@@ -25,33 +26,29 @@ namespace KKSFramework.GameSystem
         public QuestProgressState QuestProgressState { get; private set; } = QuestProgressState.NoReachable;
 
         /// <summary>
-        /// 단계 인덱스.
+        ///     단계 인덱스.
         /// </summary>
         public int ProgressIndex;
 
         /// <summary>
-        /// 단계 진행도.
+        ///     단계 진행도.
         /// </summary>
         public float ProgressValue;
 
         /// <summary>
-        /// 단계 요구 진행도.
+        ///     단계 요구 진행도.
         /// </summary>
         public float ReqProgressValue;
 
         /// <summary>
-        /// 단계 완료 액션.
+        ///     단계 완료 액션.
         /// </summary>
         public Action<int> ProgressCompleteAction;
 
         /// <summary>
-        /// 단계 실패 액션.
+        ///     단계 실패 액션.
         /// </summary>
         public Action<int> ProgressFailureAction;
-
-#pragma warning disable CS0649
-
-#pragma warning restore CS0649
 
         #endregion
 
@@ -59,7 +56,7 @@ namespace KKSFramework.GameSystem
         #region Methods
 
         /// <summary>
-        /// 단계 도달이 됨.
+        ///     단계 도달이 됨.
         /// </summary>
         public void ReachProgress (float value = 0f)
         {
@@ -69,30 +66,29 @@ namespace KKSFramework.GameSystem
             QuestProgressState = QuestProgressState.OnProgress;
             ProgressValue = value;
         }
-        
+
 
         public bool SetProgress (float value)
         {
             if (value.IsZero ())
                 return false;
-            
+
             ProgressValue = value;
-            
+
             // 단계 완료시 초과분을 넘김.
             if (!(ProgressValue >= ReqProgressValue) || QuestProgressState != QuestProgressState.OnProgress)
                 return false;
             QuestProgressState = QuestProgressState.WaitForComplete;
             return true;
-
         }
-        
-        
+
+
         public void WaitForCompleteProgress ()
         {
             if (QuestProgressState != QuestProgressState.OnProgress) return;
             QuestProgressState = QuestProgressState.WaitForComplete;
         }
-        
+
 
         public void CompleteProgress ()
         {

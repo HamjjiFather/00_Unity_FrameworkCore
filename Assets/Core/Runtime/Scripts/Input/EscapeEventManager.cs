@@ -6,22 +6,22 @@ using UnityEngine;
 namespace KKSFramework.InputEvent
 {
     /// <summary>
-    /// Managing to 'esc' button event on pc and android platforms.
+    ///     Managing to 'esc' button event on pc and android platforms.
     /// </summary>
     public sealed class EscapeEventManager : ManagerBase<EscapeEventManager>
     {
         /// <summary>
-        /// normal esc action.
+        ///     normal esc action.
         /// </summary>
         private Action _escapeAction;
 
         /// <summary>
-        /// hooked esc action.
+        ///     hooked esc action.
         /// </summary>
         private Action _hookedEscapeAction;
 
         /// <summary>
-        /// escape event action.
+        ///     escape event action.
         /// </summary>
         public Action EscapeAction => _hookedEscapeAction ?? _escapeAction;
 
@@ -43,22 +43,22 @@ namespace KKSFramework.InputEvent
 
             base.InitManager ();
         }
-        
+
 
         /// <summary>
-        /// change normal event action.
+        ///     change normal event action.
         /// </summary>
-        [Obsolete("This method will be obsoleted. Therefore use SetEscapeEvent method instead of this")]
+        [Obsolete ("This method will be obsoleted. Therefore use SetEscapeEvent method instead of this")]
         public void AddEscapeEvent (Action action)
         {
 #if UNITY_ANDROID || UNITY_STANDALONE
             _escapeAction = action;
 #endif
         }
-        
-        
+
+
         /// <summary>
-        /// change normal event action.
+        ///     change normal event action.
         /// </summary>
         public void SetEscapeEvent (Action action)
         {
@@ -67,9 +67,9 @@ namespace KKSFramework.InputEvent
 #endif
         }
 
-        
+
         /// <summary>
-        /// hooking event action.
+        ///     hooking event action.
         /// </summary>
         public void SetHookingEscapeEvent (Action hookingAction)
         {
@@ -78,9 +78,9 @@ namespace KKSFramework.InputEvent
 #endif
         }
 
-        
+
         /// <summary>
-        /// remove normal escape event.
+        ///     remove normal escape event.
         /// </summary>
         public void RemoveEscapeEvent ()
         {
@@ -88,10 +88,10 @@ namespace KKSFramework.InputEvent
             _escapeAction = null;
 #endif
         }
-        
-        
+
+
         /// <summary>
-        /// remove hooking escape event.
+        ///     remove hooking escape event.
         /// </summary>
         public void RemoveHookingEscapeEvent ()
         {

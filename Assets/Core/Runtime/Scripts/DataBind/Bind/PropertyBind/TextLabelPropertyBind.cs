@@ -11,9 +11,15 @@ namespace KKSFramework.DataBind
             base.Reset ();
             targetComponent = GetComponent<Text> ();
         }
-        
-        protected override string GetDelegate () => targetComponent.text;
 
-        protected override void SetDelegate (string value) => targetComponent.text = value;
+        protected override string GetDelegate ()
+        {
+            return targetComponent.text;
+        }
+
+        protected override void SetDelegate (string value)
+        {
+            targetComponent.text = value;
+        }
     }
 }

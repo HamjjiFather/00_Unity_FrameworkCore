@@ -11,9 +11,15 @@ namespace KKSFramework.DataBind
             base.Reset ();
             targetComponent = GetComponent<Graphic> ();
         }
-        
-        protected override Color GetDelegate () => targetComponent.color;
 
-        protected override void SetDelegate (Color value) => targetComponent.color = value;
+        protected override Color GetDelegate ()
+        {
+            return targetComponent.color;
+        }
+
+        protected override void SetDelegate (Color value)
+        {
+            targetComponent.color = value;
+        }
     }
 }

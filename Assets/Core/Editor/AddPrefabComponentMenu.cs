@@ -5,7 +5,7 @@ using UnityEngine;
 namespace KKSFramework.Editor
 {
     /// <summary>
-    /// Add PrefabComponent class on Transform Component.
+    ///     Add PrefabComponent class on Transform Component.
     /// </summary>
     public static class AddPrefabComponentMenu
     {

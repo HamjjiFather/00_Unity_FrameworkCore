@@ -6,14 +6,14 @@ using UnityEngine.UI;
 namespace KKSFramework.UI
 {
     /// <summary>
-    /// 버튼 베이스 클래스.
+    ///     버튼 베이스 클래스.
     /// </summary>
     public class ButtonExtension : Button
     {
         #region EventMethods
 
         /// <summary>
-        /// 클릭 이벤트.
+        ///     클릭 이벤트.
         /// </summary>
         protected virtual void OnClick ()
         {
@@ -26,14 +26,14 @@ namespace KKSFramework.UI
         #region Fields & Property
 
         /// <summary>
-        /// 사운드 타입.
+        ///     사운드 타입.
         /// </summary>
         [Header ("[ButtonExtension]")]
         [Space (5)]
         public SoundTypeEnum soundTypeEnum = SoundTypeEnum.sfx_button;
 
         /// <summary>
-        /// 버튼 텍스트.
+        ///     버튼 텍스트.
         /// </summary>
         public Text buttonText;
 
@@ -58,7 +58,7 @@ namespace KKSFramework.UI
         #region Methods
 
         /// <summary>
-        /// 베이스 버튼에서 컴포넌트를 변경함.
+        ///     베이스 버튼에서 컴포넌트를 변경함.
         /// </summary>
         public void ReplaceComponent (Button targetButton)
         {
@@ -69,7 +69,7 @@ namespace KKSFramework.UI
         }
 
         /// <summary>
-        /// 버튼 텍스트 변경.
+        ///     버튼 텍스트 변경.
         /// </summary>
         /// <param name="text"></param>
         public void SetText (string text)
@@ -80,31 +80,30 @@ namespace KKSFramework.UI
 
 
         /// <summary>
-        /// Add OnClick listener.
+        ///     Add OnClick listener.
         /// </summary>
         public void AddListener (UnityAction call)
         {
             onClick.AddListener (call);
         }
-        
-        
+
+
         /// <summary>
-        /// Remove OnClick listener.
+        ///     Remove OnClick listener.
         /// </summary>
         public void RemoveListener (UnityAction call)
         {
             onClick.RemoveListener (call);
         }
-        
-        
+
+
         /// <summary>
-        /// Remove all OnClick listener.
+        ///     Remove all OnClick listener.
         /// </summary>
         public void RemoveAllListeners ()
         {
             onClick.RemoveAllListeners ();
         }
-        
 
         #endregion
     }

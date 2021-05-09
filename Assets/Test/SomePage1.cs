@@ -10,7 +10,7 @@ public class SomePage1 : MonoBehaviour, IResolveTarget
     [Resolver]
     private Property<string[]> _strings;
 
-#pragma warning restore CS0649
+
 
     #endregion
 

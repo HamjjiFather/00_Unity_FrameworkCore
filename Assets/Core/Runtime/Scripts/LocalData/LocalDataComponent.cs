@@ -1,6 +1,5 @@
 ﻿using System;
 using KKSFramework.Management;
-using UnityEngine.Events;
 
 namespace KKSFramework.LocalData
 {
@@ -8,11 +7,7 @@ namespace KKSFramework.LocalData
     {
         #region Fields & Property
 
-#pragma warning disable CS0649
-
         private Action _saveAction;
-
-#pragma warning restore CS0649
 
         #endregion
 
@@ -20,7 +15,7 @@ namespace KKSFramework.LocalData
         #region UnityMethods
 
         /// <summary>
-        /// 앱을 종료할 경우 데이터를 저장.
+        ///     앱을 종료할 경우 데이터를 저장.
         /// </summary>
         private void OnApplicationQuit ()
         {

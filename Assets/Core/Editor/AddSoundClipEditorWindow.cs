@@ -9,47 +9,10 @@ using UnityEngine;
 namespace KKSFramework.Editor
 {
     /// <summary>
-    /// 사운드 클립 로드 에디터 클래스.
+    ///     사운드 클립 로드 에디터 클래스.
     /// </summary>
     public class AddSoundClipEditorWindow : EditorWindow
     {
-        #region Static Fields & Property
-
-        /// <summary>
-        /// 에디터 윈도우.
-        /// </summary>
-        private static EditorWindow _nowOpenedWindow;
-
-        /// <summary>
-        /// 현재 로드된 XML파일.
-        /// </summary>
-        private static AudioClipData _openedClipData;
-
-        /// <summary>
-        /// 현재 로드된 클립.
-        /// </summary>
-        private static List<AudioClip> _loadedClips = new List<AudioClip> ();
-
-        /// <summary>
-        /// 데이터 로드 여부.
-        /// </summary>
-        private static bool _isLoaded;
-
-        /// <summary>
-        /// Json파일.
-        /// </summary>
-        private static TextAsset _textAsset;
-
-        private static TextAsset DataFileTextAsset ()
-        {
-            _textAsset = ResourcesLoadManager.Instance.GetResources<TextAsset> ("_Data", "Json",
-                Constants.Framework.SoundJsonFileName);
-            return _textAsset;
-        }
-
-        #endregion
-
-
         #region UnityMethods
 
         private void OnGUI ()
@@ -136,10 +99,47 @@ namespace KKSFramework.Editor
         #endregion
 
 
+        #region Static Fields & Property
+
+        /// <summary>
+        ///     에디터 윈도우.
+        /// </summary>
+        private static EditorWindow _nowOpenedWindow;
+
+        /// <summary>
+        ///     현재 로드된 XML파일.
+        /// </summary>
+        private static AudioClipData _openedClipData;
+
+        /// <summary>
+        ///     현재 로드된 클립.
+        /// </summary>
+        private static List<AudioClip> _loadedClips = new List<AudioClip> ();
+
+        /// <summary>
+        ///     데이터 로드 여부.
+        /// </summary>
+        private static bool _isLoaded;
+
+        /// <summary>
+        ///     Json파일.
+        /// </summary>
+        private static TextAsset _textAsset;
+
+        private static TextAsset DataFileTextAsset ()
+        {
+            _textAsset = ResourcesLoadManager.Instance.GetResources<TextAsset> ("_Data", "Json",
+                Constants.Framework.SoundJsonFileName);
+            return _textAsset;
+        }
+
+        #endregion
+
+
         #region Static Methods
 
         /// <summary>
-        /// SFX 사운드 클립 윈도우 호출.
+        ///     SFX 사운드 클립 윈도우 호출.
         /// </summary>
         [MenuItem ("Sound/Sound Clip Setting", priority = 11)]
         public static void SoundClipWindow ()
@@ -148,7 +148,7 @@ namespace KKSFramework.Editor
         }
 
         /// <summary>
-        /// 사운드 클립 윈도우 호출.
+        ///     사운드 클립 윈도우 호출.
         /// </summary>
         private static void OpenSoundClipWindow ()
         {
@@ -171,7 +171,7 @@ namespace KKSFramework.Editor
         }
 
         /// <summary>
-        /// 데이터 현황 체크.
+        ///     데이터 현황 체크.
         /// </summary>
         private static void CheckDataStatus ()
         {
@@ -189,7 +189,7 @@ namespace KKSFramework.Editor
         }
 
         /// <summary>
-        /// XML 데이터 파일의 경로 데이터를 받아옴.
+        ///     XML 데이터 파일의 경로 데이터를 받아옴.
         /// </summary>
         /// <returns></returns>
         private static AudioClipData LoadSoundClip ()
@@ -199,7 +199,7 @@ namespace KKSFramework.Editor
         }
 
         /// <summary>
-        /// XML 데이터의 파일 경로를 토대로 받아온 TextAsset 데이터를 받아옴.
+        ///     XML 데이터의 파일 경로를 토대로 받아온 TextAsset 데이터를 받아옴.
         /// </summary>
         private static List<AudioClip> LoadAudioClip (AudioClipData clipData)
         {
@@ -208,7 +208,7 @@ namespace KKSFramework.Editor
         }
 
         /// <summary>
-        /// 현재 파일 리스트들을 저장할 수 있는지 여부.
+        ///     현재 파일 리스트들을 저장할 수 있는지 여부.
         /// </summary>
         /// <returns></returns>
         private static bool IsAbleToSave ()

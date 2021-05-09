@@ -10,37 +10,34 @@ namespace KKSFramework.Editor
     public class FloatPropertyInspector : BaseValueTypePropertyInspector<FloatPropertyBind, float>
     {
     }
-    
+
     [CanEditMultipleObjects]
     [CustomEditor (typeof (IntPropertyBind))]
     public class IntPropertyInspector : BaseValueTypePropertyInspector<IntPropertyBind, int>
     {
     }
-    
+
     [CanEditMultipleObjects]
     [CustomEditor (typeof (BooleanPropertyBind))]
     public class BooleanPropertyInspector : BaseValueTypePropertyInspector<BooleanPropertyBind, bool>
     {
     }
-    
+
     [CanEditMultipleObjects]
     [CustomEditor (typeof (StringPropertyBind))]
     public class StringPropertyInspector : BaseValueTypePropertyInspector<StringPropertyBind, string>
     {
     }
-    
-    
-    public class BaseValueTypePropertyInspector<T, TV> : UnityEditor.Editor where T : BaseValueBindableProperty<Object, TV>
+
+
+    public class BaseValueTypePropertyInspector<T, TV> : UnityEditor.Editor
+        where T : BaseValueBindableProperty<Object, TV>
     {
         #region Fields & Property
 
         private T _target;
 
         private int _arrayIndex;
-
-#pragma warning disable CS0649
-
-#pragma warning restore CS0649
 
         #endregion
 
@@ -65,14 +62,14 @@ namespace KKSFramework.Editor
 
             if (_target.targetComponent == null)
                 return;
-            
+
             var properties = _target.targetComponent.GetType ().GetProperties ()
                 .Where (x => x.PropertyType == typeof (TV) && !x.SetMethod.IsNull ()).ToList ();
             var propertyNames = properties.Select (x => x.Name).ToList ();
 
             if (!propertyNames.Any ())
             {
-                Debug.Log ($"There is no properties that are {typeof(TV)} type");
+                Debug.Log ($"There is no properties that are {typeof (TV)} type");
                 return;
             }
 

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace KKSFramework.DataBind.Methods
 {
     public class MethodDelegates
@@ -10,15 +9,15 @@ namespace KKSFramework.DataBind.Methods
         protected readonly object[] Methods;
 
 
-        public void Invoke ()
-        {
-            Methods.Foreach (x => ((Action) x).Invoke ());
-        }
-
-
         public MethodDelegates (params object[] methods)
         {
             Methods = methods;
+        }
+
+
+        public void Invoke ()
+        {
+            Methods.Foreach (x => ((Action) x).Invoke ());
         }
     }
 
@@ -134,15 +133,15 @@ namespace KKSFramework.DataBind.Methods
         protected readonly object[] Methods;
 
 
-        public IEnumerable<T> Invoke ()
-        {
-            return Methods.Select (x => ((Func<T>) x).Invoke ());
-        }
-
-
         public FuncDelegates (params object[] methods)
         {
             Methods = methods;
+        }
+
+
+        public IEnumerable<T> Invoke ()
+        {
+            return Methods.Select (x => ((Func<T>) x).Invoke ());
         }
     }
 

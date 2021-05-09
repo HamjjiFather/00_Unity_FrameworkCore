@@ -11,7 +11,7 @@ namespace KKSFramework.LocalData
     }
 
     /// <summary>
-    /// 보존이 필요한 게임 로컬 데이터 관리 클래스.
+    ///     보존이 필요한 게임 로컬 데이터 관리 클래스.
     /// </summary>
     public class LocalDataManager : ManagerBase<LocalDataManager>
     {
@@ -31,15 +31,14 @@ namespace KKSFramework.LocalData
 
         #region Methods
 
-
         public void SetSaveAction (Action saveAllAction)
         {
             LocalDataComponent.SetSaveAction (saveAllAction);
         }
-        
+
 
         /// <summary>
-        /// 게임 데이터 로드.
+        ///     게임 데이터 로드.
         /// </summary>
         public void LoadGameData (Bundle bundle)
         {
@@ -47,7 +46,7 @@ namespace KKSFramework.LocalData
         }
 
         /// <summary>
-        /// 게임 데이터 저장.
+        ///     게임 데이터 저장.
         /// </summary>
         /// .
         public void SaveGameData (Bundle bundle)
@@ -69,7 +68,7 @@ namespace KKSFramework.LocalData
     public static class LocalDataExtension
     {
         /// <summary>
-        /// Bundle 클래스 Json파일로 저장.
+        ///     Bundle 클래스 Json파일로 저장.
         /// </summary>
         public static void FromJsonData (this Bundle bundle)
         {
@@ -80,7 +79,7 @@ namespace KKSFramework.LocalData
         }
 
         /// <summary>
-        /// Json파일 Bundle클래스로 저장.
+        ///     Json파일 Bundle클래스로 저장.
         /// </summary>
         public static void ToJsonData (this Bundle bundle)
         {

@@ -5,7 +5,7 @@ namespace KKSFramework.Sound
         #region Methods
 
         /// <summary>
-        /// play bgm sound.
+        ///     play bgm sound.
         /// </summary>
         public static void PlayBgm (SoundTypeEnum soundTypeEnum)
         {
@@ -14,7 +14,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        /// play Sfx sound.
+        ///     play Sfx sound.
         /// </summary>
         public static void PlaySfx (SoundTypeEnum soundTypeEnum)
         {
@@ -23,7 +23,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        /// Pause AudioSource.
+        ///     Pause AudioSource.
         /// </summary>
         public static void Pause (SoundType soundType)
         {
@@ -32,7 +32,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        /// UnPause AudioSource.
+        ///     UnPause AudioSource.
         /// </summary>
         public static void UnPause (SoundType soundType)
         {
@@ -41,7 +41,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        /// Stop AudioSource.
+        ///     Stop AudioSource.
         /// </summary>
         public static void Stop (SoundType soundType)
         {
@@ -50,7 +50,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        /// Control Volume AudioSource.
+        ///     Control Volume AudioSource.
         /// </summary>
         public static void Volume (SoundType soundType, float volume)
         {
@@ -59,7 +59,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        /// Mute AudioSource.
+        ///     Mute AudioSource.
         /// </summary>
         public static void Mute (SoundType soundType, bool mute)
         {

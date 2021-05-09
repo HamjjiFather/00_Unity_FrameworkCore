@@ -5,13 +5,15 @@ namespace UiParticles
 {
     public class UiParticleTrailRenderer : MaskableGraphic
     {
+        private UiParticles m_partenParticlesModule;
+
         /// <summary>
-        /// ParticleSystem used for generate particles
+        ///     ParticleSystem used for generate particles
         /// </summary>
         /// <value>The particle system.</value>
         public UiParticles ParentParticleModule
         {
-            get { return m_partenParticlesModule; }
+            get => m_partenParticlesModule;
             set
             {
                 if (SetPropertyUtility.SetClass (ref m_partenParticlesModule, value))
@@ -20,22 +22,17 @@ namespace UiParticles
         }
 
         /// <summary>
-        /// Texture used by the particles
+        ///     Texture used by the particles
         /// </summary>
         public override Texture mainTexture
         {
             get
             {
-                if (material != null && material.mainTexture != null)
-                {
-                    return material.mainTexture;
-                }
+                if (material != null && material.mainTexture != null) return material.mainTexture;
 
                 return s_WhiteTexture;
             }
         }
-
-        private UiParticles m_partenParticlesModule;
 
         protected override void Start ()
         {
@@ -61,9 +58,7 @@ namespace UiParticles
             var trails = ParentParticleModule.ParticleSystem.trails;
 
             if (m_Material == null && trails.enabled)
-            {
                 m_Material = ParentParticleModule.GetComponent<ParticleSystemRenderer> ().trailMaterial;
-            }
         }
     }
 }

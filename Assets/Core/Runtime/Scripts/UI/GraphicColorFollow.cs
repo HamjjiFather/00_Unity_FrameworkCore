@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace KKSFramework.UI
 {
     /// <summary>
-    /// 이 클래스를 사용하는 UGUI가, 타겟의 UGUI 색상을 따라감.
+    ///     이 클래스를 사용하는 UGUI가, 타겟의 UGUI 색상을 따라감.
     /// </summary>
     [RequireComponent (typeof (Graphic))]
     public class GraphicColorFollow : CachedComponent
@@ -14,22 +14,22 @@ namespace KKSFramework.UI
         #region Fields & Property
 
         /// <summary>
-        /// 색상 변경 참고 상태.
+        ///     색상 변경 참고 상태.
         /// </summary>
         public StatusColorOption statusFollowOption;
 
         /// <summary>
-        /// 변경할 타겟 그래픽.
+        ///     변경할 타겟 그래픽.
         /// </summary>
         public Graphic followingGraphic;
 
         /// <summary>
-        /// 그래픽.
+        ///     그래픽.
         /// </summary>
         private Graphic _targetGraphic => GetCachedComponent<Graphic> ();
 
         /// <summary>
-        /// 구독.
+        ///     구독.
         /// </summary>
         private IDisposable _followingSubscribe;
 
@@ -57,7 +57,7 @@ namespace KKSFramework.UI
         #region Methods
 
         /// <summary>
-        /// 동적으로 타겟을 변경함.
+        ///     동적으로 타겟을 변경함.
         /// </summary>
         public void SetFollowTarget (Graphic p_graphic)
         {
@@ -65,7 +65,7 @@ namespace KKSFramework.UI
         }
 
         /// <summary>
-        /// 동적으로 타겟을 삭제함.
+        ///     동적으로 타겟을 삭제함.
         /// </summary>
         public void RemoveFollowTarget ()
         {

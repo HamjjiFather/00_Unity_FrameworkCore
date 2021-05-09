@@ -7,20 +7,12 @@ namespace KKSFramework.Navigation
     {
         #region Fields & Property
 
-#pragma warning disable CS0649
+        [field: Resolver]
+        public RectTransform PopupParents { get; }
 
-        [Resolver]
-        private RectTransform _popupParents;
 
-        public RectTransform PopupParents => _popupParents;
-
-        
-        [Resolver]
-        private RectTransform _contentRoot;
-
-        public RectTransform ContentRoot => _contentRoot;
-
-#pragma warning restore CS0649
+        [field: Resolver]
+        public RectTransform ContentRoot { get; }
 
         #endregion
     }

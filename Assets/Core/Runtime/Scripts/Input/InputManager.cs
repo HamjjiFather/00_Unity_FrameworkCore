@@ -52,7 +52,7 @@ namespace KKSFramework.InputEvent
 
 
         /// <summary>
-        /// Down 이벤트 유무
+        ///     Down 이벤트 유무
         /// </summary>
         public bool GetDown ()
         {
@@ -72,7 +72,7 @@ namespace KKSFramework.InputEvent
 
 
         /// <summary>
-        /// Up 이벤트 유무
+        ///     Up 이벤트 유무
         /// </summary>
         /// <returns></returns>
         public bool GetUp ()
@@ -93,7 +93,7 @@ namespace KKSFramework.InputEvent
 
 
         /// <summary>
-        /// Press 이벤트 유무
+        ///     Press 이벤트 유무
         /// </summary>
         public bool GetPress ()
         {
@@ -109,7 +109,7 @@ namespace KKSFramework.InputEvent
 
 
         /// <summary>
-        /// 위치
+        ///     위치
         /// </summary>
         public Vector2 GetPosition ()
         {
@@ -128,7 +128,7 @@ namespace KKSFramework.InputEvent
 
 
         /// <summary>
-        /// 위치
+        ///     위치
         /// </summary>
         public int GetPositions (Vector2[] positions)
         {

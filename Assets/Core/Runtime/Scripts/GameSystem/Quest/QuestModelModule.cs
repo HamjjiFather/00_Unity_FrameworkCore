@@ -10,64 +10,64 @@ namespace KKSFramework.GameSystem
     public enum QuestState
     {
         /// <summary>
-        /// 수락하지 않음.
+        ///     수락하지 않음.
         /// </summary>
         NoAccept,
 
         /// <summary>
-        /// 수락.
+        ///     수락.
         /// </summary>
         Accept,
 
         /// <summary>
-        /// 거절.
+        ///     거절.
         /// </summary>
         Decline,
 
 
         /// <summary>
-        /// 완료 대기.
+        ///     완료 대기.
         /// </summary>
         WaitForComplete,
 
         /// <summary>
-        /// 완료.
+        ///     완료.
         /// </summary>
         Complete,
 
         /// <summary>
-        /// 실패.
+        ///     실패.
         /// </summary>
-        Failure,
+        Failure
     }
 
 
     public enum QuestProgressState
     {
         /// <summary>
-        /// 단계 도달 못함.
+        ///     단계 도달 못함.
         /// </summary>
         NoReachable,
 
         /// <summary>
-        /// 단계 진행 중.
+        ///     단계 진행 중.
         /// </summary>
         OnProgress,
 
         /// <summary>
-        /// 완료 대기 중.
+        ///     완료 대기 중.
         /// </summary>
         WaitForComplete,
 
         /// <summary>
-        /// 단계 완료.
+        ///     단계 완료.
         /// </summary>
         Complete,
 
         /// <summary>
-        /// 단계 실패.
+        ///     단계 실패.
         /// </summary>
-        Failure,
+        Failure
     }
 
     public partial class QuestModelModule : ModelBase
@@ -87,33 +87,39 @@ namespace KKSFramework.GameSystem
         #region Core.
 
         /// <summary>
-        /// 퀘스트 진행 상태.
+        ///     퀘스트 진행 상태.
         /// </summary>
         public QuestState QuestState = QuestState.NoAccept;
 
         /// <summary>
-        /// 진행 단계들.
+        ///     진행 단계들.
         /// </summary>
         public readonly List<QuestProgressModelBase> QuestProgresses;
 
         /// <summary>
-        /// 현재 진행 중인 단계들.
+        ///     현재 진행 중인 단계들.
         /// </summary>
         public QuestProgressModelBase NowProgressModel => QuestProgresses[_progressIndex];
 
 
         /// <summary>
-        /// 현재 단계 요구 값.
+        ///     현재 단계 요구 값.
         /// </summary>
         public float NowProgressReqValue => NowProgressModel.ReqProgressValue;
 
         /// <summary>
-        /// 퀘스트 완료시 호출 액션.
+        ///     퀘스트 완료시 호출 액션.
         /// </summary>
         private Action _onCompleteQuestAction;
 
         /// <summary>
-        /// 퀘스트 실패시 호출 액션.
+        ///     퀘스트 반복시 호출 액션.
+        ///     값은 반복 처리 완료 후 현재 진행 값을 리턴한다.
+        /// </summary>
+        private Action<float> _onIteratedQuestAction;
+
+        /// <summary>
+        ///     퀘스트 실패시 호출 액션.
         /// </summary>
         private Action _onFailureQuestAction;
 
@@ -123,13 +129,13 @@ namespace KKSFramework.GameSystem
         #region Progress
 
         /// <summary>
-        /// 퀘스트 단계가 자동으로 완료 처리 되는지.
-        /// 아닐 경우 단계 완료 함수 접근을 통해 완료해 주어야 한다.
+        ///     퀘스트 단계가 자동으로 완료 처리 되는지.
+        ///     아닐 경우 단계 완료 함수 접근을 통해 완료해 주어야 한다.
         /// </summary>
         private bool _autoCompleteProgress;
 
         /// <summary>
-        /// 퀘스트 단계 완료 후 이전 단계의 초과된 값이 초기화 되는지.
+        ///     퀘스트 단계 완료 후 이전 단계의 초과된 값이 초기화 되는지.
         /// </summary>
         private bool _resetValueOnNextProgress;
 
@@ -139,17 +145,17 @@ namespace KKSFramework.GameSystem
         #region Complete
 
         /// <summary>
-        /// 퀘스트 완료 / 퀘스트 단계 완료 후에도 진행도가 추가되는지.
+        ///     퀘스트 완료 / 퀘스트 단계 완료 후에도 진행도가 추가되는지.
         /// </summary>
         private bool _addProgressOnComplete;
 
         /// <summary>
-        /// 퀘스트 완료 후 자동으로 반복되는지.
+        ///     퀘스트 완료 후 자동으로 반복되는지.
         /// </summary>
         private bool _iterateQuest;
 
         /// <summary>
-        /// 퀘스트 완료 후 반복 시 이전 단계의 초과된 값이 초기화 되는지.
+        ///     퀘스트 완료 후 반복 시 이전 단계의 초과된 값이 초기화 되는지.
         /// </summary>
         private bool _resetValueOnInterateQuest;
 
@@ -157,52 +163,49 @@ namespace KKSFramework.GameSystem
 
 
         /// <summary>
-        /// 총 단계 수량.
+        ///     총 단계 수량.
         /// </summary>
         public int ProgressLength => QuestProgresses.Count;
 
         /// <summary>
-        /// 현재 단계 진행도 (0 ~ 1).
+        ///     현재 단계 진행도 (0 ~ 1).
         /// </summary>
         public float NowProgressRatio => _nowProgressValue.Value / NowProgressModel.ReqProgressValue;
 
         /// <summary>
-        /// 전체 단계 진행도 (0 ~ 1).
+        ///     전체 단계 진행도 (0 ~ 1).
         /// </summary>
         public float TotalProgressRatio => ProgressIndexForView / (float) QuestProgresses.Count;
 
         /// <summary>
-        /// 모든 단계의 퀘스트 진행도.
+        ///     모든 단계의 퀘스트 진행도.
         /// </summary>
         public float TotalProgressValue => QuestProgresses.Take (_progressIndex).Sum (q => q.ReqProgressValue) +
                                            _nowProgressValue.Value;
 
         /// <summary>
-        /// 모든 단계의 퀘스트 요구량.
+        ///     모든 단계의 퀘스트 요구량.
         /// </summary>
         public float TotalReqProgressValue => QuestProgresses.Sum (q => q.ReqProgressValue);
 
         /// <summary>
-        /// 모든 단계의 퀘스트 요구량 배열.
+        ///     모든 단계의 퀘스트 요구량 배열.
         /// </summary>
         public float[] TotalReqProgresses => QuestProgresses.Select (q => q.ReqProgressValue).ToArray ();
 
-#pragma warning disable CS0649
-
-#pragma warning restore CS0649
 
         /// <summary>
-        /// 진행 단계.
+        ///     진행 단계.
         /// </summary>
         private int _progressIndex;
 
         /// <summary>
-        /// 인식용 진행 단계.
+        ///     인식용 진행 단계.
         /// </summary>
         public int ProgressIndexForView => _progressIndex + 1;
 
         /// <summary>
-        /// 현재 단계 진행 값.
+        ///     현재 단계 진행 값.
         /// </summary>
         private readonly FloatReactiveProperty _nowProgressValue = new FloatReactiveProperty (0);
 
@@ -241,7 +244,7 @@ namespace KKSFramework.GameSystem
 
 
         /// <summary>
-        /// 퀘스트 포기.
+        ///     퀘스트 포기.
         /// </summary>
         public void DeclineQuest ()
         {
@@ -254,8 +257,8 @@ namespace KKSFramework.GameSystem
 
 
         /// <summary>
-        /// 현재 단계 수동 완료.
-        /// 이미 완료된 단계를 완료해야함.
+        ///     현재 단계 수동 완료.
+        ///     이미 완료된 단계를 완료해야함.
         /// </summary>
         public void CompleteProgressManually ()
         {
@@ -270,7 +273,7 @@ namespace KKSFramework.GameSystem
 
 
         /// <summary>
-        /// 단계 값 추가.
+        ///     단계 값 추가.
         /// </summary>
         public void AddProgressValue (float value)
         {
@@ -295,7 +298,7 @@ namespace KKSFramework.GameSystem
 
 
         /// <summary>
-        /// 현재 단계 체크.
+        ///     현재 단계 체크.
         /// </summary>
         private void CheckNextProgress ()
         {
@@ -313,8 +316,8 @@ namespace KKSFramework.GameSystem
 
 
         /// <summary>
-        /// 현재 단계 완료.
-        /// 모든 단계 완료 여부 리턴.
+        ///     현재 단계 완료.
+        ///     모든 단계 완료 여부 리턴.
         /// </summary>
         private bool CompleteProgressProcess ()
         {
@@ -328,7 +331,7 @@ namespace KKSFramework.GameSystem
 
 
         /// <summary>
-        /// 다음 단계 세팅.
+        ///     다음 단계 세팅.
         /// </summary>
         private void SetNextProgress ()
         {
@@ -341,7 +344,7 @@ namespace KKSFramework.GameSystem
 
 
         /// <summary>
-        /// 퀘스트 반복 처리.
+        ///     퀘스트 반복 처리.
         /// </summary>
         private void IterationQuest ()
         {
@@ -353,6 +356,7 @@ namespace KKSFramework.GameSystem
             _nowProgressValue.Value = 0;
             NowProgressModel.ReachProgress ();
             AddProgressValue (remainValue);
+            _onIteratedQuestAction.CallSafe (_nowProgressValue.Value);
         }
 
 

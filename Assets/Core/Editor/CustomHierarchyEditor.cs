@@ -16,13 +16,17 @@ namespace KKSFramework
 
         static CustomHierarchyEditor ()
         {
-            var activeColor = BaseExtension.ToColor (EditorPrefs.GetString (nameof(ActiveNameTextColor), ActiveNameTextColor.ToRGBHex ()));
+            var activeColor =
+                BaseExtension.ToColor (EditorPrefs.GetString (nameof (ActiveNameTextColor),
+                    ActiveNameTextColor.ToRGBHex ()));
             ActiveNameTextColor = activeColor;
-            var inActiveColor = BaseExtension.ToColor (EditorPrefs.GetString (nameof(InactiveNameTextColor), InactiveNameTextColor.ToRGBHex ()));
+            var inActiveColor = BaseExtension.ToColor (EditorPrefs.GetString (nameof (InactiveNameTextColor),
+                InactiveNameTextColor.ToRGBHex ()));
             InactiveNameTextColor = inActiveColor;
-            var bgColor = BaseExtension.ToColor (EditorPrefs.GetString (nameof(BackGroundColor), BackGroundColor.ToRGBHex ()));
-            BackGroundColor = bgColor; 
-            
+            var bgColor =
+                BaseExtension.ToColor (EditorPrefs.GetString (nameof (BackGroundColor), BackGroundColor.ToRGBHex ()));
+            BackGroundColor = bgColor;
+
             EditorApplication.hierarchyWindowItemOnGUI += HandleHierarchyWindowItemOnGUI;
         }
 
@@ -44,7 +48,7 @@ namespace KKSFramework
                 var bgColor = isSelection ? new Color (0.24f, 0.48f, 0.90f) : BackGroundColor;
                 var offsetRect = new Rect (selectionRect.position + new Vector2 (18, 0),
                     selectionRect.size - (isPrefab ? new Vector2 (18, 0) : Vector2.zero));
-                
+
                 EditorGUI.DrawRect (offsetRect, bgColor);
                 EditorGUI.LabelField (offsetRect,
                     $"{obj.name} (Bind as {toGameObj.GetComponent<Bindable> ().ContainerPath} to {(targetContext ? targetContext.name : null)})",

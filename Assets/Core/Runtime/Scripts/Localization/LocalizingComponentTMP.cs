@@ -14,9 +14,9 @@
 //
 //         public override TextMeshPro BindTarget => GetCachedComponent<TextMeshPro> ();
 //
-// #pragma warning disable CS0649
+// 
 //
-// #pragma warning restore CS0649
+// 
 //
 //         #endregion
 //
@@ -41,3 +41,4 @@
 //         #endregion
 //     }
 // }
+

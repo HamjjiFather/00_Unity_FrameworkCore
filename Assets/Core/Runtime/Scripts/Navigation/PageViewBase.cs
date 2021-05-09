@@ -5,30 +5,10 @@ using UnityEngine;
 
 namespace KKSFramework.Navigation
 {
-    [RequireComponent(typeof (Context))]
+    [RequireComponent (typeof (Context))]
     [RequireComponent (typeof (PageOption))]
     public class PageViewBase : ViewBase, IResolveTarget
     {
-        #region Fields & Property
-
-        /// <summary>
-        /// _pageOption.
-        /// </summary>
-        private PageOption PageOption => GetCachedComponent<PageOption> ();
-
-        /// <summary>
-        /// Popup stack.
-        /// </summary>
-        private readonly Stack<PopupViewBase> _registedPopupStack = new Stack<PopupViewBase> ();
-        
-        /// <summary>
-        /// Has popup.
-        /// </summary>
-        public bool ExistPopup => _registedPopupStack.Count != 0;
-        
-        #endregion
-
-
         #region UnityMethods
 
         private void Reset ()
@@ -43,10 +23,30 @@ namespace KKSFramework.Navigation
         #endregion
 
 
+        #region Fields & Property
+
+        /// <summary>
+        ///     _pageOption.
+        /// </summary>
+        private PageOption PageOption => GetCachedComponent<PageOption> ();
+
+        /// <summary>
+        ///     Popup stack.
+        /// </summary>
+        private readonly Stack<PopupViewBase> _registedPopupStack = new Stack<PopupViewBase> ();
+
+        /// <summary>
+        ///     Has popup.
+        /// </summary>
+        public bool ExistPopup => _registedPopupStack.Count != 0;
+
+        #endregion
+
+
         #region Methods
 
         /// <summary>
-        /// 페이지 팝업 등록.
+        ///     페이지 팝업 등록.
         /// </summary>
         public void RegistPopup (PopupViewBase popupViewBase)
         {
@@ -56,7 +56,7 @@ namespace KKSFramework.Navigation
         }
 
         /// <summary>
-        /// 페이지에 오픈된 팝업을 닫음.
+        ///     페이지에 오픈된 팝업을 닫음.
         /// </summary>
         /// <returns></returns>
         public async UniTask<bool> CloseLastPopup ()
@@ -65,7 +65,6 @@ namespace KKSFramework.Navigation
             var last = _registedPopupStack.Pop ();
             await last.Pop ();
             return true;
-
         }
 
         #endregion
@@ -74,7 +73,7 @@ namespace KKSFramework.Navigation
         #region EventMethods
 
         /// <summary>
-        /// 뷰 오픈.
+        ///     뷰 오픈.
         /// </summary>
         protected override async UniTask OnPush (object pushValue = null)
         {

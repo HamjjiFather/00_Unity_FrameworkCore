@@ -8,7 +8,7 @@ using UnityEditor.UI;
 namespace KKSFramework.Editor
 {
     /// <summary>
-    /// ButtonExtension 클래스 커스텀 에디터.
+    ///     ButtonExtension 클래스 커스텀 에디터.
     /// </summary>
     [CustomEditor (typeof (ButtonExtension), true)]
     [CanEditMultipleObjects]
@@ -20,12 +20,12 @@ namespace KKSFramework.Editor
         #region Fields & Property
 
         /// <summary>
-        /// 필드 인포.
+        ///     필드 인포.
         /// </summary>
         private List<FieldInfo> _listPropertyInfos;
 
         /// <summary>
-        /// 상속 여부.
+        ///     상속 여부.
         /// </summary>
         private bool _isInheritance;
 

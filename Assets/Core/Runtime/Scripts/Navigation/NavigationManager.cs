@@ -8,36 +8,35 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using Zenject;
 
 namespace KKSFramework.Navigation
 {
     public enum NavigationTriggerState
     {
         /// <summary>
-        /// 일반 팝업 동작.
+        ///     일반 팝업 동작.
         /// </summary>
         CloseAndOpen = 0,
 
         /// <summary>
-        /// 최초 페이지로 설정.
+        ///     최초 페이지로 설정.
         /// </summary>
         First,
 
         /// <summary>
-        /// 백스페이스 트리거 동작을 하지 않음.
+        ///     백스페이스 트리거 동작을 하지 않음.
         /// </summary>
         NotTrigger
     }
 
     /// <summary>
-    /// 화면 전환 데이터 클래스.
+    ///     화면 전환 데이터 클래스.
     /// </summary>
     public class NavigationInfo
     {
-        public readonly string ViewTypeName;
         public readonly NavigationTriggerState NavigationTriggerState;
         public readonly PageViewBase PageViewBase;
+        public readonly string ViewTypeName;
 
         public NavigationInfo ()
         {
@@ -54,19 +53,19 @@ namespace KKSFramework.Navigation
     }
 
     /// <summary>
-    /// 화면 전환 관리 클래스.
+    ///     화면 전환 관리 클래스.
     /// </summary>
     public class NavigationManager : ManagerBase<NavigationManager>
     {
         #region Fields & Property
 
         /// <summary>
-        /// 현재 열려있는 페이지 카운트.
+        ///     현재 열려있는 페이지 카운트.
         /// </summary>
         public readonly IntReactiveProperty PageCount = new IntReactiveProperty (0);
 
         /// <summary>
-        /// 현재 열려있는 페이지 타입.
+        ///     현재 열려있는 페이지 타입.
         /// </summary>
         public readonly ReactiveProperty<string> LastPageType =
             new ReactiveProperty<string> ("EntryPage");
@@ -77,27 +76,24 @@ namespace KKSFramework.Navigation
 
         public EventSystem RootEventSystem => _navigationComponent.RootEventSystem;
 
-#pragma warning disable CS0649
-
-#pragma warning restore CS0649
 
         /// <summary>
-        /// 네비게이션 컴포넌트.
+        ///     네비게이션 컴포넌트.
         /// </summary>
         private NavigationComponent _navigationComponent => ComponentBase as NavigationComponent;
 
         /// <summary>
-        /// 현재 오픈되어 있는 페이지뷰 스택.
+        ///     현재 오픈되어 있는 페이지뷰 스택.
         /// </summary>
         private readonly Stack<NavigationInfo> _pageInfoStack = new Stack<NavigationInfo> ();
 
         /// <summary>
-        /// ESC 버튼을 통해 뒤로 갈 수 있는지 여부.
+        ///     ESC 버튼을 통해 뒤로 갈 수 있는지 여부.
         /// </summary>
         private bool _ableBackPage;
 
         /// <summary>
-        /// 처음 페이지에서 뒤로가기 버튼을 눌렀을 경우 행동할 액션.
+        ///     처음 페이지에서 뒤로가기 버튼을 눌렀을 경우 행동할 액션.
         /// </summary>
         private UnityAction _actionOnFirst;
 
@@ -107,7 +103,7 @@ namespace KKSFramework.Navigation
         #region Methods
 
         /// <summary>
-        /// initializing manager class.
+        ///     initializing manager class.
         /// </summary>
         public override void InitManager ()
         {
@@ -116,7 +112,7 @@ namespace KKSFramework.Navigation
 
 
         /// <summary>
-        /// return whether or not the last page information exists.
+        ///     return whether or not the last page information exists.
         /// </summary>
         private bool IsExistLastNavInfo ()
         {
@@ -124,7 +120,7 @@ namespace KKSFramework.Navigation
         }
 
         /// <summary>
-        /// return last 'NavigationInfo' data.
+        ///     return last 'NavigationInfo' data.
         /// </summary>
         private NavigationInfo GetLastNavInfo ()
         {
@@ -132,16 +128,14 @@ namespace KKSFramework.Navigation
         }
 
         /// <summary>
-        /// create page view object
+        ///     create page view object
         /// </summary>
         private async UniTask<PageViewBase> CreatePage (string viewString)
         {
             var poolingPath = $"_Prefab/Page/{viewString}";
             // if exist pooled object.
             if (ObjectPoolingManager.Instance.IsExistPooledObject (poolingPath))
-            {
                 return ObjectPoolingManager.Instance.ReturnLoadResources<PageViewBase> (poolingPath);
-            }
 
             var resObj = await ResourcesLoadManager.Instance.GetResourcesAsync<PageViewBase> ("_Prefab",
                 "Page", viewString);
@@ -152,16 +146,14 @@ namespace KKSFramework.Navigation
 
 
         /// <summary>
-        /// create popup view object.
+        ///     create popup view object.
         /// </summary>
         private async UniTask<PopupViewBase> CreatePopup (string viewString)
         {
             var poolingPath = $"_Prefab/Popup/{viewString}";
             // 풀링된 오브젝트가 있을 경우.
             if (ObjectPoolingManager.Instance.IsExistPooledObject (poolingPath))
-            {
                 return ObjectPoolingManager.Instance.ReturnLoadResources<PopupViewBase> (poolingPath);
-            }
 
             var resObj = await ResourcesLoadManager.Instance.GetResourcesAsync<PopupViewBase> ("_Prefab",
                 "Popup", viewString);
@@ -172,7 +164,7 @@ namespace KKSFramework.Navigation
 
 
         /// <summary>
-        /// open page.
+        ///     open page.
         /// </summary>
         public async UniTask OpenPage (string viewString, NavigationTriggerState triggerState,
             object pushValue = null, UnityAction actionOnFirst = null)
@@ -213,7 +205,7 @@ namespace KKSFramework.Navigation
         }
 
         /// <summary>
-        /// open popup.
+        ///     open popup.
         /// </summary>
         public async UniTask OpenPopup (string viewString, object pushValue = null)
         {
@@ -224,7 +216,7 @@ namespace KKSFramework.Navigation
         }
 
         /// <summary>
-        /// create common view.
+        ///     create common view.
         /// </summary>
         public async UniTask OpenCommonView<T> (string viewName) where T : PrefabComponent
         {
@@ -236,14 +228,14 @@ namespace KKSFramework.Navigation
         }
 
         /// <summary>
-        /// back to previous page.
-        /// order.
-        /// 1. fade-in transition animation effect.
-        /// 2. check opened popup in opened page and close the popup.
-        /// 3. invoke (Pop -> Hide -> PoolingObject) method opened page.
-        /// 4. invoke (ToForeground -> Show) method previous page.
-        /// 5. invoke unPooled method on previous page.
-        /// 6. fade-out transition animation effect.
+        ///     back to previous page.
+        ///     order.
+        ///     1. fade-in transition animation effect.
+        ///     2. check opened popup in opened page and close the popup.
+        ///     3. invoke (Pop -> Hide -> PoolingObject) method opened page.
+        ///     4. invoke (ToForeground -> Show) method previous page.
+        ///     5. invoke unPooled method on previous page.
+        ///     6. fade-out transition animation effect.
         /// </summary>
         public async UniTask GoBackPage ()
         {
@@ -288,7 +280,7 @@ namespace KKSFramework.Navigation
 
 
         /// <summary>
-        /// task show async transition view.
+        ///     task show async transition view.
         /// </summary>
         public async UniTask ShowTransitionViewAsync ()
         {
@@ -297,7 +289,7 @@ namespace KKSFramework.Navigation
 
 
         /// <summary>
-        /// task hide async transition view. 
+        ///     task hide async transition view.
         /// </summary>
         public async UniTask HideTransitionViewAsync ()
         {
@@ -306,7 +298,7 @@ namespace KKSFramework.Navigation
 
 
         /// <summary>
-        /// change effector playable state.
+        ///     change effector playable state.
         /// </summary>
         public void ChangeTransitionLockState (bool isLockState)
         {
