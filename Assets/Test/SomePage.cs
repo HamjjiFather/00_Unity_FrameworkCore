@@ -8,6 +8,8 @@ public class SomePage : MonoBehaviour, IResolveTarget
 {
     #region Fields & Property
 
+#pragma warning disable CS0649
+
     [Resolver]
     private MethodDelegates _methods;
 
@@ -40,6 +42,8 @@ public class SomePage : MonoBehaviour, IResolveTarget
 
     [Resolver]
     private Func<int, int> _funcBb;
+
+#pragma warning restore CS0649
 
     #endregion
 

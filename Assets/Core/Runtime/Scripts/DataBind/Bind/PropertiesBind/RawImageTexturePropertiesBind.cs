@@ -6,14 +6,10 @@ namespace KKSFramework.DataBind
 {
     public class RawImageTextureBindableProperties : BindableProperties<RawImage, Texture[]>
     {
-        protected override Texture[] GetDelegate ()
-        {
-            return targetComponents.Select (x => x.GetComponent<RawImage> ().texture).ToArray ();
-        }
+        protected override Texture[] GetDelegate () =>
+            targetComponents.Select (x => x.GetComponent<RawImage> ().texture).ToArray ();
 
-        protected override void SetDelegate (Texture[] values)
-        {
+        protected override void SetDelegate (Texture[] values) =>
             targetComponents.ZipForEach (values, (comp, value) => { comp.texture = value; });
-        }
     }
 }

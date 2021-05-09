@@ -15,7 +15,7 @@ namespace KKSFramework.UI
     }
 
     /// <summary>
-    ///     Unity UI 색상.
+    /// Unity UI 색상.
     /// </summary>
     [RequireComponent (typeof (Graphic))]
     public class GraphicColorChange : CachedComponent
@@ -23,22 +23,22 @@ namespace KKSFramework.UI
         #region Fields & Property
 
         /// <summary>
-        ///     색상 변경 참고 상태(색상 전체, 색상 만, 알파값 만).
+        /// 색상 변경 참고 상태(색상 전체, 색상 만, 알파값 만).
         /// </summary>
         public StatusColorOption statusFollowOption;
 
         /// <summary>
-        ///     타겟들.
+        /// 타겟들.
         /// </summary>
         public List<Graphic> changeGraphics;
 
         /// <summary>
-        ///     타겟 그래픽.
+        /// 타겟 그래픽.
         /// </summary>
         private Graphic _targetGraphic => GetCachedComponent<Graphic> ();
 
         /// <summary>
-        ///     구독.
+        /// 구독.
         /// </summary>
         private IDisposable _followingSubscribe;
 
@@ -77,7 +77,7 @@ namespace KKSFramework.UI
         #region Methods
 
         /// <summary>
-        ///     타겟이 될 그래픽 소스를 동적으로 할당함.
+        /// 타겟이 될 그래픽 소스를 동적으로 할당함.
         /// </summary>
         public void AddChangeTarget (Graphic p_graphic)
         {
@@ -85,7 +85,7 @@ namespace KKSFramework.UI
         }
 
         /// <summary>
-        ///     타겟이었던 그래픽 소스를 동적으로 삭제함.
+        /// 타겟이었던 그래픽 소스를 동적으로 삭제함.
         /// </summary>
         /// <param name="p_graphic"></param>
         public void RemoveChangeTarget (Graphic p_graphic)

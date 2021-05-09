@@ -15,6 +15,10 @@ namespace KKSFramework.Editor
 
         private int _arrayIndex;
 
+#pragma warning disable CS0649
+
+#pragma warning restore CS0649
+
         #endregion
 
 
@@ -40,7 +44,7 @@ namespace KKSFramework.Editor
                 return;
 
             var methods = _target.targetComponent.GetType ().GetMethods (BindingFlags.Instance | BindingFlags.Public)
-                .Where (x => x.GetCustomAttribute<BindAttribute> ().NotNull ()).ToList ();
+                .Where (x => x.GetCustomAttribute<BindAttribute>().NotNull ()).ToList ();
             var methodNames = methods.Select (x => x.Name).ToList ();
 
             _arrayIndex = methodNames.Contains (_target.methodName) ? methodNames.IndexOf (_target.methodName) : 0;

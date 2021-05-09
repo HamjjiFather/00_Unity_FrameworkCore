@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-///     MonoBehaviour를 상속한 클래스의 싱글톤.
+/// MonoBehaviour를 상속한 클래스의 싱글톤.
 /// </summary>
 public class MonobehaviourSingletonClass<T> : MonoBehaviour where T : MonobehaviourSingletonClass<T>
 {

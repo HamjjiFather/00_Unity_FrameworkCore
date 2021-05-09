@@ -3,13 +3,13 @@
     public interface ILevelCore
     {
         public int Level { get; set; }
-
+        
         public int MaxLevel { get; set; }
     }
-
-
+    
+    
     /// <summary>
-    ///     레벨 인터페이스.
+    /// 레벨 인터페이스.
     /// </summary>
     public interface ILevel : ILevelCore
     {
@@ -21,7 +21,7 @@
         #region Methods
 
         public void SetLevel (int level);
-
+        
         public void AddLevel (int levelAmount);
 
         public void SetMaxLevel (int maxLevel);
@@ -30,10 +30,10 @@
 
         #endregion
     }
-
-
+    
+    
     /// <summary>
-    ///     경험치 기반의 레벨 인터페이스.
+    /// 경험치 기반의 레벨 인터페이스.
     /// </summary>
     public interface ILevelBasedOnExp : ILevelCore
     {
@@ -49,9 +49,9 @@
         #region Methods
 
         public void SetExp (int expAmount);
-
+        
         public bool VariExp (int expAmount);
-
+        
         #endregion
     }
 }

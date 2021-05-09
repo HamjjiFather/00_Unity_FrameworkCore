@@ -9,7 +9,7 @@ namespace KKSFramework.ResourcesLoad
         #region Methods
 
         /// <summary>
-        ///     리소스 로드.
+        /// 리소스 로드.
         /// </summary>
         public T GetResources<T> (string path) where T : Object
         {
@@ -23,7 +23,7 @@ namespace KKSFramework.ResourcesLoad
 
 
         /// <summary>
-        ///     제네릭 타입에 해당하는 리소스 로드.
+        /// 제네릭 타입에 해당하는 리소스 로드.
         /// </summary>
         public T GetResources<T> (string roleString, string typeString, string prefabName) where T : Object
         {
@@ -31,7 +31,7 @@ namespace KKSFramework.ResourcesLoad
         }
 
         /// <summary>
-        ///     제네릭 타입에 해당하는 리소스 로드.
+        /// 제네릭 타입에 해당하는 리소스 로드.
         /// </summary>
         public T GetResources<T> (string roleString, string prefabName) where T : Object
         {
@@ -40,7 +40,7 @@ namespace KKSFramework.ResourcesLoad
 
 
         /// <summary>
-        ///     리소스 비동기 로드.
+        /// 리소스 비동기 로드.
         /// </summary>
         private async UniTask<T> GetResourceAsync<T> (string path) where T : Object
         {
@@ -53,7 +53,7 @@ namespace KKSFramework.ResourcesLoad
         }
 
         /// <summary>
-        ///     제네릭 타입에 해당하는 리소스 비동기 로드.
+        /// 제네릭 타입에 해당하는 리소스 비동기 로드.
         /// </summary>
         public async UniTask<T> GetResourcesAsync<T> (string roleString, string typeString, string prefabName)
             where T : Object
@@ -62,7 +62,7 @@ namespace KKSFramework.ResourcesLoad
         }
 
         /// <summary>
-        ///     제네릭 타입에 해당하는 리소스 비동기 로드.
+        /// 제네릭 타입에 해당하는 리소스 비동기 로드.
         /// </summary>
         public async UniTask<T> GetResourcesAsync<T> (string roleString, string prefabName) where T : Object
         {
@@ -71,7 +71,7 @@ namespace KKSFramework.ResourcesLoad
 
 
         /// <summary>
-        ///     제네릭 타입에 해당하는 리소스 비동기 로드.
+        /// 제네릭 타입에 해당하는 리소스 비동기 로드.
         /// </summary>
         public async UniTask<T> GetResourcesAsync<T> (string fullPath) where T : Object
         {

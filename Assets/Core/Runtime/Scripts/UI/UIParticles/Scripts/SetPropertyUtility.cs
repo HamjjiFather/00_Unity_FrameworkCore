@@ -2,7 +2,7 @@
 
 namespace UiParticles
 {
-    internal static class SetPropertyUtility
+    static class SetPropertyUtility
     {
         public static bool SetColor (ref Color currentValue, Color newValue)
         {
@@ -25,7 +25,7 @@ namespace UiParticles
 
         public static bool SetClass<T> (ref T currentValue, T newValue) where T : class
         {
-            if (currentValue == null && newValue == null || currentValue != null && currentValue.Equals (newValue))
+            if ((currentValue == null && newValue == null) || (currentValue != null && currentValue.Equals (newValue)))
                 return false;
 
             currentValue = newValue;

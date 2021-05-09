@@ -11,15 +11,9 @@ namespace KKSFramework.DataBind
             base.Reset ();
             targetComponent = GetComponent<RawImage> ();
         }
+        
+        protected override Texture GetDelegate () => targetComponent.texture;
 
-        protected override Texture GetDelegate ()
-        {
-            return targetComponent.texture;
-        }
-
-        protected override void SetDelegate (Texture value)
-        {
-            targetComponent.texture = value;
-        }
+        protected override void SetDelegate (Texture value) => targetComponent.texture = value;
     }
 }

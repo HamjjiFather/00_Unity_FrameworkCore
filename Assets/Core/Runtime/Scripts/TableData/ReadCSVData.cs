@@ -7,13 +7,13 @@ using UnityEngine;
 namespace KKSFramework.TableData
 {
     /// <summary>
-    ///     CSV데이터를 받아와 리턴.
+    /// CSV데이터를 받아와 리턴.
     /// </summary>
     public class ReadCSVData : Singleton<ReadCSVData>
     {
         /// <summary>
-        ///     CSV 데이터 리턴.
-        ///     데이터 클래스를 List<object> 형식으로 받아올 수 있게 구현해주어야 함.
+        /// CSV 데이터 리턴.
+        /// 데이터 클래스를 List<object> 형식으로 받아올 수 있게 구현해주어야 함.
         /// </summary>
         /// <returns></returns>
         public async UniTask<List<T>> LoadCSVData<T> (string sccondsPath, string path) where T : TableDataBase, new ()

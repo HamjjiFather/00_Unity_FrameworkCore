@@ -1,29 +1,140 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace UiParticles
 {
     /// <summary>
-    ///     Ui Parcticles, requiere ParticleSystem component
+    /// Ui Parcticles, requiere ParticleSystem component
     /// </summary>
     [RequireComponent (typeof (ParticleSystem))]
     public class UiParticles : MaskableGraphic
     {
-        private Mesh _cachedMesh;
-        private int[] m_MeshTriangles;
-        private Vector2[] m_MeshUvs;
-        private Vector3[] m_MeshVerts;
-        private ParticleSystem.Particle[] m_Particles;
+        #region InspectorFields
+
+        /// <summary>
+        /// ParticleSystem used for generate particles
+        /// </summary>
+        [SerializeField]
+        [FormerlySerializedAs ("m_ParticleSystem")]
+        private ParticleSystem m_ParticleSystem;
+
+        /// <summary>
+        /// If true, particles renders in streched mode
+        /// </summary>
+        [FormerlySerializedAs ("m_RenderMode")]
+        [SerializeField]
+        [Tooltip ("Render mode of particles")]
+        private UiParticleRenderMode m_RenderMode = UiParticleRenderMode.Billboard;
+
+        /// <summary>
+        /// Scale particle size, depends on particle velocity
+        /// </summary>
+        [FormerlySerializedAs ("m_StretchedSpeedScale")]
+        [SerializeField]
+        [Tooltip ("Speed Scale for streched billboards")]
+        private float m_StretchedSpeedScale = 1f;
+
+        /// <summary>
+        /// Sclae particle length in streched mode
+        /// </summary>
+        [FormerlySerializedAs ("m_StretchedLenghScale")]
+        [SerializeField]
+        [Tooltip ("Speed Scale for streched billboards")]
+        private float m_StretchedLenghScale = 1f;
+
+
+        [FormerlySerializedAs ("m_IgnoreTimescale")]
+        [SerializeField]
+        [Tooltip ("If true, particles ignore timescale")]
+        private bool m_IgnoreTimescale = false;
+
+        [SerializeField]
+        private Mesh m_RenderedMesh;
+
+        #endregion
+
+
+        #region Public properties
+
+        /// <summary>
+        /// ParticleSystem used for generate particles
+        /// </summary>
+        /// <value>The particle system.</value>
+        public ParticleSystem ParticleSystem
+        {
+            get { return m_ParticleSystem; }
+            set
+            {
+                if (SetPropertyUtility.SetClass (ref m_ParticleSystem, value))
+                    SetAllDirty ();
+            }
+        }
+
+        /// <summary>
+        /// Texture used by the particles
+        /// </summary>
+        public override Texture mainTexture
+        {
+            get
+            {
+                if (material != null && material.mainTexture != null)
+                {
+                    return material.mainTexture;
+                }
+
+                return s_WhiteTexture;
+            }
+        }
+
+        /// <summary>
+        /// Particle system render mode (billboard, strechedBillobard)
+        /// </summary>
+        public UiParticleRenderMode RenderMode
+        {
+            get { return m_RenderMode; }
+            set
+            {
+                if (SetPropertyUtility.SetStruct (ref m_RenderMode, value))
+                    SetAllDirty ();
+            }
+        }
+
+        public Mesh RenderedMesh
+        {
+            get { return m_RenderedMesh; }
+            set
+            {
+                if (SetPropertyUtility.SetClass (ref m_RenderedMesh, value))
+                {
+                    InitMeshData ();
+                    SetAllDirty ();
+                }
+            }
+        }
+
+        #endregion
 
 
         private ParticleSystemRenderer m_ParticleSystemRenderer;
+        private ParticleSystem.Particle[] m_Particles;
+
+        private Mesh _cachedMesh;
+        private Vector3[] m_MeshVerts;
+        private int[] m_MeshTriangles;
+        private Vector2[] m_MeshUvs;
 
         protected override void Awake ()
         {
             var _particleSystem = GetComponent<ParticleSystem> ();
             var _particleSystemRenderer = GetComponent<ParticleSystemRenderer> ();
-            if (m_Material == null) m_Material = _particleSystemRenderer.sharedMaterial;
+            if (m_Material == null)
+            {
+                m_Material = _particleSystemRenderer.sharedMaterial;
+            }
 
             if (_particleSystemRenderer.renderMode == ParticleSystemRenderMode.Stretch)
                 RenderMode = UiParticleRenderMode.StreachedBillboard;
@@ -32,26 +143,6 @@ namespace UiParticles
             ParticleSystem = _particleSystem;
             m_ParticleSystemRenderer = _particleSystemRenderer;
             InitMeshData ();
-        }
-
-        protected virtual void Update ()
-        {
-            if (!m_IgnoreTimescale)
-            {
-                if (ParticleSystem != null && ParticleSystem.isPlaying) SetVerticesDirty ();
-            }
-            else
-            {
-                if (ParticleSystem != null)
-                {
-                    ParticleSystem.Simulate (Time.unscaledDeltaTime, true, false);
-                    SetVerticesDirty ();
-                }
-            }
-
-            // disable default particle renderer, we using our custom
-            if (m_ParticleSystemRenderer != null && m_ParticleSystemRenderer.enabled)
-                m_ParticleSystemRenderer.enabled = false;
         }
 
         private void InitMeshData ()
@@ -84,11 +175,36 @@ namespace UiParticles
             GenerateParticlesBillboards (toFill);
         }
 
+        protected virtual void Update ()
+        {
+            if (!m_IgnoreTimescale)
+            {
+                if (ParticleSystem != null && ParticleSystem.isPlaying)
+                {
+                    SetVerticesDirty ();
+                }
+            }
+            else
+            {
+                if (ParticleSystem != null)
+                {
+                    ParticleSystem.Simulate (Time.unscaledDeltaTime, true, false);
+                    SetVerticesDirty ();
+                }
+            }
+
+            // disable default particle renderer, we using our custom
+            if (m_ParticleSystemRenderer != null && m_ParticleSystemRenderer.enabled)
+                m_ParticleSystemRenderer.enabled = false;
+        }
+
 
         private void InitParticlesBuffer (ParticleSystem.MainModule mainModule)
         {
             if (m_Particles == null || m_Particles.Length < mainModule.maxParticles)
+            {
                 m_Particles = new ParticleSystem.Particle[mainModule.maxParticles];
+            }
         }
 
         private void GenerateParticlesBillboards (VertexHelper vh)
@@ -99,7 +215,7 @@ namespace UiParticles
             var textureSheetAnimationModule = ParticleSystem.textureSheetAnimation;
 
             InitParticlesBuffer (mainModule);
-            var numParticlesAlive = ParticleSystem.GetParticles (m_Particles);
+            int numParticlesAlive = ParticleSystem.GetParticles (m_Particles);
 
             vh.Clear ();
 
@@ -115,17 +231,21 @@ namespace UiParticles
                 if (RenderedMesh != null)
                 {
                     InitMeshData ();
-                    for (var i = 0; i < numParticlesAlive; i++)
+                    for (int i = 0; i < numParticlesAlive; i++)
+                    {
                         DrawParticleMesh (m_Particles[i], vh, frameOverTime, isWorldSimulationSpace,
                             textureSheetAnimationModule, m_MeshVerts, m_MeshTriangles, m_MeshUvs);
+                    }
                 }
             }
             else
             {
-                for (var i = 0; i < numParticlesAlive; i++)
+                for (int i = 0; i < numParticlesAlive; i++)
+                {
                     DrawParticleBillboard (m_Particles[i], vh, frameOverTime,
                         velocityOverTimeX, velocityOverTimeY, velocityOverTimeZ, isWorldSimulationSpace,
                         textureSheetAnimationModule);
+                }
             }
         }
 
@@ -140,13 +260,16 @@ namespace UiParticles
             var center = particle.position;
             var rotation = Quaternion.Euler (particle.rotation3D);
 
-            if (isWorldSimulationSpace) center = rectTransform.InverseTransformPoint (center);
+            if (isWorldSimulationSpace)
+            {
+                center = rectTransform.InverseTransformPoint (center);
+            }
 
-            var timeAlive = particle.startLifetime - particle.remainingLifetime;
-            var globalTimeAlive = timeAlive / particle.startLifetime;
+            float timeAlive = particle.startLifetime - particle.remainingLifetime;
+            float globalTimeAlive = timeAlive / particle.startLifetime;
 
-            var size3D = particle.GetCurrentSize3D (ParticleSystem);
-            var color32 = particle.GetCurrentColor (ParticleSystem);
+            Vector3 size3D = particle.GetCurrentSize3D (ParticleSystem);
+            Color32 color32 = particle.GetCurrentColor (ParticleSystem);
 
             Vector2 uv0;
             Vector2 uv1;
@@ -157,9 +280,9 @@ namespace UiParticles
                 out uv3);
 
             var currentVertCount = vh.currentVertCount;
-            for (var j = 0; j < verts.Length; j++)
+            for (int j = 0; j < verts.Length; j++)
             {
-                var pos = verts[j];
+                Vector3 pos = verts[j];
                 pos.x *= size3D.x;
                 pos.y *= size3D.y;
                 pos.z *= size3D.z;
@@ -174,10 +297,12 @@ namespace UiParticles
                 vh.AddVert (pos, color32, new Vector2 (newUvx, newUvy));
             }
 
-            for (var i = 0; i < triangles.Length; i += 3)
+            for (int i = 0; i < triangles.Length; i += 3)
+            {
                 vh.AddTriangle (currentVertCount + triangles[i],
                     currentVertCount + triangles[i + 1],
                     currentVertCount + triangles[i + 2]);
+            }
         }
 
         private void DrawParticleBillboard (
@@ -193,16 +318,21 @@ namespace UiParticles
             var center = particle.position;
             var rotation = Quaternion.Euler (particle.rotation3D);
 
-            if (isWorldSimulationSpace) center = rectTransform.InverseTransformPoint (center);
+            if (isWorldSimulationSpace)
+            {
+                center = rectTransform.InverseTransformPoint (center);
+            }
 
-            var timeAlive = particle.startLifetime - particle.remainingLifetime;
-            var globalTimeAlive = timeAlive / particle.startLifetime;
+            float timeAlive = particle.startLifetime - particle.remainingLifetime;
+            float globalTimeAlive = timeAlive / particle.startLifetime;
 
-            var size3D = particle.GetCurrentSize3D (ParticleSystem);
+            Vector3 size3D = particle.GetCurrentSize3D (ParticleSystem);
 
             if (m_RenderMode == UiParticleRenderMode.StreachedBillboard)
+            {
                 GetStrechedBillboardsSizeAndRotation (particle, globalTimeAlive, ref size3D, out rotation,
                     velocityOverTimeX, velocityOverTimeY, velocityOverTimeZ);
+            }
 
             var leftTop = new Vector3 (-size3D.x * 0.5f, size3D.y * 0.5f);
             var rightTop = new Vector3 (size3D.x * 0.5f, size3D.y * 0.5f);
@@ -215,7 +345,7 @@ namespace UiParticles
             rightBottom = rotation * rightBottom + center;
             leftBottom = rotation * leftBottom + center;
 
-            var color32 = particle.GetCurrentColor (ParticleSystem);
+            Color32 color32 = particle.GetCurrentColor (ParticleSystem);
             var i = vh.currentVertCount;
 
             Vector2 uv0;
@@ -249,9 +379,9 @@ namespace UiParticles
             }
             else
             {
-                var lifeTimePerCycle = particle.startLifetime / textureSheetAnimationModule.cycleCount;
-                var timePerCycle = timeAlive % lifeTimePerCycle;
-                var timeAliveAnim01 = timePerCycle / lifeTimePerCycle; // in percents
+                float lifeTimePerCycle = particle.startLifetime / textureSheetAnimationModule.cycleCount;
+                float timePerCycle = timeAlive % lifeTimePerCycle;
+                float timeAliveAnim01 = timePerCycle / lifeTimePerCycle; // in percents
 
 
                 var totalFramesCount = textureSheetAnimationModule.numTilesY * textureSheetAnimationModule.numTilesX;
@@ -269,7 +399,7 @@ namespace UiParticles
                     {
                         frame = Mathf.Clamp (Mathf.Floor (frame01 * textureSheetAnimationModule.numTilesX), 0,
                             textureSheetAnimationModule.numTilesX - 1);
-                        var row = textureSheetAnimationModule.rowIndex;
+                        int row = textureSheetAnimationModule.rowIndex;
                         if (textureSheetAnimationModule.useRandomRow)
                         {
                             Random.InitState ((int) particle.randomSeed);
@@ -281,8 +411,8 @@ namespace UiParticles
                     }
                 }
 
-                var x = (int) frame % textureSheetAnimationModule.numTilesX;
-                var y = (int) frame / textureSheetAnimationModule.numTilesX;
+                int x = (int) frame % textureSheetAnimationModule.numTilesX;
+                int y = (int) frame / textureSheetAnimationModule.numTilesX;
 
                 var xDelta = 1f / textureSheetAnimationModule.numTilesX;
                 var yDelta = 1f / textureSheetAnimationModule.numTilesY;
@@ -301,7 +431,7 @@ namespace UiParticles
 
 
         /// <summary>
-        ///     Evaluate size and roatation of particle in streched billboard mode
+        /// Evaluate size and roatation of particle in streched billboard mode
         /// </summary>
         /// <param name="particle">particle</param>
         /// <param name="timeAlive01">current life time percent [0,1] range</param>
@@ -327,114 +457,11 @@ namespace UiParticles
             size3D.y *= m_StretchedLenghScale;
             size3D += new Vector3 (0, m_StretchedSpeedScale * finalVelocity.magnitude);
         }
-
-
-        #region InspectorFields
-
-        /// <summary>
-        ///     ParticleSystem used for generate particles
-        /// </summary>
-        [SerializeField]
-        [FormerlySerializedAs ("m_ParticleSystem")]
-        private ParticleSystem m_ParticleSystem;
-
-        /// <summary>
-        ///     If true, particles renders in streched mode
-        /// </summary>
-        [FormerlySerializedAs ("m_RenderMode")]
-        [SerializeField]
-        [Tooltip ("Render mode of particles")]
-        private UiParticleRenderMode m_RenderMode = UiParticleRenderMode.Billboard;
-
-        /// <summary>
-        ///     Scale particle size, depends on particle velocity
-        /// </summary>
-        [FormerlySerializedAs ("m_StretchedSpeedScale")]
-        [SerializeField]
-        [Tooltip ("Speed Scale for streched billboards")]
-        private float m_StretchedSpeedScale = 1f;
-
-        /// <summary>
-        ///     Sclae particle length in streched mode
-        /// </summary>
-        [FormerlySerializedAs ("m_StretchedLenghScale")]
-        [SerializeField]
-        [Tooltip ("Speed Scale for streched billboards")]
-        private float m_StretchedLenghScale = 1f;
-
-
-        [FormerlySerializedAs ("m_IgnoreTimescale")]
-        [SerializeField]
-        [Tooltip ("If true, particles ignore timescale")]
-        private bool m_IgnoreTimescale;
-
-        [SerializeField]
-        private Mesh m_RenderedMesh;
-
-        #endregion
-
-
-        #region Public properties
-
-        /// <summary>
-        ///     ParticleSystem used for generate particles
-        /// </summary>
-        /// <value>The particle system.</value>
-        public ParticleSystem ParticleSystem
-        {
-            get => m_ParticleSystem;
-            set
-            {
-                if (SetPropertyUtility.SetClass (ref m_ParticleSystem, value))
-                    SetAllDirty ();
-            }
-        }
-
-        /// <summary>
-        ///     Texture used by the particles
-        /// </summary>
-        public override Texture mainTexture
-        {
-            get
-            {
-                if (material != null && material.mainTexture != null) return material.mainTexture;
-
-                return s_WhiteTexture;
-            }
-        }
-
-        /// <summary>
-        ///     Particle system render mode (billboard, strechedBillobard)
-        /// </summary>
-        public UiParticleRenderMode RenderMode
-        {
-            get => m_RenderMode;
-            set
-            {
-                if (SetPropertyUtility.SetStruct (ref m_RenderMode, value))
-                    SetAllDirty ();
-            }
-        }
-
-        public Mesh RenderedMesh
-        {
-            get => m_RenderedMesh;
-            set
-            {
-                if (SetPropertyUtility.SetClass (ref m_RenderedMesh, value))
-                {
-                    InitMeshData ();
-                    SetAllDirty ();
-                }
-            }
-        }
-
-        #endregion
     }
 
 
     /// <summary>
-    ///     Particles Render Modes
+    /// Particles Render Modes
     /// </summary>
     public enum UiParticleRenderMode
     {

@@ -1,5 +1,5 @@
 /// <summary>
-///     Don't edit this file, It will be edited automatically on  class.
+/// Don't edit this file, It will be edited automatically on  class.
 /// </summary>
 public enum SoundTypeEnum
 {
@@ -8,5 +8,5 @@ public enum SoundTypeEnum
     bgm_battle,
     sfx_button,
     sfx_equipment,
-    sfx_purchase
+    sfx_purchase,
 }

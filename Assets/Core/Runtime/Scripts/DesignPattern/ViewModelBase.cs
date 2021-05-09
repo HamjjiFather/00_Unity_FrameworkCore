@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
 
@@ -6,8 +7,8 @@ namespace KKSFramework.DesignPattern
 {
     public abstract class ViewModelBase<T> : ViewModelBase where T : ModelBase
     {
-        protected readonly ReactiveCommand<T> ModelChangedCommand = new ReactiveCommand<T> ();
         protected abstract T ModelBase { get; set; }
+        protected readonly ReactiveCommand<T> ModelChangedCommand = new ReactiveCommand<T> ();
 
 
         public virtual void RegistReactiveCommand (Action<T> subscribeAction)
@@ -27,19 +28,19 @@ namespace KKSFramework.DesignPattern
     public abstract class ViewModelBase
     {
         /// <summary>
-        ///     뷰모델 초기 세팅.
+        /// 뷰모델 초기 세팅.
         /// </summary>
         public abstract void Initialize ();
 
         /// <summary>
-        ///     테이블 데이터를 로드하고 뷰모델 세팅.
+        /// 테이블 데이터를 로드하고 뷰모델 세팅.
         /// </summary>
         public virtual void InitAfterLoadTableData ()
         {
         }
 
         /// <summary>
-        ///     로컬 데이터를 로드하고 뷰모델 세팅.
+        /// 로컬 데이터를 로드하고 뷰모델 세팅.
         /// </summary>
         public virtual void InitAfterLoadLocalData ()
         {
@@ -47,7 +48,7 @@ namespace KKSFramework.DesignPattern
 
 
         /// <summary>
-        ///     모든 세팅 후 초기화.
+        /// 모든 세팅 후 초기화.
         /// </summary>
         public virtual void InitFinally ()
         {

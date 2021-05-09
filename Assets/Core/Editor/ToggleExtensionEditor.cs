@@ -8,7 +8,7 @@ using UnityEditor.UI;
 namespace KKSFramework.Editor
 {
     /// <summary>
-    ///     ToggleBase 클래스 커스텀 에디터.
+    /// ToggleBase 클래스 커스텀 에디터.
     /// </summary>
     [CustomEditor (typeof (ToggleExtension), true)]
     [CanEditMultipleObjects]
@@ -20,12 +20,12 @@ namespace KKSFramework.Editor
         #region Fields & Property
 
         /// <summary>
-        ///     필드 인포.
+        /// 필드 인포.
         /// </summary>
         private List<FieldInfo> list_property_infos;
 
         /// <summary>
-        ///     상속 여부.
+        /// 상속 여부.
         /// </summary>
         private bool is_inheritance;
 

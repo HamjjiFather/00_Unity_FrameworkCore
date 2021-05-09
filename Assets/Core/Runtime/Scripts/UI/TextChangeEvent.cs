@@ -16,15 +16,18 @@ namespace KKSFramework.UI
 
         #region Fields & Property
 
+#pragma warning disable CS0649
+#pragma warning restore CS0649
+
         protected Text Text => GetCachedComponent<Text> ();
 
         /// <summary>
-        ///     문자열 표기 포맷.
+        /// 문자열 표기 포맷.
         /// </summary>
         public string customFormat = "{0}";
 
         /// <summary>
-        ///     변화 이벤트 시간.
+        /// 변화 이벤트 시간.
         /// </summary>
         private const float ChangeTime = 1f;
 
@@ -39,7 +42,7 @@ namespace KKSFramework.UI
         #region Methods
 
         /// <summary>
-        ///     비동기 텍스트 애니메이션.
+        /// 비동기 텍스트 애니메이션.
         /// </summary>
         public virtual async Task AsyncTextAnimation (float originValue, float changedValue)
         {
@@ -47,7 +50,7 @@ namespace KKSFramework.UI
         }
 
         /// <summary>
-        ///     텍스트 애니메이션.
+        /// 텍스트 애니메이션.
         /// </summary>
         public virtual void TextAnimation (int originValue, int changedValue)
         {
@@ -56,7 +59,7 @@ namespace KKSFramework.UI
         }
 
         /// <summary>
-        ///     텍스트 애니메이션 코루틴.
+        /// 텍스트 애니메이션 코루틴.
         /// </summary>
         private IEnumerator WaitTextAnimation (float originValue, float changedValue)
         {
@@ -71,7 +74,7 @@ namespace KKSFramework.UI
         }
 
         /// <summary>
-        ///     텍스트 포맷 변경.
+        /// 텍스트 포맷 변경.
         /// </summary>
         public void SetCustomFormat (string newFormat)
         {

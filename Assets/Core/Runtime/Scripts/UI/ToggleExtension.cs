@@ -1,19 +1,19 @@
-﻿using KKSFramework.Sound;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using KKSFramework.Sound;
 
 namespace KKSFramework.UI
 {
     /// <summary>
-    ///     토글 베이스 클래스.
+    /// 토글 베이스 클래스.
     /// </summary>
     public class ToggleExtension : Toggle
     {
         #region EventMethods
 
         /// <summary>
-        ///     클릭 이벤트.
+        /// 클릭 이벤트.
         /// </summary>
         protected virtual void OnClick ()
         {
@@ -26,19 +26,19 @@ namespace KKSFramework.UI
         #region Fields & Property
 
         /// <summary>
-        ///     사운드 타입.
+        /// 사운드 타입.
         /// </summary>
         [Header ("[ToggleExtension]")]
         [Space (5)]
         public SoundTypeEnum soundTypeEnum = SoundTypeEnum.sfx_button;
 
         /// <summary>
-        ///     토글 텍스트.
+        /// 토글 텍스트.
         /// </summary>
         public Text toggleText;
 
         /// <summary>
-        ///     클릭 이벤트.
+        /// 클릭 이벤트.
         /// </summary>
         public UnityEvent onClick = new UnityEvent ();
 
@@ -65,7 +65,7 @@ namespace KKSFramework.UI
         #region Methods
 
         /// <summary>
-        ///     베이스 토글에서 컴포넌트를 변경함.
+        /// 베이스 토글에서 컴포넌트를 변경함.
         /// </summary>
         public void ReplaceComponent (Toggle targetToggle)
         {
@@ -80,7 +80,7 @@ namespace KKSFramework.UI
 
 
         /// <summary>
-        ///     토글 내 텍스트 변경.
+        /// 토글 내 텍스트 변경.
         /// </summary>
         public void SetText (string text)
         {
@@ -90,25 +90,25 @@ namespace KKSFramework.UI
 
 
         /// <summary>
-        ///     Add OnValueChanged event listener.
+        /// Add OnValueChanged event listener.
         /// </summary>
         public void AddListener (UnityAction<bool> valueChanged)
         {
             onValueChanged.AddListener (valueChanged);
         }
-
-
+        
+        
         /// <summary>
-        ///     Remove OnValueChanged event listener.
+        /// Remove OnValueChanged event listener.
         /// </summary>
         public void RemoveListener (UnityAction<bool> valueChanged)
         {
             onValueChanged.RemoveListener (valueChanged);
         }
-
-
+        
+        
         /// <summary>
-        ///     Remove all OnValueChanged event listener.
+        /// Remove all OnValueChanged event listener.
         /// </summary>
         public void AddOnValueChanged ()
         {

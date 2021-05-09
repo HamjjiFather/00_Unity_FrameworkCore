@@ -7,10 +7,14 @@ namespace KKSFramework.GameSystem
         #region Fields & Property
 
         public int Level { get; set; }
-
+        
         public int MaxLevel { get; set; }
 
         public readonly ReactiveCommand<(int, int)> LevelChangedCommand = new ReactiveCommand<(int, int)> ();
+        
+#pragma warning disable CS0649
+
+#pragma warning restore CS0649
 
         #endregion
 
@@ -21,14 +25,14 @@ namespace KKSFramework.GameSystem
 
 
         #region Methods
-
+        
         public void SetLevel (int level)
         {
             Level = level;
             LevelChangedCommand?.Execute ((MaxLevel, Level));
         }
 
-
+        
         public void AddLevel (int levelAmount)
         {
             Level += levelAmount;
@@ -41,14 +45,14 @@ namespace KKSFramework.GameSystem
             MaxLevel = maxLevel;
             LevelChangedCommand?.Execute ((MaxLevel, Level));
         }
-
-
+        
+        
         public void AddMaxLevel (int maxLevel)
         {
             MaxLevel += maxLevel;
             LevelChangedCommand?.Execute ((MaxLevel, Level));
         }
-
+        
 
         public bool IsMaxLevel => Level == MaxLevel;
 

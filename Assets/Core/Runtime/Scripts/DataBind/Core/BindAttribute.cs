@@ -2,7 +2,7 @@ using System;
 
 namespace KKSFramework.DataBind
 {
-    [AttributeUsage (AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method)]
     public class BindAttribute : Attribute
     {
     }

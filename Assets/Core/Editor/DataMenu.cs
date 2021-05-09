@@ -1,19 +1,18 @@
-﻿using System.Diagnostics;
-using KKSFramework.LocalData;
+﻿using KKSFramework.LocalData;
 using UnityEditor;
 using UnityEngine;
 
 namespace KKSFramework.Editor
 {
     /// <summary>
-    ///     로컬 데이터 삭제.
+    /// 로컬 데이터 삭제.
     /// </summary>
     public static class DataMenu
     {
         [MenuItem ("Data/Open Local Path")]
         public static void OpenLocalPath ()
         {
-            Process.Start (Application.persistentDataPath);
+            System.Diagnostics.Process.Start (Application.persistentDataPath);
         }
 
         [MenuItem ("Data/Delete Local Data")]

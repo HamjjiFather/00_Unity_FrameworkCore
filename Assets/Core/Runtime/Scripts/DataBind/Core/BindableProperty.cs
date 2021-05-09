@@ -4,32 +4,20 @@ namespace KKSFramework.DataBind
 {
     public abstract class BindableProperty<T, TV> : Bindable where T : Object
     {
-        #region Methods
-
-        public override void Dispose ()
-        {
-            _targetValue = null;
-            targetComponent = null;
-            base.Dispose ();
-        }
-
-        #endregion
-
-
         #region Fields & Property
-
+        
         /// <summary>
-        ///     BindTarget component.
+        /// BindTarget component.
         /// </summary>
         public override object BindTarget => BindTargetProperty;
-
+        
         /// <summary>
-        ///     target comp.
+        /// target comp.
         /// </summary>
         public T targetComponent;
 
         /// <summary>
-        ///     my property.
+        /// my property.
         /// </summary>
         private Property<TV> _targetValue;
 
@@ -45,14 +33,31 @@ namespace KKSFramework.DataBind
         }
 
         /// <summary>
-        ///     getter delegates.
+        /// getter delegates.
         /// </summary>
         protected abstract TV GetDelegate ();
 
         /// <summary>
-        ///     setter delegates.
+        /// setter delegates.
         /// </summary>
         protected abstract void SetDelegate (TV value);
+
+
+#pragma warning disable CS0649
+
+#pragma warning restore CS0649
+
+        #endregion
+
+
+        #region Methods
+
+        public override void Dispose ()
+        {
+            _targetValue = null;
+            targetComponent = null;
+            base.Dispose ();
+        }
 
         #endregion
     }

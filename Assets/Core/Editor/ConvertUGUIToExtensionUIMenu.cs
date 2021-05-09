@@ -1,5 +1,6 @@
-using KKSFramework.UI;
 using UnityEditor;
+using UnityEngine.UI;
+using KKSFramework.UI;
 using UnityEngine;
 
 namespace KKSFramework.Editor
@@ -49,7 +50,7 @@ namespace KKSFramework.Editor
 
 
         /// <summary>
-        ///     Convert to the specified component.
+        /// Convert to the specified component.
         /// </summary>
         private static void ConvertTo<T> (Object context) where T : MonoBehaviour
         {

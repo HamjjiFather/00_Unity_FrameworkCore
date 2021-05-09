@@ -7,9 +7,9 @@ using Object = UnityEngine.Object;
 namespace KKSFramework.ResourcesLoad
 {
     /// <summary>
-    ///     오브젝트 풀링 관리 클래스.
-    ///     선입선출 타입의 페이지뷰 풀링.
-    ///     2018.06.03. 작성.
+    /// 오브젝트 풀링 관리 클래스.
+    /// 선입선출 타입의 페이지뷰 풀링.
+    /// 2018.06.03. 작성.
     /// </summary>
     public class ObjectPoolingManager : ManagerBase<ObjectPoolingManager>
     {
@@ -20,21 +20,24 @@ namespace KKSFramework.ResourcesLoad
 
         #region Fields & Property
 
+#pragma warning disable CS0649
+
         /// <summary>
-        ///     오브젝트 풀링 컴포넌트.
+        /// 오브젝트 풀링 컴포넌트.
         /// </summary>
         private ObjectPoolingComponent _objectPoolingComponent => ComponentBase as ObjectPoolingComponent;
 
+#pragma warning restore CS0649
 
         /// <summary>
-        ///     풀링된 오브젝트 보관 트랜스폼.
+        /// 풀링된 오브젝트 보관 트랜스폼.
         /// </summary>
         private readonly Dictionary<string, Transform> _pooledObjTransformDict =
             new Dictionary<string, Transform> ();
 
         /// <summary>
-        ///     풀링된 일반 프리팹 오브젝트 리스트.
-        ///     enum 타입별로 관리하고 싶으면 변수 타입에 해당하는 딕셔너리를 늘려서 관리하도록.
+        /// 풀링된 일반 프리팹 오브젝트 리스트.
+        /// enum 타입별로 관리하고 싶으면 변수 타입에 해당하는 딕셔너리를 늘려서 관리하도록.
         /// </summary>
         private readonly Dictionary<string, Queue<PoolingComponent>> _pooledPrefabs =
             new Dictionary<string, Queue<PoolingComponent>> ();
@@ -45,7 +48,7 @@ namespace KKSFramework.ResourcesLoad
         #region Methods
 
         /// <summary>
-        ///     해당 타입의 풀링된 오브젝트를 리턴.
+        /// 해당 타입의 풀링된 오브젝트를 리턴.
         /// </summary>
         private PoolingComponent ReturnPooledObjectBase (string poolingPath)
         {
@@ -56,7 +59,7 @@ namespace KKSFramework.ResourcesLoad
         }
 
         /// <summary>
-        ///     해당 타입의 해당 문자열을 가진 풀링된 오브젝트가 있는지 여부.
+        /// 해당 타입의 해당 문자열을 가진 풀링된 오브젝트가 있는지 여부.
         /// </summary>
         /// <returns></returns>
         public bool IsExistPooledObject (string resourceTypeString)
@@ -65,8 +68,8 @@ namespace KKSFramework.ResourcesLoad
         }
 
         /// <summary>
-        ///     풀링된 오브젝트를 꺼냄.
-        ///     리소스 관리를 껐다 켰다 할 수 있도록 설계해야 함.
+        /// 풀링된 오브젝트를 꺼냄.
+        /// 리소스 관리를 껐다 켰다 할 수 있도록 설계해야 함.
         /// </summary>
         public T ReturnLoadResources<T> (string poolingPath) where T : Object
         {
@@ -92,8 +95,8 @@ namespace KKSFramework.ResourcesLoad
 
 
         /// <summary>
-        ///     오브젝트를 파괴하지 않고 풀링함.
-        ///     풀링된 오브젝트는 하위에 위치 시킴.
+        /// 오브젝트를 파괴하지 않고 풀링함.
+        /// 풀링된 오브젝트는 하위에 위치 시킴.
         /// </summary>
         public void RegistPooledObject (PoolingInfo poolingInfo, PoolingComponent poolingComponent)
         {

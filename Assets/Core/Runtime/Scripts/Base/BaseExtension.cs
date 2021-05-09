@@ -31,52 +31,6 @@ namespace KKSFramework
         #endregion
 
 
-        #region Float
-
-        public static bool IsZero (this float floatValue)
-        {
-            return floatValue < float.Epsilon;
-        }
-
-        #endregion
-
-
-        #region String
-
-        /// <summary>
-        ///     Add tag for formatted text.
-        /// </summary>
-        public static string AddTag (this string target, string tagName, object value)
-        {
-            return $"<{tagName}={value}>{target}</{tagName}>";
-        }
-
-        #endregion
-
-
-        #region GameObject
-
-        private static T GetOrAddComponent<T> (GameObject gameObject) where T : Component
-        {
-            var component = gameObject.GetComponent<T> ();
-            if (component == null) component = gameObject.AddComponent<T> ();
-
-            return component;
-        }
-
-        #endregion
-
-
-        #region Random
-
-        public static int RandomRange (this IEnumerable<int> bound)
-        {
-            return Random.Range (bound.Min (), bound.Max ());
-        }
-
-        #endregion
-
-
         #region While
 
         public static void ForWhile (this int cycle, Action invokeAction)
@@ -98,6 +52,29 @@ namespace KKSFramework
                 invokeAction.Invoke (i);
                 i++;
             }
+        }
+
+        #endregion
+
+
+        #region Float
+
+        public static bool IsZero (this float floatValue)
+        {
+            return floatValue < float.Epsilon;
+        }
+
+        #endregion
+
+
+        #region String
+
+        /// <summary>
+        ///     Add tag for formatted text.
+        /// </summary>
+        public static string AddTag (this string target, string tagName, object value)
+        {
+            return $"<{tagName}={value}>{target}</{tagName}>";
         }
 
         #endregion
@@ -347,6 +324,19 @@ namespace KKSFramework
 
             return new Color (Convert.ToInt32 (r, 16) / 255f, Convert.ToInt32 (g, 16) / 255f,
                 Convert.ToInt32 (b, 16) / 255f, Convert.ToInt32 (a, 16) / 255f);
+        }
+
+        #endregion
+
+
+        #region GameObject
+
+        private static T GetOrAddComponent<T> (GameObject gameObject) where T : Component
+        {
+            var component = gameObject.GetComponent<T> ();
+            if (component == null) component = gameObject.AddComponent<T> ();
+
+            return component;
         }
 
         #endregion
@@ -659,7 +649,7 @@ namespace KKSFramework
                 throw new ArgumentException (nameof (source));
 
             var sourceArray = source.ToArray ();
-            var randValue = Random.Range (0, sourceArray.Length);
+            var randValue = UnityEngine.Random.Range (0, sourceArray.Length);
             var result = sourceArray[randValue];
             return result;
         }
@@ -900,6 +890,16 @@ namespace KKSFramework
         public static void AddRange<TK, TV> (this Dictionary<TK, TV> dict, Dictionary<TK, TV> targetDict)
         {
             targetDict.Foreach (target => { dict.ContainAndAdd (target.Key, target.Value); });
+        }
+
+        #endregion
+
+
+        #region Random
+
+        public static int RandomRange (this IEnumerable<int> bound)
+        {
+            return UnityEngine.Random.Range (bound.Min (), bound.Max ());
         }
 
         #endregion

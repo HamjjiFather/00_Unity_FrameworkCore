@@ -13,12 +13,16 @@ namespace KKSFramework.Editor
         #region Fields & Property
 
         private MethodsBind _target;
-
+        
         private Component _targetComp;
 
         private int _typeArrayIndex;
 
         private int _arrayIndex;
+
+#pragma warning disable CS0649
+
+#pragma warning restore CS0649
 
         #endregion
 
@@ -43,7 +47,7 @@ namespace KKSFramework.Editor
 
             if (_target.targetComponents == null || !_target.targetComponents.Any ())
                 return;
-
+            
             var comps = _target.targetComponents.First ().GetComponents<Component> ().ToList ();
             _typeArrayIndex = _target.targetComponent == null || !comps.Contains (_target.targetComponent)
                 ? 0
@@ -58,16 +62,16 @@ namespace KKSFramework.Editor
                 _target.targetComponents = _target.targetComponents
                     .Select (x => x.GetComponent (_targetComp.GetType ())).ToArray ();
             }
-
+            
             var methods = _target.targetComponent.GetType ().GetMethods (BindingFlags.Instance | BindingFlags.Public)
-                .Where (x => x.GetCustomAttribute<BindAttribute> ().NotNull ()).ToList ();
+                .Where (x => x.GetCustomAttribute<BindAttribute>().NotNull ()).ToList ();
 
             if (!methods.Any ())
             {
-#if BF_DEBUG
+                #if BF_DEBUG
                 Debug.Log ("Component has not contain BindAttribute methods");
                 return;
-#endif
+                #endif
             }
 
             var methodNames = methods.Select (x => x.Name).ToList ();

@@ -20,7 +20,7 @@ namespace KKSFramework.Navigation
             PopupOption.InitializePopupOption (ClickClose);
         }
 
-
+        
         private void Reset ()
         {
             if (!GetComponent<Context> ())

@@ -39,7 +39,7 @@ namespace KKSFramework.SceneLoad
 
 
         /// <summary>
-        ///     씬 로드 비동기 처리.
+        /// 씬 로드 비동기 처리.
         /// </summary>
         public async UniTask LoadSceneAsync (SceneType sceneType, bool loadedCheck = false)
         {
@@ -58,7 +58,7 @@ namespace KKSFramework.SceneLoad
 
 
         /// <summary>
-        ///     씬 전환 비동기 처리.
+        /// 씬 전환 비동기 처리.
         /// </summary>
         public async UniTask ChangeSceneAsync (SceneType sceneType)
         {

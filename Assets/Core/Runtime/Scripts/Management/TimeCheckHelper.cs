@@ -11,15 +11,15 @@ namespace KKSFramework
     public static class TimeCheckHelper
     {
         /// <summary>
-        ///     구독중인 시간 체크 딕셔너리.
+        /// 구독중인 시간 체크 딕셔너리.
         /// </summary>
         private static readonly DisposableDictionary _disposablesDict = new DisposableDictionary ();
 
 
         /// <summary>
-        ///     남은 시간 체크.
-        ///     키를 가지고 있지 않을 경우 새 시간 체크 이벤트가 등록이 되고.
-        ///     이미 키를 가진 시간 체크 이벤트의 경우 업데이트가 된다.
+        /// 남은 시간 체크.
+        /// 키를 가지고 있지 않을 경우 새 시간 체크 이벤트가 등록이 되고.
+        /// 이미 키를 가진 시간 체크 이벤트의 경우 업데이트가 된다.
         /// </summary>
         public static void RegisterRemainingTimeEvent (string key, double completeTime,
             UnityAction<double> nextAction = null, UnityAction completeAction = null, double intervalTime = 0.1f,
@@ -76,7 +76,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     경과된 시간 체크
+        /// 경과된 시간 체크
         /// </summary>
         public static void RegisterElapsedTimeEvent (string key, double completeTime,
             UnityAction<double> nextAction = null, UnityAction completeAction = null, double intervalTime = 0.1f,
@@ -127,7 +127,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     시간 체크 이벤트 추가.
+        /// 시간 체크 이벤트 추가.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="nextAction"></param>
@@ -142,7 +142,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     시간 체크 이벤트 삭제.
+        /// 시간 체크 이벤트 삭제.
         /// </summary>
         /// <param name="key"></param>
         /// <param name="nextAction"></param>
@@ -157,7 +157,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     시간 체크 구독 해지.
+        /// 시간 체크 구독 해지.
         /// </summary>
         public static void Unregister (string key)
         {

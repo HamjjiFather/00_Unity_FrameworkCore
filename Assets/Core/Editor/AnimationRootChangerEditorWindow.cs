@@ -7,14 +7,12 @@ using UnityEngine;
 namespace KKSFramework.Editor
 {
     /// <summary>
-    ///     애니메이션의 Root를 변경하는 에디터 클래스.
+    /// 애니메이션의 Root를 변경하는 에디터 클래스.
     /// </summary>
     public class AnimationRootChangerEditorWindow : EditorWindow
     {
         private static readonly int columnWidth = 300;
         private readonly List<AnimationClip> animationClips;
-
-        private readonly Dictionary<string, string> tempPathOverrides;
 
         private Animator animatorObject;
         private Hashtable paths;
@@ -28,16 +26,48 @@ namespace KKSFramework.Editor
 
         private string sReplacementOldRoot;
 
+        private readonly Dictionary<string, string> tempPathOverrides;
+
         public AnimationRootChangerEditorWindow ()
         {
             animationClips = new List<AnimationClip> ();
             tempPathOverrides = new Dictionary<string, string> ();
         }
 
+        [MenuItem ("Window/Animation Hierarchy Editor")]
+        private static void ShowWindow ()
+        {
+            GetWindow<AnimationRootChangerEditorWindow> ();
+        }
+
+        private void OnSelectionChange ()
+        {
+            if (Selection.objects.Length > 1)
+            {
+                Debug.Log ("Length? " + Selection.objects.Length);
+                animationClips.Clear ();
+                foreach (var o in Selection.objects)
+                    if (o is AnimationClip)
+                        animationClips.Add ((AnimationClip) o);
+            }
+            else if (Selection.activeObject is AnimationClip)
+            {
+                animationClips.Clear ();
+                animationClips.Add ((AnimationClip) Selection.activeObject);
+                FillModel ();
+            }
+            else
+            {
+                animationClips.Clear ();
+            }
+
+            Repaint ();
+        }
+
         private void OnGUI ()
         {
-            if (Event.current.type == EventType.ValidateCommand)
-                switch (Event.current.commandName)
+            if (UnityEngine.Event.current.type == EventType.ValidateCommand)
+                switch (UnityEngine.Event.current.commandName)
                 {
                     case "UndoRedoPerformed":
                         FillModel ();
@@ -106,41 +136,6 @@ namespace KKSFramework.Editor
             }
         }
 
-        private void OnInspectorUpdate ()
-        {
-            Repaint ();
-        }
-
-        private void OnSelectionChange ()
-        {
-            if (Selection.objects.Length > 1)
-            {
-                Debug.Log ("Length? " + Selection.objects.Length);
-                animationClips.Clear ();
-                foreach (var o in Selection.objects)
-                    if (o is AnimationClip)
-                        animationClips.Add ((AnimationClip) o);
-            }
-            else if (Selection.activeObject is AnimationClip)
-            {
-                animationClips.Clear ();
-                animationClips.Add ((AnimationClip) Selection.activeObject);
-                FillModel ();
-            }
-            else
-            {
-                animationClips.Clear ();
-            }
-
-            Repaint ();
-        }
-
-        [MenuItem ("Window/Animation Hierarchy Editor")]
-        private static void ShowWindow ()
-        {
-            GetWindow<AnimationRootChangerEditorWindow> ();
-        }
-
 
         private void GUICreatePathItem (string path)
         {
@@ -197,6 +192,11 @@ namespace KKSFramework.Editor
             {
                 Debug.LogError (ex.Message);
             }
+        }
+
+        private void OnInspectorUpdate ()
+        {
+            Repaint ();
         }
 
         private void FillModel ()

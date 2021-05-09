@@ -10,26 +10,38 @@ namespace KKSFramework.DataBind
     public class Context : MonoBehaviour, IDisposable
     {
         /// <summary>
-        ///     자동 Resolve 실행 여부.
+        /// 컨테이너에 포함된 컴포넌트 딕셔너리.
+        /// </summary>
+        public Dictionary<string, object> Container { get; } = new Dictionary<string, object> ();
+
+        /// <summary>
+        /// 자동 Resolve 실행 여부.
         /// </summary>
         public bool autoRun = true;
 
         /// <summary>
-        ///     Resolve가 되었는지 여부.
+        /// Resolve가 되었는지 여부.
         /// </summary>
         private bool _isResolved;
 
-        /// <summary>
-        ///     컨테이너에 포함된 컴포넌트 딕셔너리.
-        /// </summary>
-        public Dictionary<string, object> Container { get; } = new Dictionary<string, object> ();
 
+        #region UnityMethods
 
-        public void Dispose ()
+        private void Awake ()
         {
-            Container.Clear ();
-            GC.Collect ();
+            if (autoRun && CheckRunnableState ())
+            {
+                Resolve ();
+            }
         }
+
+
+        private void OnDestroy ()
+        {
+            Dispose ();
+        }
+
+        #endregion
 
 
         private bool CheckRunnableState ()
@@ -37,15 +49,17 @@ namespace KKSFramework.DataBind
             var classes = GetComponents<IResolveTarget> ();
             var result = classes.Any ();
             if (!result)
+            {
                 Debug.LogWarning (
                     $"[{nameof (Context)}] There is no 'IResolveTarget' component in this game object. {gameObject.name}");
+            }
 
             return classes.Any ();
         }
 
 
         /// <summary>
-        ///     바인딩된 컴포넌트를 할당한다.
+        /// 바인딩된 컴포넌트를 할당한다. 
         /// </summary>
         public void Resolve (bool isForce = false)
         {
@@ -143,11 +157,14 @@ namespace KKSFramework.DataBind
 
 
         /// <summary>
-        ///     Manually Resolve.
+        /// Manually Resolve.
         /// </summary>
         public object Resolve (string key)
         {
-            if (Vaildate (key)) return Container[key];
+            if (Vaildate (key))
+            {
+                return Container[key];
+            }
 
             Debug.Log ($"There is no bindable source: {key}.");
             return default;
@@ -155,11 +172,14 @@ namespace KKSFramework.DataBind
 
 
         /// <summary>
-        ///     Manually Resolve with Convert to Generic type.
+        /// Manually Resolve with Convert to Generic type.
         /// </summary>
         public T Resolve<T> (string key)
         {
-            if (Vaildate (key)) return (T) Container[key];
+            if (Vaildate (key))
+            {
+                return (T) Container[key];
+            }
 
             Debug.Log ($"There is no bindable source: {key}.");
             return default;
@@ -167,7 +187,7 @@ namespace KKSFramework.DataBind
 
 
         /// <summary>
-        ///     Add Component.
+        /// Add Component.
         /// </summary>
         public void AddComponent (string key, object target)
         {
@@ -179,32 +199,23 @@ namespace KKSFramework.DataBind
 
 
         /// <summary>
-        ///     Has contained key.
+        /// Has contained key.
         /// </summary>
         public bool Vaildate (string key)
         {
             return Container.ContainsKey (key);
         }
 
+
+        public void Dispose ()
+        {
+            Container.Clear ();
+            GC.Collect ();
+        }
+
         public void ChangeAutoRunState (bool value)
         {
             autoRun = value;
         }
-
-
-        #region UnityMethods
-
-        private void Awake ()
-        {
-            if (autoRun && CheckRunnableState ()) Resolve ();
-        }
-
-
-        private void OnDestroy ()
-        {
-            Dispose ();
-        }
-
-        #endregion
     }
 }

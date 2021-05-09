@@ -9,38 +9,54 @@ namespace KKSFramework.Navigation
     {
         #region Fields & Property
 
-        /// <summary>
-        ///     root Canvas.
-        /// </summary>
-        [field: Resolver]
-        public Canvas RootCanvas { get; }
+#pragma warning disable CS0649
 
         /// <summary>
-        ///     pageView Canvas.
+        /// root Canvas.
         /// </summary>
-        [field: Resolver]
-        public Transform PageParents { get; }
+        [Resolver]
+        private Canvas _rootCanvas;
+        
+        public Canvas RootCanvas => _rootCanvas;
+        
+        /// <summary>
+        /// pageView Canvas.
+        /// </summary>
+        [Resolver]
+        private Transform _pageParents;
+
+        public Transform PageParents => _pageParents;
 
         /// <summary>
-        ///     CommonView Canvas.
+        /// CommonView Canvas.
         /// </summary>
-        [field: Resolver]
-        public Transform CommonViewParents { get; }
+        [Resolver]
+        private Transform _commonViewParents;
+
+        public Transform CommonViewParents => _commonViewParents;
 
         /// <summary>
-        ///     transition display effector.
+        /// transition display effector.
         /// </summary>
-        [field: Resolver]
-        public ViewEffector TransitionEffector { get; }
+        [Resolver]
+        private ViewEffector _transitionEffector;
+
+        public ViewEffector TransitionEffector => _transitionEffector;
 
         /// <summary>
-        ///     main camera.
+        /// main camera.
         /// </summary>
-        [field: Resolver]
-        public Camera MainCamera { get; }
+        [Resolver]
+        private Camera _mainCamera;
+        
+        public Camera MainCamera => _mainCamera;
 
-        [field: Resolver]
-        public EventSystem RootEventSystem { get; }
+        [Resolver]
+        private EventSystem _rootEventSystem;
+
+        public EventSystem RootEventSystem => _rootEventSystem;
+
+#pragma warning restore CS0649
 
         #endregion
     }

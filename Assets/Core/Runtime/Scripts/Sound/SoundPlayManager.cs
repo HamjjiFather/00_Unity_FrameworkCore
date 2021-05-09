@@ -15,13 +15,13 @@ namespace KKSFramework.Sound
 
 
     /// <summary>
-    ///     Json 저장용 사운드 데이터 클래스
+    /// Json 저장용 사운드 데이터 클래스
     /// </summary>
     [Serializable]
     public class AudioClipData
     {
         /// <summary>
-        ///     Add Data.
+        /// Add Data.
         /// </summary>
         public void Add ()
         {
@@ -30,7 +30,7 @@ namespace KKSFramework.Sound
         }
 
         /// <summary>
-        ///     Insert List.
+        /// Insert List.
         /// </summary>
         public void Insert (int idx)
         {
@@ -39,7 +39,7 @@ namespace KKSFramework.Sound
         }
 
         /// <summary>
-        ///     Remove List At.
+        /// Remove List At.
         /// </summary>
         public void RemoveAt (int idx)
         {
@@ -51,12 +51,12 @@ namespace KKSFramework.Sound
         #region Fields & Property
 
         /// <summary>
-        ///     Sound Key.
+        /// Sound Key.
         /// </summary>
         public List<string> filePath = new List<string> ();
 
         /// <summary>
-        ///     Volumes.
+        /// Volumes.
         /// </summary>
         public List<float> volumes = new List<float> ();
 
@@ -64,18 +64,18 @@ namespace KKSFramework.Sound
     }
 
     /// <summary>
-    ///     사운드 데이터.
+    /// 사운드 데이터.
     /// </summary>
     [Serializable]
     public class AudioClipDataBase
     {
         /// <summary>
-        ///     Audio Clip.
+        /// Audio Clip.
         /// </summary>
         public AudioClip clip;
 
         /// <summary>
-        ///     Volume.
+        /// Volume.
         /// </summary>
         public float volume;
 
@@ -88,26 +88,26 @@ namespace KKSFramework.Sound
     }
 
     /// <summary>
-    ///     사운드 실행 관리 클래스.
+    /// 사운드 실행 관리 클래스.
     /// </summary>
     public class SoundPlayManager : ManagerBase<SoundPlayManager>
     {
         #region Fields & Property
 
         /// <summary>
-        ///     사운드 컴포넌트 베이스.
+        /// 사운드 컴포넌트 베이스.
         /// </summary>
         private SoundPlayComponent _soundPlayComponent => ComponentBase as SoundPlayComponent;
 
         /// <summary>
-        ///     오디오 데이터 클래스.
+        /// 오디오 데이터 클래스.
         /// </summary>
         private Dictionary<SoundTypeEnum, AudioClipDataBase> _soundClipDataDict =
             new Dictionary<SoundTypeEnum, AudioClipDataBase> ();
 
 
         /// <summary>
-        ///     return volume.
+        /// return volume.
         /// </summary>
         private float GetVolume (SoundType soundType)
         {
@@ -135,7 +135,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Play Audio Clip.
+        /// Play Audio Clip.
         /// </summary>
         public void Play (SoundType soundType, SoundTypeEnum soundTypeEnum)
         {
@@ -144,7 +144,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Play Audio Clip on AudioSource.
+        /// Play Audio Clip on AudioSource.
         /// </summary>
         public void Play (AudioSource audioSource, SoundTypeEnum soundTypeEnum)
         {
@@ -155,7 +155,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Play One Shot Audio Clip.
+        /// Play One Shot Audio Clip.
         /// </summary>
         public void PlayOneShot (SoundType soundType, SoundTypeEnum soundTypeEnum)
         {
@@ -164,7 +164,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Play One Shot Audio Clip on AudioSource.
+        /// Play One Shot Audio Clip on AudioSource.
         /// </summary>
         public void PlayOneShot (AudioSource audioSource, SoundTypeEnum soundTypeEnum)
         {
@@ -174,7 +174,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Pause AudioSource.
+        /// Pause AudioSource.
         /// </summary>
         public void Pause (SoundType soundType)
         {
@@ -183,7 +183,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Pause AudioSource.
+        /// Pause AudioSource.
         /// </summary>
         public void Pause (AudioSource audioSource)
         {
@@ -192,7 +192,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     UnPause AudioSource.
+        /// UnPause AudioSource.
         /// </summary>
         public void UnPause (SoundType soundType)
         {
@@ -201,7 +201,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     UnPause AudioSource.
+        /// UnPause AudioSource.
         /// </summary>
         public void UnPause (AudioSource audioSource)
         {
@@ -210,7 +210,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Stop AudioSource.
+        /// Stop AudioSource.
         /// </summary>
         public void Stop (SoundType soundType)
         {
@@ -219,7 +219,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     UnPause AudioSource.
+        /// UnPause AudioSource.
         /// </summary>
         public void Stop (AudioSource audioSource)
         {
@@ -228,7 +228,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Control Volume AudioSource.
+        /// Control Volume AudioSource.
         /// </summary>
         public void Volume (SoundType soundType, float volume)
         {
@@ -237,7 +237,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Control Volume AudioSource.
+        /// Control Volume AudioSource.
         /// </summary>
         public void Volume (AudioSource audioSource, float volume)
         {
@@ -246,7 +246,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Mute AudioSource.
+        /// Mute AudioSource.
         /// </summary>
         public void Mute (SoundType soundType, bool mute)
         {
@@ -255,7 +255,7 @@ namespace KKSFramework.Sound
 
 
         /// <summary>
-        ///     Mute AudioSource.
+        /// Mute AudioSource.
         /// </summary>
         public void Mute (AudioSource audioSource, bool mute)
         {

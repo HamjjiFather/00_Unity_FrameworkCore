@@ -1,5 +1,5 @@
 /// <summary>
-///     MonoBehaviour를 상속하지 않은 일반 클래스의 싱글톤 디자인.
+/// MonoBehaviour를 상속하지 않은 일반 클래스의 싱글톤 디자인.
 /// </summary>
 public class Singleton<T> where T : new ()
 {

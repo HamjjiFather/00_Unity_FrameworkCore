@@ -1,45 +1,48 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
+
 namespace KKSFramework.Fsm
 {
     /// <summary>
-    ///     Fsm 클래스.
-    ///     시작(Start), 변경(Change) 정지(Stop)로 상태 제어.
+    /// Fsm 클래스.
+    /// 시작(Start), 변경(Change) 정지(Stop)로 상태 제어.
     /// </summary>
     public class FsmRunner
     {
         #region Fields & Property
 
         /// <summary>
-        ///     상태별 작동 함수 딕셔너리.
+        /// 상태별 작동 함수 딕셔너리.
         /// </summary>
         private readonly Dictionary<string, Func<CancellationTokenSource, UniTask>> _fsmStateDict =
             new Dictionary<string, Func<CancellationTokenSource, UniTask>> ();
 
         /// <summary>
-        ///     현재 상태 이름.
+        /// 현재 상태 이름.
         /// </summary>
         private StringReactiveProperty _currentStateName;
 
         /// <summary>
-        ///     상태 이름 변환 구독.
+        /// 상태 이름 변환 구독.
         /// </summary>
         private IDisposable _stateNameDisposable;
 
         /// <summary>
-        ///     Fsm 제어 토큰.
+        /// Fsm 제어 토큰.
         /// </summary>
         private CancellationTokenSource _cancellationTokenSource;
 
         /// <summary>
-        ///     상태가 진행 중인지 여부.
+        /// 상태가 진행 중인지 여부.
         /// </summary>
-        public bool IsRunned { get; private set; }
+        private bool _isRunned;
+
+        public bool IsRunned => _isRunned;
 
         #endregion
 
@@ -52,7 +55,7 @@ namespace KKSFramework.Fsm
         #region Methods
 
         /// <summary>
-        ///     Fsm 상태를 등록.
+        /// Fsm 상태를 등록.
         /// </summary>
         public void RegistFsmState (string stateName, Func<CancellationTokenSource, UniTask> stateMethod)
         {
@@ -67,7 +70,7 @@ namespace KKSFramework.Fsm
 
 
         /// <summary>
-        ///     Fsm 시작.
+        /// Fsm 시작.
         /// </summary>
         public void StartFsm (string initStateName)
         {
@@ -77,7 +80,7 @@ namespace KKSFramework.Fsm
                 return;
             }
 
-            IsRunned = true;
+            _isRunned = true;
             _cancellationTokenSource = new CancellationTokenSource ();
             _currentStateName = new StringReactiveProperty (initStateName);
 
@@ -90,7 +93,7 @@ namespace KKSFramework.Fsm
 
 
         /// <summary>
-        ///     Fsm 상태 변경.
+        /// Fsm 상태 변경.
         /// </summary>
         public void ChangeState (string stateName)
         {
@@ -106,13 +109,13 @@ namespace KKSFramework.Fsm
 
 
         /// <summary>
-        ///     Fsm 정지.
+        /// Fsm 정지.
         /// </summary>
         public void StopFsm ()
         {
-            if (!IsRunned) return;
+            if (!_isRunned) return;
 
-            IsRunned = false;
+            _isRunned = false;
             _currentStateName?.Dispose ();
             _stateNameDisposable?.Dispose ();
             _cancellationTokenSource?.Cancel ();
