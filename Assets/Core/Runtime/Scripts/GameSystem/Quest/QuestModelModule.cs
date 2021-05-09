@@ -359,6 +359,7 @@ namespace KKSFramework.GameSystem
             _nowProgressValue.Value = 0;
             NowProgressModel.ReachProgress ();
             AddProgressValue (remainValue);
+            _onIteratedQuestAction.CallSafe (_nowProgressValue.Value);
         }
 
 
