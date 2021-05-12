@@ -99,7 +99,7 @@ namespace KKSFramework.GameSystem
         /// <summary>
         /// 현재 진행 중인 단계들.
         /// </summary>
-        public QuestProgressModelBase NowProgressModel => QuestProgresses[_progressIndex];
+        private QuestProgressModelBase NowProgressModel => QuestProgresses[_progressIndex];
 
 
         /// <summary>
@@ -109,6 +109,7 @@ namespace KKSFramework.GameSystem
 
         /// <summary>
         /// 퀘스트 완료시 호출 액션.
+        /// 완료 후 반복되는 경우에도 호출됨.
         /// </summary>
         private Action _onCompleteQuestAction;
         
@@ -119,9 +120,10 @@ namespace KKSFramework.GameSystem
         private Action<float> _onIteratedQuestAction;
 
         /// <summary>
-        /// 퀘스트 실패시 호출 액션.
+        /// 퀘스트 종료시 호출 액션.
+        /// 상태 구분없이 퀘스트가 끝날 경우 호출되며 성공시에는 반복이 되지 않을 경우 호출됨. 
         /// </summary>
-        private Action _onFailureQuestAction;
+        private Action _onFinishQuestAction;
 
         #endregion
 
@@ -168,9 +170,14 @@ namespace KKSFramework.GameSystem
         public int ProgressLength => QuestProgresses.Count;
 
         /// <summary>
-        /// 현재 단계 진행도 (0 ~ 1).
+        /// 현재 단계 진행 값.
         /// </summary>
-        public float NowProgressRatio => _nowProgressValue.Value / NowProgressModel.ReqProgressValue;
+        public float NowProgressValue => _nowProgressValue;
+        
+        /// <summary>
+        /// 현재 단계 진행도 (0 ~ 1f).
+        /// </summary>
+        public float NowProgressRatio => _nowProgressValue / NowProgressModel.ReqProgressValue;
 
         /// <summary>
         /// 전체 단계 진행도 (0 ~ 1).
@@ -181,7 +188,7 @@ namespace KKSFramework.GameSystem
         /// 모든 단계의 퀘스트 진행도.
         /// </summary>
         public float TotalProgressValue => QuestProgresses.Take (_progressIndex).Sum (q => q.ReqProgressValue) +
-                                           _nowProgressValue.Value;
+                                           _nowProgressValue;
 
         /// <summary>
         /// 모든 단계의 퀘스트 요구량.
@@ -210,7 +217,12 @@ namespace KKSFramework.GameSystem
         /// <summary>
         /// 현재 단계 진행 값.
         /// </summary>
-        private readonly FloatReactiveProperty _nowProgressValue = new FloatReactiveProperty (0);
+        private float _nowProgressValue;
+
+        /// <summary>
+        /// 구독 전달.
+        /// </summary>
+        private Subject<QuestModelModule> _subscribeQuestModule;
 
         #endregion
 
@@ -238,7 +250,8 @@ namespace KKSFramework.GameSystem
 
             if (!_iterateQuest)
             {
-                _nowProgressValue.DisposeSafe ();
+                _subscribeQuestModule.DisposeSafe ();
+                _onFinishQuestAction.CallSafe ();
                 return;
             }
 
@@ -255,7 +268,20 @@ namespace KKSFramework.GameSystem
                 return;
 
             QuestState = QuestState.Decline;
-            _onFailureQuestAction.CallSafe ();
+            _onFinishQuestAction.CallSafe ();
+        }
+        
+        
+        /// <summary>
+        /// 퀘스트 실패.
+        /// </summary>
+        public void FailureQuest ()
+        {
+            if (!Utility.Or (QuestState, QuestState.Accept, QuestState.WaitForComplete))
+                return;
+
+            QuestState = QuestState.Failure;
+            _onFinishQuestAction.CallSafe ();
         }
 
 
@@ -285,18 +311,22 @@ namespace KKSFramework.GameSystem
 
             if (QuestState == QuestState.Complete && _addProgressOnComplete)
             {
-                _nowProgressValue.Value += value;
+                _nowProgressValue += value;
                 return;
             }
 
-            _nowProgressValue.Value += value;
-            bool completeProgress;
+            _nowProgressValue += value;
             do
             {
-                completeProgress = NowProgressModel.SetProgress (_nowProgressValue.Value);
+                var completeProgress = NowProgressModel.SetProgress (_nowProgressValue);
                 if (completeProgress)
                     CheckNextProgress ();
-            } while (completeProgress);
+                else
+                {
+                    _subscribeQuestModule.OnNext (this);
+                    break;
+                }
+            } while (true);
         }
 
 
@@ -326,9 +356,14 @@ namespace KKSFramework.GameSystem
         {
             // 모든 단계가 완료됨.
             var isCompleteAllProgress = _progressIndex >= QuestProgresses.Count - 1;
-            if (!isCompleteAllProgress) return false;
+            if (!isCompleteAllProgress)
+            {
+                _subscribeQuestModule.OnNext (this);
+                return false;
+            }
             NowProgressModel.CompleteProgress ();
             QuestState = QuestState.WaitForComplete;
+            _subscribeQuestModule.OnNext (this);
             return true;
         }
 
@@ -338,11 +373,12 @@ namespace KKSFramework.GameSystem
         /// </summary>
         private void SetNextProgress ()
         {
-            var nextValue = _resetValueOnNextProgress ? 0 : _nowProgressValue.Value - NowProgressReqValue;
+            var nextValue = _resetValueOnNextProgress ? 0 : _nowProgressValue - NowProgressReqValue;
             _progressIndex = Mathf.Max (_progressIndex + 1, ProgressLength - 1);
 
             NowProgressModel.ReachProgress (nextValue);
-            _nowProgressValue.Value = nextValue;
+            _nowProgressValue = nextValue;
+            _subscribeQuestModule.OnNext (this);
         }
 
 
@@ -354,18 +390,19 @@ namespace KKSFramework.GameSystem
             QuestState = QuestState.Accept;
             QuestProgresses.ForEach (q => { q.ResetProgress (); });
 
-            var remainValue = _resetValueOnInterateQuest ? 0 : _nowProgressValue.Value - NowProgressReqValue;
+            var remainValue = _resetValueOnInterateQuest ? 0 : _nowProgressValue - NowProgressReqValue;
             _progressIndex = 0;
-            _nowProgressValue.Value = 0;
+            _nowProgressValue = 0;
             NowProgressModel.ReachProgress ();
             AddProgressValue (remainValue);
-            _onIteratedQuestAction.CallSafe (_nowProgressValue.Value);
+            _onIteratedQuestAction.CallSafe (_nowProgressValue);
+            _subscribeQuestModule.OnNext (this);
         }
 
 
-        public void Subscribe (Action<float> onNext)
+        public void Subscribe (Action<QuestModelModule> onNext)
         {
-            _nowProgressValue.Subscribe (onNext);
+            _subscribeQuestModule.Subscribe (onNext);
         }
 
         #endregion

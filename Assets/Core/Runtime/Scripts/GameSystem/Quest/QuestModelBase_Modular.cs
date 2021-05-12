@@ -35,7 +35,7 @@ namespace KKSFramework.GameSystem
         
         public QuestModelModule SetOnFailure (Action onFailure)
         {
-            _onFailureQuestAction = onFailure;
+            _onFinishQuestAction = onFailure;
             return this;
         } 
         
