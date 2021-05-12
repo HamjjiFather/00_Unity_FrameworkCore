@@ -239,10 +239,10 @@ namespace KKSFramework.GameSystem
         }
 
 
-        public void CompleteQuest ()
+        public bool CompleteQuest ()
         {
             if (QuestState != QuestState.WaitForComplete)
-                return;
+                return false;
 
             QuestState = QuestState.Complete;
             NowProgressModel.CompleteProgress ();
@@ -252,10 +252,37 @@ namespace KKSFramework.GameSystem
             {
                 _subscribeQuestModule.DisposeSafe ();
                 _onFinishQuestAction.CallSafe ();
-                return;
+                return true;
             }
 
             IterationQuest ();
+            return QuestState == QuestState.WaitForComplete;
+        }
+
+
+        /// <summary>
+        /// 퀘스트가 반복적으로 수행될 경우 초과된 값만큼 반복 완료 한다.
+        /// </summary>
+        /// <returns></returns>
+        public int CompleteIterally ()
+        {
+            if (!_iterateQuest)
+                return 0;
+            
+            var count =  (int)(_nowProgressValue / TotalProgressValue);
+            var remainValue = _nowProgressValue % TotalProgressValue;
+            
+            QuestState = QuestState.Accept;
+            QuestProgresses.ForEach (q => { q.ResetProgress (); });
+
+            _progressIndex = 0;
+            _nowProgressValue = 0;
+            NowProgressModel.ReachProgress ();
+            AddProgressValue (remainValue);
+            _onIteratedQuestAction.CallSafe (_nowProgressValue);
+            _subscribeQuestModule.OnNext (this);
+
+            return count;
         }
 
 
