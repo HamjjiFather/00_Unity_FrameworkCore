@@ -1,21 +1,33 @@
-﻿using KKSFramework.LocalData;
+﻿using System.Diagnostics;
+using KKSFramework.LocalData;
 using UnityEditor;
 using UnityEngine;
 
 namespace KKSFramework.Editor
 {
-    /// <summary>
-    /// 로컬 데이터 삭제.
-    /// </summary>
-    public static class DataMenu
+    public static class DataFolderEditor
     {
-        [MenuItem ("Data/Open Local Path")]
-        public static void OpenLocalPath ()
+        [MenuItem ("Framework/Folder/OpenCacheFolder", priority = 3)]
+        public static void ShowTemporaryCacheFolder ()
         {
-            System.Diagnostics.Process.Start (Application.persistentDataPath);
+            Process.Start (Application.temporaryCachePath);
         }
 
-        [MenuItem ("Data/Delete Local Data")]
+        [MenuItem ("Framework/Folder/OpenPersistentFolder", priority = 2)]
+        public static void ShowPersistentFolder ()
+        {
+            Process.Start (Application.persistentDataPath);
+        }
+
+
+        [MenuItem ("Framework/Folder/OpenDataPath", priority = 1)]
+        public static void ShowMainFolder ()
+        {
+            Process.Start (Application.dataPath);
+        }
+        
+        
+        [MenuItem ("Framework/Data/Delete Local Data")]
         public static void DeleteLocalData ()
         {
             PlayerPrefs.DeleteAll ();
