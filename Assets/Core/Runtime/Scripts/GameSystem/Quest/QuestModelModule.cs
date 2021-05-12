@@ -269,8 +269,8 @@ namespace KKSFramework.GameSystem
             if (!_iterateQuest)
                 return 0;
             
-            var count =  (int)(_nowProgressValue / TotalProgressValue);
-            var remainValue = _nowProgressValue % TotalProgressValue;
+            var count =  (int)(_nowProgressValue / TotalReqProgressValue);
+            var remainValue = _nowProgressValue % TotalReqProgressValue;
             
             QuestState = QuestState.Accept;
             QuestProgresses.ForEach (q => { q.ResetProgress (); });
