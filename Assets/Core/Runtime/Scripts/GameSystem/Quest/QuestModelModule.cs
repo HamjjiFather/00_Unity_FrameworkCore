@@ -222,7 +222,7 @@ namespace KKSFramework.GameSystem
         /// <summary>
         /// 구독 전달.
         /// </summary>
-        private Subject<QuestModelModule> _subscribeQuestModule;
+        private readonly Subject<QuestModelModule> _subscribeQuestModule = new Subject<QuestModelModule> ();
 
         #endregion
 
