@@ -26,7 +26,7 @@ namespace KKSFramework.Navigation
             if (!GetComponent<Context> ())
                 gameObject.AddComponent<Context> ();
 
-            if (!GetComponent<PageOption> ())
+            if (!GetComponent<PopupOption> ())
                 gameObject.AddComponent<PopupOption> ();
         }
 
