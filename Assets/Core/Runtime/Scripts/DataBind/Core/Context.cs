@@ -157,6 +157,83 @@ namespace KKSFramework.DataBind
 
 
         /// <summary>
+        /// 바인딩된 컴포넌트들이 갖춰져 있는지 확인. 
+        /// </summary>
+        public bool CheckResolve ()
+        {
+            var isVaild = true;
+            var bindingComps = GetComponentsInChildren<Bindable> (true)
+                .Where (x => x.TargetContext.Equals (this));
+
+            var binderClasses = GetComponents<IResolveTarget> ();
+            binderClasses.Foreach (binder =>
+            {
+                var binderType = binder.GetType ();
+                var fields = new List<FieldInfo> ();
+
+                while (!binderType.Name.Equals (nameof (MonoBehaviour)))
+                {
+                    var result = binderType
+                        .GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                        .Where (x => x.HasAttribute<ResolverAttribute> ());
+                    fields.AddRange (result);
+                    binderType = binderType.BaseType;
+                }
+
+#if BF_DEBUG
+                var thisObj = gameObject;
+                Debug.Log (
+                    $"The result quantity of binding requests in the {thisObj.name} GameObject is {fields.Count ()}",
+                    thisObj);
+#endif
+
+                fields.Foreach (field =>
+                {
+                    var attribute = field.GetCustomAttribute<ResolverAttribute> (true);
+                    var attributeKey = string.IsNullOrEmpty (attribute.Key) ? field.Name : attribute.Key;
+#if BF_DEBUG
+                    Debug.Log ($"resolve request {attributeKey} in {thisObj.name} GameObject", thisObj);
+#endif
+
+                    object targetComp;
+                    try
+                    {
+                        targetComp = Container.ContainsKey (attributeKey)
+                            ? Container[attributeKey]
+                            : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
+                    }
+                    catch (Exception e)
+                    {
+#if BF_DEBUG
+                        Debug.LogError ($"resolve request error {attributeKey} in {thisObj.name} GameObject",
+                            thisObj);
+#endif
+                        isVaild = false;
+                        return;
+                    }
+
+
+                    // target component is GameObject Array type.
+                    if (targetComp is GameObject[] gameObjects)
+                    {
+                        var fieldType = field.FieldType;
+                        if (fieldType.HasElementType) return;
+#if BF_DEBUG
+                        Debug.LogError (
+                            $"resolve target field type has not array type {fieldType} in {thisObj.name} GameObject",
+                            thisObj);
+#endif
+                        isVaild = false;
+                        return;
+                    }
+                });
+            });
+
+            return isVaild;
+        }
+
+
+        /// <summary>
         /// Manually Resolve.
         /// </summary>
         public object Resolve (string key)

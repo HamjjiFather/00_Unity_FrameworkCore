@@ -14,14 +14,14 @@ using Random = UnityEngine.Random;
 namespace KKSFramework
 {
     /// <summary>
-    ///     c#, unity3D base extended functions.
+    /// c#, unity3D base extended functions.
     /// </summary>
     public static class BaseExtension
     {
         #region Disposable
 
         /// <summary>
-        ///     dispose safely.
+        /// dispose safely.
         /// </summary>
         public static void DisposeSafe (this IDisposable disposable)
         {
@@ -70,7 +70,7 @@ namespace KKSFramework
         #region String
 
         /// <summary>
-        ///     Add tag for formatted text.
+        /// Add tag for formatted text.
         /// </summary>
         public static string AddTag (this string target, string tagName, object value)
         {
@@ -120,7 +120,7 @@ namespace KKSFramework
         #region Action
 
         /// <summary>
-        ///     invoke action safely.
+        /// invoke action safely.
         /// </summary>
         public static void CallSafe (this Action action)
         {
@@ -129,7 +129,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     invoke action safely.
+        /// invoke action safely.
         /// </summary>
         public static void CallSafe<T1> (this Action<T1> action, T1 t1)
         {
@@ -138,7 +138,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     invoke action safely.
+        /// invoke action safely.
         /// </summary>
         public static void CallSafe<T1, T2> (this Action<T1, T2> action, T1 t1, T2 t2)
         {
@@ -147,7 +147,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     invoke action safely.
+        /// invoke action safely.
         /// </summary>
         public static void CallSafe<T1, T2, T3> (this Action<T1, T2, T3> action, T1 t1, T2 t2, T3 t3)
         {
@@ -156,7 +156,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     invoke action safely.
+        /// invoke action safely.
         /// </summary>
         public static void CallSafe<T1, T2, T3, T4> (this Action<T1, T2, T3, T4> action, T1 t1, T2 t2, T3 t3, T4 t4)
         {
@@ -169,7 +169,7 @@ namespace KKSFramework
         #region Func
 
         /// <summary>
-        ///     invoke function safely.
+        /// invoke function safely.
         /// </summary>
         public static T1 CallSafe<T1> (this Func<T1> func)
         {
@@ -178,7 +178,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     invoke function safely.
+        /// invoke function safely.
         /// </summary>
         public static T2 CallSafe<T1, T2> (this Func<T1, T2> func, T1 t1)
         {
@@ -187,7 +187,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     invoke function safely.
+        /// invoke function safely.
         /// </summary>
         public static T3 CallSafe<T1, T2, T3> (this Func<T1, T2, T3> func, T1 t1, T2 t2)
         {
@@ -196,7 +196,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     invoke function safely.
+        /// invoke function safely.
         /// </summary>
         public static T4 CallSafe<T1, T2, T3, T4> (this Func<T1, T2, T3, T4> func, T1 t1, T2 t2, T3 t3)
         {
@@ -209,7 +209,7 @@ namespace KKSFramework
         #region Vector
 
         /// <summary>
-        ///     change X axis value only.
+        /// change X axis value only.
         /// </summary>
         public static Vector2 X (this Vector2 vector2, float value)
         {
@@ -218,7 +218,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     change Y axis value only.
+        /// change Y axis value only.
         /// </summary>
         public static Vector2 Y (this Vector2 vector2, float value)
         {
@@ -227,7 +227,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     change Vector3 to only one value.
+        /// change Vector3 to only one value.
         /// </summary>
         public static Vector3 SetOneValue (float value)
         {
@@ -236,7 +236,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     change X axis value only.
+        /// change X axis value only.
         /// </summary>
         public static Vector3 X (this Vector3 vector3, float value)
         {
@@ -244,7 +244,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     change Y axis value only.
+        /// change Y axis value only.
         /// </summary>
         public static Vector3 Y (this Vector3 vector3, float value)
         {
@@ -252,7 +252,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     change Z axis value only.
+        /// change Z axis value only.
         /// </summary>
         public static Vector3 Z (this Vector3 vector3, float value)
         {
@@ -265,7 +265,7 @@ namespace KKSFramework
         #region Color
 
         /// <summary>
-        ///     Change red value only color.
+        /// Change red value only color.
         /// </summary>
         public static Color Red (this Color color, float red)
         {
@@ -273,7 +273,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     Change green value only color.
+        /// Change green value only color.
         /// </summary>
         public static Color Green (this Color color, float green)
         {
@@ -281,7 +281,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     Change blue value only color.
+        /// Change blue value only color.
         /// </summary>
         public static Color Blue (this Color color, float blue)
         {
@@ -289,7 +289,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     Change alpha value only color.
+        /// Change alpha value only color.
         /// </summary>
         public static Color Alpha (this Color color, float alpha)
         {
@@ -298,7 +298,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Convert color to color code.
+        /// Convert color to color code.
         /// </summary>
         public static string ToRGBHex (this Color c)
         {
@@ -312,7 +312,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     Convert color code to color.
+        /// Convert color code to color.
         /// </summary>
         public static Color ToColor (string code)
         {
@@ -345,7 +345,7 @@ namespace KKSFramework
         #region Transform
 
         /// <summary>
-        ///     Give a targetTransform a look.
+        /// Give a targetTransform a look.
         /// </summary>
         public static void SetEulerAngle2D (this Transform transform, Transform targetTransform)
         {
@@ -355,7 +355,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Initializing transform state.
+        /// Initializing transform state.
         /// </summary>
         public static void SetInstantiateTransform (this Transform transform)
         {
@@ -366,7 +366,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Change position X axis value only.
+        /// Change position X axis value only.
         /// </summary>
         public static Transform SetPositionX (this Transform transform, float value)
         {
@@ -376,7 +376,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Change position Y axis value only.
+        /// Change position Y axis value only.
         /// </summary>
         public static Transform SetPositionY (this Transform transform, float value)
         {
@@ -386,7 +386,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Change position Z axis value only.
+        /// Change position Z axis value only.
         /// </summary>
         public static Transform SetPositionZ (this Transform transform, float value)
         {
@@ -396,7 +396,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Change position to vector2 value.
+        /// Change position to vector2 value.
         /// </summary>
         public static Transform SetPositionXy (this Transform transform, Vector2 pos)
         {
@@ -406,7 +406,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Change local position X axis value only.
+        /// Change local position X axis value only.
         /// </summary>
         public static Transform SetLocalPositionX (this Transform transform, float value)
         {
@@ -416,7 +416,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Change local position Y axis value only.
+        /// Change local position Y axis value only.
         /// </summary>
         public static Transform SetLocalPositionY (this Transform transform, float value)
         {
@@ -426,7 +426,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Change local position Z axis value only.
+        /// Change local position Z axis value only.
         /// </summary>
         public static Transform SetLocalPositionZ (this Transform transform, float value)
         {
@@ -436,7 +436,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Change local position to vector2 value.
+        /// Change local position to vector2 value.
         /// </summary>
         public static Transform SetLocalPositionXy (this Transform transform, Vector2 pos)
         {
@@ -455,7 +455,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Return children Transform List of transform.
+        /// Return children Transform List of transform.
         /// </summary>
         public static IEnumerable<Transform> GetChildTransforms (this Transform transform)
         {
@@ -468,7 +468,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     Return index number.
+        /// Return index number.
         /// </summary>
         public static int GetChildIndex (this Transform transform, Transform child)
         {
@@ -488,7 +488,7 @@ namespace KKSFramework
         #region RectTransform
 
         /// <summary>
-        ///     Initializing Rect Transform state.
+        /// Initializing Rect Transform state.
         /// </summary>
         public static void SetInstantiateTransform (this RectTransform transform)
         {
@@ -501,7 +501,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     change anchored position X axis value only.
+        /// change anchored position X axis value only.
         /// </summary>
         public static RectTransform SetAnchoredPositionX (this RectTransform rectTransform, float x)
         {
@@ -511,7 +511,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     change anchored position Y axis value only.
+        /// change anchored position Y axis value only.
         /// </summary>
         public static RectTransform SetAnchoredPositionY (this RectTransform rectTransform, float y)
         {
@@ -521,7 +521,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     change size delta X axis value only.
+        /// change size delta X axis value only.
         /// </summary>
         public static RectTransform SetSizeDeltaX (this RectTransform rectTransform, float x)
         {
@@ -531,7 +531,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     change size delta Y axis value only.
+        /// change size delta Y axis value only.
         /// </summary>
         public static RectTransform SetSizeDeltaY (this RectTransform rectTransform, float y)
         {
@@ -545,7 +545,7 @@ namespace KKSFramework
         #region UI
 
         /// <summary>
-        ///     Add trigger action to eventTrigger.
+        /// Add trigger action to eventTrigger.
         /// </summary>
         public static void AddEventTrigger (this EventTrigger eventTrigger, EventTriggerType eventTriggerType,
             UnityAction<BaseEventData> triggerAction)
@@ -560,7 +560,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     change graphic color.
+        /// change graphic color.
         /// </summary>
         public static void SetColor (this Graphic graphic, Color color)
         {
@@ -568,7 +568,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     Change graphic color only to alpha values.
+        /// Change graphic color only to alpha values.
         /// </summary>
         public static void SetAlphaColor (this Graphic graphic, Color color)
         {
@@ -576,7 +576,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     Change graphic color only to RGB values.
+        /// Change graphic color only to RGB values.
         /// </summary>
         public static void SetOnlyColor (this Graphic graphic, Color color)
         {
@@ -584,7 +584,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     Change graphic color.
+        /// Change graphic color.
         /// </summary>
         private static void SetColorByOption (this Graphic graphic, StatusColorOption option, Color color)
         {
@@ -621,7 +621,7 @@ namespace KKSFramework
         #region Collection
 
         /// <summary>
-        ///     collection's foreach action.
+        /// collection's foreach action.
         /// </summary>
         public static void Foreach<T> (this IEnumerable<T> enumerable, Action<T> action)
         {
@@ -630,7 +630,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     collection's foreach action.
+        /// collection's foreach action.
         /// </summary>
         public static void Foreach<T> (this IEnumerable<T> enumerable, Action<T, int> action)
         {
@@ -789,7 +789,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     zipping other collections foreach action.
+        /// zipping other collections foreach action.
         /// </summary>
         public static void ZipForEach<T, V> (this IEnumerable<T> enumeration, IEnumerable<V> otherEnumerable,
             Action<T, V> action)
@@ -806,7 +806,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     zipping other collections foreach action.
+        /// zipping other collections foreach action.
         /// </summary>
         public static void ZipForEach<T, TV> (this IEnumerable<T> enumeration, IEnumerable<TV> otherEnumerable,
             Action<T, TV, int> action)
@@ -825,7 +825,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     shuffle collection.
+        /// shuffle collection.
         /// </summary>
         public static IEnumerable<T> Shuffle<T> (this IEnumerable<T> enumerable)
         {
@@ -834,7 +834,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     enqueue many times.
+        /// enqueue many times.
         /// </summary>
         public static void Enqueues<T> (this Queue<T> queue, IEnumerable<T> enumerable)
         {
@@ -843,7 +843,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     dequeue specific times.
+        /// dequeue specific times.
         /// </summary>
         public static IEnumerable<T> Dequeues<T> (this Queue<T> queue, int count)
         {
@@ -866,7 +866,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     If a Key exists, set the value, and if not, add the Key Value to Dictionary.
+        /// If a Key exists, set the value, and if not, add the Key Value to Dictionary.
         /// </summary>
         public static void SetOrAdd<TK, TV> (this Dictionary<TK, TV> dict, TK key, TV value)
         {
@@ -878,7 +878,7 @@ namespace KKSFramework
 
 
         /// <summary>
-        ///     If not a Key exists, add the Key Value to Dictionary.
+        /// If not a Key exists, add the Key Value to Dictionary.
         /// </summary>
         public static void ContainAndAdd<TK, TV> (this Dictionary<TK, TV> dict, TK key, TV value)
         {

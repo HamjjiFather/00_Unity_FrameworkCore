@@ -13,9 +13,9 @@ namespace KKSFramework.Editor
         private void OnGUI ()
         {
             CustomHierarchyEditor.ActiveNameTextColor =
-                EditorGUILayout.ColorField ("Activated, NonPrefab Font Color", CustomHierarchyEditor.ActiveNameTextColor);
+                EditorGUILayout.ColorField ("Activated, NonPrefab Color", CustomHierarchyEditor.ActiveNameTextColor);
             CustomHierarchyEditor.InactiveNameTextColor =
-                EditorGUILayout.ColorField ("Inactivated, NonPrefab Font Color", CustomHierarchyEditor.InactiveNameTextColor);
+                EditorGUILayout.ColorField ("Inactivated, NonPrefab Color", CustomHierarchyEditor.InactiveNameTextColor);
             CustomHierarchyEditor.BackGroundColor =
                 EditorGUILayout.ColorField ("Background Color", CustomHierarchyEditor.BackGroundColor);
             

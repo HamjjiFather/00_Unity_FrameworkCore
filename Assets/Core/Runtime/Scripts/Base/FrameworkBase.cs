@@ -5,7 +5,7 @@ using UnityEngine;
 namespace KKSFramework
 {
     /// <summary>
-    ///     프레임워크 베이스 데이터 세팅.
+    /// 프레임워크 베이스 데이터 세팅.
     /// </summary>
     public class FrameworkBase : Singleton<FrameworkBase>
     {
@@ -28,7 +28,7 @@ namespace KKSFramework
         #region Fields & Property
 
         /// <summary>
-        ///     프레임워크 데이터 경로 텍스트에셋.
+        /// 프레임워크 데이터 경로 텍스트에셋.
         /// </summary>
         private TextAsset textAsset;
 
@@ -46,7 +46,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     받아온 프레임워크 데이터.
+        /// 받아온 프레임워크 데이터.
         /// </summary>
         private FrameworkBaseData _frameworkBaseData;
 
@@ -72,7 +72,7 @@ namespace KKSFramework
         #region Methods
 
         /// <summary>
-        ///     프레임워크 데이터를 로드함.
+        /// 프레임워크 데이터를 로드함.
         /// </summary>
         private FrameworkBaseData LoadFrameworkData ()
         {
@@ -80,7 +80,7 @@ namespace KKSFramework
         }
 
         /// <summary>
-        ///     프레임워크 데이터를 업데이트함.
+        /// 프레임워크 데이터를 업데이트함.
         /// </summary>
         public void UpdateFrameWorkData (FrameworkBaseData frameworkBaseData)
         {

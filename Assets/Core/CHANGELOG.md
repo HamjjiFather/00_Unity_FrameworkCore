@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Add check for updates menu editor class.
 * Add validate check for update Base frame package.
 * Add open data folder UnityEditor class. 
+* Add [ContextEditorClass] for Check validate bindable properties in [Context] class.
 
 ### Changed
 * Change the structure of changing from UGUI to ExtensionUI.
+
 
 ## [1.4.0] - 2021-03-29 (Game System)
 ### Added
