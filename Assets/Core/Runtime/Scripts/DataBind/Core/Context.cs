@@ -103,7 +103,7 @@ namespace KKSFramework.DataBind
                         {
                             targetComp = Container.ContainsKey (attributeKey)
                                 ? Container[attributeKey]
-                                : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
+                                : bindingComps.First (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
                         }
                         catch (Exception e)
                         {
@@ -200,7 +200,7 @@ namespace KKSFramework.DataBind
                     {
                         targetComp = Container.ContainsKey (attributeKey)
                             ? Container[attributeKey]
-                            : bindingComps.Single (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
+                            : bindingComps.First (x => x.ContainerPath.Equals (attributeKey)).BindTarget;
                     }
                     catch (Exception e)
                     {

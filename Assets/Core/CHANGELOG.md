@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Add validate check for update Base frame package.
 * Add open data folder UnityEditor class. 
 * Add [ContextEditorClass] for Check validate bindable properties in [Context] class.
+* Add method of access specified index in [Action] or [Func] array.
 
 ### Changed
 * Change the structure of changing from UGUI to ExtensionUI.
