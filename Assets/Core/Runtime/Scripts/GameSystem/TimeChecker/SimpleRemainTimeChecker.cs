@@ -36,7 +36,7 @@ namespace KKSFramework.GameSystem
             remove => _onRemaining -= value;
         }
 
-        private event CompleteEventHandler Completed
+        public event CompleteEventHandler Completed
         {
             add => _completed += value;
             remove => _completed -= value;
