@@ -70,8 +70,11 @@ namespace KKSFramework.Editor
             {
                 #if BF_DEBUG
                 Debug.Log ("Component has not contain BindAttribute methods");
-                return;
                 #endif
+
+                var red = new GUIStyle (EditorStyles.label) {normal = {textColor = Color.red}};
+                EditorGUILayout.LabelField ("There is no any bound Methods", red);
+                return;
             }
 
             var methodNames = methods.Select (x => x.Name).ToList ();

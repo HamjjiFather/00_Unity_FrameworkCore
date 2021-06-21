@@ -111,7 +111,6 @@ namespace KKSFramework.ResourcesLoad
         /// </summary>
         protected virtual void OnCreated ()
         {
-            Debug.Log ($"{nameof (PoolingComponent)} : OnCreated");
         }
 
         
@@ -120,7 +119,6 @@ namespace KKSFramework.ResourcesLoad
         /// </summary>
         protected virtual void OnPooling ()
         {
-            Debug.Log ($"{nameof (PoolingComponent)} : OnPooling");
         }
 
         
@@ -129,7 +127,6 @@ namespace KKSFramework.ResourcesLoad
         /// </summary>
         protected virtual void OnUnpooled ()
         {
-            Debug.Log ($"{nameof (PoolingComponent)} : OnUnpooled");
         }
 
         #endregion

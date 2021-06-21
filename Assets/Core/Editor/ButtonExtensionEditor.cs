@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using KKSFramework.UI;
 using UnityEditor;
@@ -14,20 +13,9 @@ namespace KKSFramework.Editor
     [CanEditMultipleObjects]
     public class ButtonExtensionEditor : ButtonEditor
     {
-        //[Header("[Editor_UIToggleBase]"), Space(5)]
-
-
         #region Fields & Property
 
-        /// <summary>
-        /// 필드 인포.
-        /// </summary>
-        private List<FieldInfo> _listPropertyInfos;
-
-        /// <summary>
-        /// 상속 여부.
-        /// </summary>
-        private bool _isInheritance;
+        private ButtonExtension _target;
 
         #endregion
 
@@ -36,36 +24,81 @@ namespace KKSFramework.Editor
 
         protected override void OnEnable ()
         {
+            _target = target as ButtonExtension;
             base.OnEnable ();
-            _isInheritance = !target.GetType ().Name.Equals (nameof (ButtonExtension));
-            if (_isInheritance)
-                _listPropertyInfos = target.GetType ().GetFields ().ToList ().FindAll (x =>
-                    !x.DeclaringType.Name.Equals (nameof (ButtonExtension)) &&
-                    x.DeclaringType.Name.Equals (target.GetType ().Name));
         }
+
 
         public override void OnInspectorGUI ()
         {
-            if (_isInheritance)
-                if (_listPropertyInfos.Count != 0)
-                    foreach (var t in _listPropertyInfos)
-                    {
-                        EditorGUILayout.PropertyField (serializedObject.FindProperty (t.Name));
-                        serializedObject.ApplyModifiedProperties ();
-                    }
+            EditorGUILayout.BeginVertical ("Box");
+            {
+                EditorGUILayout.LabelField ($"[Holding Action]", EditorStyles.boldLabel);
+                
+                EditorGUILayout.PropertyField (
+                    serializedObject.FindProperty (nameof (_target.useHoldingAction)));
+                serializedObject.ApplyModifiedProperties ();
 
-            // 색상 변경 옵션.
-            EditorGUILayout.PropertyField (serializedObject.FindProperty ("soundTypeEnum"));
-            serializedObject.ApplyModifiedProperties ();
+                if (!_target.useHoldingAction)
+                {
+                    EditorGUILayout.EndVertical ();
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField (
+                        serializedObject.FindProperty (nameof (_target.defaultHoldDuration)));
+                    EditorGUILayout.EndVertical ();
+                }
+            }
+            
+            
+            EditorGUILayout.BeginVertical ("Box");
+            {
+                EditorGUILayout.LabelField ($"[Scale Effect]", EditorStyles.boldLabel);
+                
+                EditorGUILayout.PropertyField (
+                    serializedObject.FindProperty (nameof (_target.useScaleEffect)));
+                serializedObject.ApplyModifiedProperties ();
 
-            // 색상 변경 옵션.
-            EditorGUILayout.PropertyField (serializedObject.FindProperty ("buttonText"));
-            serializedObject.ApplyModifiedProperties ();
+                if (!_target.useScaleEffect)
+                {
+                    EditorGUILayout.EndVertical ();
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField (
+                        serializedObject.FindProperty (nameof (_target.scaleEffectDuration)));
+                    
+                    EditorGUILayout.PropertyField (
+                        serializedObject.FindProperty (nameof (_target.toScaleValue)));
+                    
+                    serializedObject.ApplyModifiedProperties ();
+                    EditorGUILayout.EndVertical ();
+                }
+            }
 
-            EditorGUILayout.Space ();
-            EditorGUILayout.LabelField ("[Button]", EditorStyles.boldLabel);
+            
+            EditorGUILayout.BeginVertical ("Box");
+            {
+                EditorGUILayout.LabelField ($"[Button Extension Base]", EditorStyles.boldLabel);
+                
+                // 색상 변경 옵션.
+                EditorGUILayout.PropertyField (serializedObject.FindProperty (nameof (ButtonExtension.soundTypeEnum)));
 
-            base.OnInspectorGUI ();
+                // 포함된 텍스트.
+                EditorGUILayout.PropertyField (serializedObject.FindProperty (nameof (ButtonExtension.buttonText)));
+                serializedObject.ApplyModifiedProperties ();
+
+                EditorGUILayout.EndVertical ();
+            }
+            
+            
+            EditorGUILayout.BeginVertical ("Box");
+            {
+                EditorGUILayout.LabelField ("[Button]", EditorStyles.boldLabel);
+                base.OnInspectorGUI ();
+                EditorGUILayout.EndVertical ();
+            }
         }
 
         #endregion
