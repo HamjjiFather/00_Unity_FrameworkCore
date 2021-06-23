@@ -12,20 +12,20 @@ namespace KKSFramework.Fsm
     /// Fsm 클래스.
     /// 시작(Start), 변경(Change) 정지(Stop)로 상태 제어.
     /// </summary>
-    public class FsmRunner
+    public class FsmRunner<T>
     {
         #region Fields & Property
 
         /// <summary>
         /// 상태별 작동 함수 딕셔너리.
         /// </summary>
-        private readonly Dictionary<string, Func<CancellationTokenSource, UniTask>> _fsmStateDict =
-            new Dictionary<string, Func<CancellationTokenSource, UniTask>> ();
+        private readonly Dictionary<T, Func<CancellationTokenSource, UniTask>> _fsmStateDict =
+            new Dictionary<T, Func<CancellationTokenSource, UniTask>> ();
 
         /// <summary>
         /// 현재 상태 이름.
         /// </summary>
-        private StringReactiveProperty _currentStateName;
+        private ReactiveProperty<T> _currentStateName;
 
         /// <summary>
         /// 상태 이름 변환 구독.
@@ -57,22 +57,22 @@ namespace KKSFramework.Fsm
         /// <summary>
         /// Fsm 상태를 등록.
         /// </summary>
-        public void RegistFsmState (string stateName, Func<CancellationTokenSource, UniTask> stateMethod)
+        public void RegistFsmState (T state, Func<CancellationTokenSource, UniTask> stateMethod)
         {
-            if (_fsmStateDict.ContainsKey (stateName))
+            if (_fsmStateDict.ContainsKey (state))
             {
-                Debug.Log ($"already contained state: {stateName}");
+                Debug.Log ($"already contained state: {state}");
                 return;
             }
 
-            _fsmStateDict.Add (stateName, stateMethod);
+            _fsmStateDict.Add (state, stateMethod);
         }
 
 
         /// <summary>
         /// Fsm 시작.
         /// </summary>
-        public void StartFsm (string initStateName)
+        public void StartFsm (T state)
         {
             if (_fsmStateDict.Count.Equals (0))
             {
@@ -82,12 +82,12 @@ namespace KKSFramework.Fsm
 
             _isRunned = true;
             _cancellationTokenSource = new CancellationTokenSource ();
-            _currentStateName = new StringReactiveProperty (initStateName);
+            _currentStateName = new ReactiveProperty<T> (state);
 
             _stateNameDisposable = _currentStateName.Subscribe (value =>
             {
                 _fsmStateDict[value].Invoke (_cancellationTokenSource).Forget ();
-                Debug.Log ($"{value}");
+                // Debug.Log ($"{value}");
             });
         }
 
@@ -95,16 +95,16 @@ namespace KKSFramework.Fsm
         /// <summary>
         /// Fsm 상태 변경.
         /// </summary>
-        public void ChangeState (string stateName)
+        public void ChangeState (T state)
         {
-            if (!_fsmStateDict.ContainsKey (stateName))
+            if (!_fsmStateDict.ContainsKey (state))
             {
-                Debug.Log ($"not exist state: {stateName}");
+                Debug.Log ($"not exist state: {state}");
                 return;
             }
 
-            _currentStateName.Value = stateName;
-            Debug.Log ($"change state: {stateName}");
+            _currentStateName.Value = state;
+            Debug.Log ($"change state: {state}");
         }
 
 

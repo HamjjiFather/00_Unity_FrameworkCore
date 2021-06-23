@@ -2,8 +2,9 @@
   "name": "com.rhkdtjq0390.baseframe",
   "displayName": "Base framework",
   "description": "Base framework for Unity3d.",
-  "version": "1.4.1",
+  "version": "1.5.1",
   "unity": "2021.1",
   "unityRelease": "4f1",
+  "author": "rhkdtjq0390",
   "dependencies": {}
 }
