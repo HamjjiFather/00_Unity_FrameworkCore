@@ -17,6 +17,11 @@ namespace KKSFramework.Fsm
         #region Fields & Property
 
         /// <summary>
+        /// 상태 변경 이벤트 핸들러.
+        /// </summary>
+        public delegate void FsmOnChangedHandler (T prevKey, T currentKey);
+
+        /// <summary>
         /// 상태별 작동 함수 딕셔너리.
         /// </summary>
         private readonly Dictionary<T, Func<CancellationTokenSource, UniTask>> _fsmStateDict =
@@ -40,9 +45,18 @@ namespace KKSFramework.Fsm
         /// <summary>
         /// 상태가 진행 중인지 여부.
         /// </summary>
-        private bool _isRunned;
+        public bool IsRunned { get; private set; }
 
-        public bool IsRunned => _isRunned;
+        /// <summary>
+        /// 현재 상태 키.
+        /// </summary>
+        public T CurrentKey { get; private set; }
+
+        /// <summary>
+        /// 상태 변경시 호출할 이벤트 핸들러.
+        /// 상태 변경 함수 호출 전 호출된다.
+        /// </summary>
+        public FsmOnChangedHandler OnChangedEventHandler;
 
         #endregion
 
@@ -80,14 +94,17 @@ namespace KKSFramework.Fsm
                 return;
             }
 
-            _isRunned = true;
+            IsRunned = true;
+            CurrentKey = state;
             _cancellationTokenSource = new CancellationTokenSource ();
             _currentStateName = new ReactiveProperty<T> (state);
 
             _stateNameDisposable = _currentStateName.Subscribe (value =>
             {
+                var prevKey = CurrentKey;
+                CurrentKey = value;
+                OnChangedEventHandler?.Invoke (prevKey, CurrentKey);
                 _fsmStateDict[value].Invoke (_cancellationTokenSource).Forget ();
-                // Debug.Log ($"{value}");
             });
         }
 
@@ -113,9 +130,9 @@ namespace KKSFramework.Fsm
         /// </summary>
         public void StopFsm ()
         {
-            if (!_isRunned) return;
+            if (!IsRunned) return;
 
-            _isRunned = false;
+            IsRunned = false;
             _currentStateName?.Dispose ();
             _stateNameDisposable?.Dispose ();
             _cancellationTokenSource?.Cancel ();
