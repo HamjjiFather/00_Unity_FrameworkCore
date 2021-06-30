@@ -50,7 +50,7 @@ namespace KKSFramework.Fsm
         /// <summary>
         /// 현재 상태 키.
         /// </summary>
-        public T CurrentKey { get; private set; }
+        public T CurrentKey => _currentStateName.Value;
 
         /// <summary>
         /// 상태 변경시 호출할 이벤트 핸들러.
@@ -95,14 +95,12 @@ namespace KKSFramework.Fsm
             }
 
             IsRunned = true;
-            CurrentKey = state;
             _cancellationTokenSource = new CancellationTokenSource ();
             _currentStateName = new ReactiveProperty<T> (state);
 
             _stateNameDisposable = _currentStateName.Subscribe (value =>
             {
                 var prevKey = CurrentKey;
-                CurrentKey = value;
                 OnChangedEventHandler?.Invoke (prevKey, CurrentKey);
                 _fsmStateDict[value].Invoke (_cancellationTokenSource).Forget ();
             });
@@ -120,7 +118,7 @@ namespace KKSFramework.Fsm
                 return;
             }
 
-            _currentStateName.Value = state;
+            _currentStateName.SetValueAndForceNotify (state);
             Debug.Log ($"change state: {state}");
         }
 
