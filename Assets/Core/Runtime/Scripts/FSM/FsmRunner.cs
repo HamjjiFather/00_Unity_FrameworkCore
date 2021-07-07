@@ -19,7 +19,7 @@ namespace KKSFramework.Fsm
         /// <summary>
         /// 상태 변경 이벤트 핸들러.
         /// </summary>
-        public delegate void FsmOnChangedHandler (T prevKey, T currentKey);
+        public delegate void FsmOnChangeHandler (T prevState, T nextState);
 
         /// <summary>
         /// 상태별 작동 함수 딕셔너리.
@@ -50,13 +50,13 @@ namespace KKSFramework.Fsm
         /// <summary>
         /// 현재 상태 키.
         /// </summary>
-        public T CurrentKey => _currentStateName.Value;
+        public T CurrentState => _currentStateName.Value;
 
         /// <summary>
         /// 상태 변경시 호출할 이벤트 핸들러.
         /// 상태 변경 함수 호출 전 호출된다.
         /// </summary>
-        public FsmOnChangedHandler OnChangedEventHandler;
+        public FsmOnChangeHandler OnChangeEventHandler;
 
         #endregion
 
@@ -98,11 +98,11 @@ namespace KKSFramework.Fsm
             _cancellationTokenSource = new CancellationTokenSource ();
             _currentStateName = new ReactiveProperty<T> (state);
 
-            _stateNameDisposable = _currentStateName.Subscribe (value =>
+            _stateNameDisposable = _currentStateName.Subscribe (nextState =>
             {
-                var prevKey = CurrentKey;
-                OnChangedEventHandler?.Invoke (prevKey, CurrentKey);
-                _fsmStateDict[value].Invoke (_cancellationTokenSource).Forget ();
+                var prevState = CurrentState;
+                OnChangeEventHandler?.Invoke (prevState, nextState);
+                _fsmStateDict[nextState].Invoke (_cancellationTokenSource).Forget ();
             });
         }
 
